@@ -40,21 +40,10 @@ format:
     toc: false
     anchor-sections: false
     link-external-newwindow: true
-    include-in-header:
-      - text: |
-          <script>
-            // Before first paint, so the page never flashes the wrong style.
-            try {
-              var s = localStorage.getItem("odaily-style") || "pixel";
-              document.documentElement.dataset.style =
-                ["pixel","chart","deep","dataviz"].indexOf(s) < 0 ? "pixel" : s;
-            } catch (e) { document.documentElement.dataset.style = "pixel"; }
-          </script>
     include-after-body:
       - text: |
           <script src="/assets/planet-core.js"></script>
           <script src="/assets/render-pixel.js"></script>
-          <script src="/assets/render-vector.js"></script>
           <script src="/assets/ui.js"></script>
           <script src="/assets/galaxy.js"></script>
           <script src="/assets/day.js"></script>

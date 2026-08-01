@@ -47,10 +47,6 @@ toc: false
 ::: {#journal}
 ::: {.journal-inner}
 
-<button type="button" class="journal-return" id="journal-return">↑ Back into orbit</button>
-
-<button type="button" class="orbit-return" id="orbit-return">↑ Orbit</button>
-
 {{< include _includes/summary.md >}}
 
 ## The journal

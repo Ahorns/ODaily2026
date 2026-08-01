@@ -266,6 +266,15 @@ $ufo-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
   transform: translateX(-50%) translateY(-2px);
 }
 
+// Once you have left orbit the stage has scrolled away, so the button pins
+// itself to the viewport instead — it is the way back, and a way back that
+// scrolls off the screen is not one.
+body.out-of-orbit .galaxy-exit {
+  position: fixed;
+  bottom: 1.4rem;
+  z-index: 40;
+}
+
 // ---------------------------------------------------------------------------
 // Below the fold: the reading half of the page
 // ---------------------------------------------------------------------------
@@ -286,46 +295,6 @@ $ufo-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
   color: $dim;
   margin: 2.5rem 0 1rem;
 }
-
-// Two ways back up: one that stays with you as you read, and one pinned to the
-// corner once you have left the universe.
-.journal-return {
-  position: sticky;
-  top: 4.5rem;
-  z-index: 3;
-  font: inherit;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: $dim;
-  background: rgba(10, 15, 28, 0.9);
-  border: 1px solid $rule-dim;
-  padding: 0.45rem 1rem;
-  margin-bottom: 2rem;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-}
-.journal-return:hover { color: $bright; border-color: $rule; }
-
-.orbit-return {
-  position: fixed;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  z-index: 40;
-  display: none;
-  font: inherit;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: $void;
-  background: $gold;
-  border: none;
-  padding: 0.6rem 1.1rem;
-  cursor: pointer;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
-}
-body.out-of-orbit .orbit-return { display: block; }
-.orbit-return:hover { background: lighten($gold, 8%); }
 
 #journal-panel {
   border: 1px solid $rule-dim;
@@ -392,9 +361,8 @@ body.entry .quarto-title-meta { display: none !important; }
 
 canvas.day-planet { display: block; }
 
-// Only the pixel sprite wants the whole-number scale-up; the vector styles draw
-// at device resolution and are ruined by it.
-html[data-style="pixel"] canvas.day-planet {
+// The sprite is drawn small and scaled up whole, so it must not be smoothed.
+canvas.day-planet {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
@@ -440,423 +408,40 @@ th {
 // layout, the meanings and the hit tests are identical in all of them.
 // ---------------------------------------------------------------------------
 
-.style-switch-item { display: flex; align-items: center; margin-left: 0.6rem; }
-.style-switch { display: inline-flex; border: 1px solid $rule-dim; }
-.style-switch button {
-  font: inherit;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: $dim;
-  background: transparent;
-  border: none;
-  padding: 0.22rem 0.55rem;
-  cursor: pointer;
+
+// ---------------------------------------------------------------------------
+// Everything here is on a whole-pixel grid on purpose — hard edges, no blur, no
+// radius, and brackets instead of rounded corners.
+// ---------------------------------------------------------------------------
+
+.galaxy-readout {
+  background: linear-gradient(180deg, rgba(19, 28, 48, 0.94), rgba(10, 16, 30, 0.94));
+  box-shadow: 0 0 0 1px rgba(7, 11, 22, 0.9), 0 14px 34px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
-.style-switch button:hover { color: $bright; }
-.style-switch button[aria-pressed="true"] { color: $void; background: $gold; }
-
-// ---------------------------------------------------------------------------
-// -- atlas: an 18th-century celestial plate.
-//
-// The canvas draws parchment, so the page has to *be* parchment too — a light
-// sheet with a dark chart on it, not a dark site with one pale window in it.
-// This is the only style that inverts the site, and it is the whole point of it.
-// ---------------------------------------------------------------------------
-
-$p-sheet:  #f4ead2;   // the lit middle of the sheet
-$p-ground: #ece0c3;   // the page around the plate
-$p-edge:   #ddcda8;   // handled edges, and the rule between slabs
-$p-ink:    #2b2117;   // iron gall, gone brown
-$p-body:   #3b2f20;
-$p-soft:   #6b5334;   // sepia: everything secondary
-$p-gilt:   #8a6a1f;
-$p-rubric: #93341a;   // the second ink. Links, and today.
-$p-rule:   rgba(107, 83, 52, 0.34);
-$p-rule-2: rgba(107, 83, 52, 0.18);
-
-// The impression of the mould: fine wires one way, chain lines the other, at
-// exactly the spacing the canvas draws. It is what ties slab to plate.
-@mixin laid($a: 0.045) {
-  background-image:
-    repeating-linear-gradient(0deg, rgba(120, 96, 60, $a) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(120, 96, 60, $a * 1.15) 0 1px, transparent 1px 27px);
+// Corner brackets, drawn with two gradients rather than four elements: the
+// same mark the renderer puts around a selected planet.
+.galaxy-readout::before,
+.galaxy-readout::after {
+  content: "";
+  position: absolute;
+  width: 9px; height: 9px;
+  border: 2px solid $gold;
+  pointer-events: none;
 }
+.galaxy-readout::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.galaxy-readout::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
 
-// A cartouche: the ruled border a plate puts around a block of text — a rule,
-// paper, then a hairline — sitting a little above the sheet.
-@mixin cartouche($bg: $p-sheet) {
-  background: $bg;
-  border: 1px solid $p-rule;
-  box-shadow:
-    inset 0 0 0 4px rgba(255, 250, 236, 0.55),
-    inset 0 0 0 5px $p-rule-2,
-    0 10px 28px rgba(94, 68, 34, 0.1);
+.hud-title { text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.65); }
+.galaxy-tools button, .galaxy-zoom button, .galaxy-exit,
+.view-toggle button, .readout-go {
+  border-radius: 0;
 }
-
-// An ink-drawn saucer, because a pale one vanishes on paper — and the saucer
-// is not negotiable.
-$ufo-ink: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='26' shape-rendering='crispEdges'%3E%3Cg fill='%236b5334'%3E%3Crect x='13' y='3' width='6' height='2'/%3E%3Crect x='11' y='5' width='10' height='2'/%3E%3C/g%3E%3Cg fill='%232b2117'%3E%3Crect x='9' y='7' width='14' height='2'/%3E%3Crect x='4' y='9' width='24' height='2'/%3E%3Crect x='2' y='11' width='28' height='2'/%3E%3C/g%3E%3Cg fill='%235c4a32'%3E%3Crect x='6' y='13' width='20' height='2'/%3E%3C/g%3E%3Cg fill='%23e8d9b4'%3E%3Crect x='7' y='11' width='2' height='2'/%3E%3Crect x='15' y='11' width='2' height='2'/%3E%3Crect x='23' y='11' width='2' height='2'/%3E%3C/g%3E%3C/svg%3E";
-$ufo-ink-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' shape-rendering='crispEdges'%3E%3Cg fill='%236b5334'%3E%3Crect x='13' y='3' width='6' height='2'/%3E%3Crect x='11' y='5' width='10' height='2'/%3E%3C/g%3E%3Cg fill='%232b2117'%3E%3Crect x='9' y='7' width='14' height='2'/%3E%3Crect x='4' y='9' width='24' height='2'/%3E%3Crect x='2' y='11' width='28' height='2'/%3E%3C/g%3E%3Cg fill='%235c4a32'%3E%3Crect x='6' y='13' width='20' height='2'/%3E%3C/g%3E%3Cg fill='%23e8d9b4'%3E%3Crect x='7' y='11' width='2' height='2'/%3E%3Crect x='15' y='11' width='2' height='2'/%3E%3Crect x='23' y='11' width='2' height='2'/%3E%3C/g%3E%3Cg fill='%2393341a' opacity='.6'%3E%3Crect x='13' y='15' width='6' height='2'/%3E%3Crect x='11' y='17' width='10' height='2'/%3E%3Crect x='9' y='19' width='14' height='2'/%3E%3C/g%3E%3Cg fill='%2393341a' opacity='.32'%3E%3Crect x='7' y='21' width='18' height='2'/%3E%3Crect x='5' y='23' width='22' height='2'/%3E%3C/g%3E%3C/svg%3E";
-
-html[data-style="chart"] {
-  color-scheme: light;
-  --paper: #{$p-sheet};
-  --ink: #{$p-ink};
-  --gilt: #{$p-gilt};
-  --rubric: #{$p-rubric};
-
-  // Real book type. The rest of the site is a terminal; this register is a page.
-  --atlas-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
-    "URW Palladio L", P052, "Hoefler Text", Georgia, serif;
-
-  body {
-    background: $p-ground;
-    color: $p-body;
-    font-family: var(--atlas-serif);
-    font-size: 1.0125rem;
-    line-height: 1.72;
-    @include laid;
-  }
-
-  // Type set for reading rather than for a console: oldstyle figures in running
-  // prose, where a 3 that drops below the line is a pleasure.
-  body, .galaxy-readout, #journal-panel {
-    font-variant-numeric: oldstyle-num;
-    font-feature-settings: "liga" 1, "onum" 1;
-  }
-
-  // But never in a column of values. An oldstyle zero is an o, and "10h" that
-  // reads as "1oh" is a bug dressed as a flourish.
-  table, .log-table, .stat-value, .stamp, .readout-foot, .galaxy-zoom, time {
-    font-variant-numeric: lining-nums tabular-nums;
-    font-feature-settings: "lnum" 1, "tnum" 1;
-  }
-
-  h1, h2, h3, h4, .hud-title, .panel-title { color: $p-ink; }
-  h1 { font-weight: 400; letter-spacing: 0.01em; }
-
-  a { color: $p-rubric; text-underline-offset: 0.16em; }
-  a:hover { color: darken($p-rubric, 8%); }
-
-  code, pre { font-family: $font-family-monospace; }
-  code { background: rgba(107, 83, 52, 0.09); color: $p-rubric; }
-
-  hr, .navbar { border-color: $p-rule; }
-
-  // ---- the plate ---------------------------------------------------------
-  .navbar {
-    background: rgba(244, 234, 210, 0.88);
-    border-bottom: 1px solid $p-rule;
-    box-shadow: 0 1px 0 rgba(255, 250, 236, 0.6);
-  }
-  .navbar .navbar-title,
-  .navbar .nav-link { color: $p-ink !important; }
-  .navbar .nav-link:hover { color: $p-rubric !important; }
-  .navbar-title { font-variant: small-caps; letter-spacing: 0.12em; text-transform: none; }
-
-  .galaxy-stage { background: $p-edge; }
-
-  #galaxy { cursor: url("#{$ufo-ink}") 16 12, grab; }
-  #galaxy.is-over-planet { cursor: url("#{$ufo-ink-beam}") 16 12, pointer; }
-  #galaxy:focus-visible { outline-color: $p-rubric; }
-
-  // The edge of the sheet, not a force field.
-  .galaxy-stage.at-edge::after { box-shadow: inset 0 0 90px rgba(107, 74, 34, 0.28); }
-
-  // ---- the hand-lettering over the plate ---------------------------------
-  .hud-title {
-    font-family: var(--atlas-serif);
-    font-size: 1rem;
-    letter-spacing: 0.34em;
-    color: $p-ink;
-  }
-  .hud-title span { color: $p-rubric; }
-  .hud-hint { color: rgba(107, 83, 52, 0.85); font-style: italic; font-size: 0.8rem; letter-spacing: 0; }
-
-  .galaxy-readout {
-    @include cartouche(rgba(247, 239, 220, 0.94));
-    backdrop-filter: blur(3px);
-    padding: 1.15rem 1.35rem;
-  }
-  .galaxy-readout h2 { font-size: 1.2rem; font-weight: 400; }
-  .readout-name { color: $p-gilt; letter-spacing: 0.24em; }
-  .stamp, .readout-foot, .readout-tip, .readout-empty, .stat-label,
-  .galaxy-tools .label, .galaxy-zoom, .log-table .dim, #journal h2,
-  #journal-panel .panel-eyebrow, body.entry h2 { color: $p-soft; }
-  .readout-tip { font-style: italic; }
-  .stamp .milestone { color: $p-gilt; }
-  .stamp .idea { color: $p-rubric; }
-
-  // ---- controls: engraved labels on paper, not glowing chips -------------
-  .galaxy-tools button,
-  .galaxy-zoom button,
-  .galaxy-exit,
-  .journal-return,
-  .view-toggle button {
-    background: rgba(247, 239, 220, 0.92);
-    border-color: $p-rule;
-    color: $p-soft;
-    backdrop-filter: none;
-  }
-  // No blur on this one: it sits inside the navbar's own backdrop filter, and
-  // nesting the two makes Chrome drop the whole group on some frames.
-  .style-switch { background: rgba(247, 239, 220, 0.82); border-color: $p-rule; }
-
-  // Quarto's search button is a bare white box until it is told otherwise.
-  .aa-DetachedSearchButton,
-  #quarto-search .aa-Form {
-    background: rgba(255, 252, 244, 0.6);
-    border: 1px solid $p-rule;
-    color: $p-soft;
-  }
-  .aa-DetachedSearchButton:hover { border-color: $p-ink; color: $p-ink; }
-  .galaxy-tools button:hover,
-  .galaxy-zoom button:hover:not(:disabled),
-  .galaxy-exit:hover,
-  .journal-return:hover { color: $p-ink; border-color: $p-ink; }
-
-  .galaxy-tools button[aria-pressed="true"],
-  .view-toggle button[aria-pressed="true"],
-  .style-switch button[aria-pressed="true"] {
-    background: $p-ink;
-    border-color: $p-ink;
-    color: $p-sheet;
-  }
-  .style-switch button, .view-toggle button { color: $p-soft; background: transparent; }
-  .style-switch button:hover, .view-toggle button:hover { color: $p-ink; }
-
-  .readout-go, .orbit-return {
-    background: $p-ink;
-    color: $p-sheet;
-    letter-spacing: 0.14em;
-  }
-  .readout-go:hover, .orbit-return:hover { background: $p-rubric; }
-  .orbit-return { box-shadow: 0 6px 22px rgba(94, 68, 34, 0.28); }
-
-  .galaxy-exit, .galaxy-tools .label, .hud-title { text-shadow: 0 1px 0 rgba(255, 250, 236, 0.6); }
-
-  // ---- the reading half --------------------------------------------------
-  #journal, #list-view, body.entry {
-    background: $p-sheet;
-    border-top-color: $p-edge;
-    @include laid(0.035);
-  }
-  #journal { border-top: 1px solid $p-edge; box-shadow: inset 0 1px 0 rgba(255, 250, 236, 0.7); }
-
-  #journal h2, body.entry h2 {
-    font-family: var(--atlas-serif);
-    font-variant: small-caps;
-    text-transform: none;
-    letter-spacing: 0.13em;
-    font-size: 0.98rem;
-    border-bottom: 1px solid $p-rule-2;
-    padding-bottom: 0.3rem;
-  }
-
-  #journal-panel { @include cartouche(rgba(250, 244, 228, 0.85)); }
-  #journal-panel:empty::after { color: $p-soft; font-style: italic; }
-  #journal-panel .panel-title { font-weight: 400; }
-
-  .stat-value { color: $p-gilt; font-weight: 400; }
-  .day-name { color: $p-gilt; }
-
-  // Quarto's callouts arrive tinted blue, which is the one colour nothing on a
-  // sheet of parchment should be.
-  .callout {
-    background: rgba(255, 250, 236, 0.7);
-    border: 1px solid $p-rule-2;
-    border-left: 3px solid $p-gilt;
-  }
-  .callout .callout-body, .callout .callout-title { background: transparent; color: $p-body; }
-  .callout .callout-icon::before { filter: sepia(1) saturate(0.6) hue-rotate(-18deg); }
-  blockquote { border-left: 3px solid $p-rule; color: $p-soft; }
-
-  // ---- the list, as a ruled register -------------------------------------
-  .log-table { font-size: 0.9rem; }
-  .log-table th {
-    color: $p-soft;
-    font-variant: small-caps;
-    text-transform: none;
-    letter-spacing: 0.08em;
-    border-bottom: 1.5px solid $p-rule;
-  }
-  .log-table th:hover { color: $p-ink; }
-  .log-table th[aria-sort]::after { color: $p-rubric; }
-  .log-table td { border-bottom: 1px solid $p-rule-2; }
-  .log-table tr:hover td { background: rgba(107, 83, 52, 0.06); }
-  .log-table .marks { color: $p-gilt; }
-  .log-table .swatch { box-shadow: 0 0 0 1px rgba(43, 33, 23, 0.35); }
+.galaxy-tools button:hover, .galaxy-exit:hover {
+  box-shadow: inset 0 0 0 1px rgba(242, 196, 107, 0.4);
 }
+.log-table .swatch { box-shadow: 0 0 0 1px rgba(7, 11, 22, 0.8); }
 
-// ---------------------------------------------------------------------------
-// -- deep: photographic space. Nothing is a flat panel here — every surface is
-//    glass over the sky, so the nebulae behind it are always faintly present.
-// ---------------------------------------------------------------------------
-
-html[data-style="deep"] {
-  $d-void: #010207;
-  $d-glass: rgba(10, 14, 30, 0.62);
-  $d-line: rgba(150, 178, 240, 0.2);
-  $d-text: #cdd8f4;
-  $d-dim: #7d8cb8;
-
-  body { background: $d-void; color: $d-text; }
-  .navbar {
-    background: rgba(2, 3, 10, 0.7);
-    border-bottom: 1px solid rgba(150, 178, 240, 0.1);
-    backdrop-filter: blur(14px) saturate(1.2);
-  }
-  .galaxy-stage { background: $d-void; }
-  h1, h2, h3, .hud-title, .panel-title { color: #f0f4ff; }
-
-  .galaxy-readout {
-    background: $d-glass;
-    border-color: $d-line;
-    backdrop-filter: blur(16px) saturate(1.3);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(180, 205, 255, 0.14);
-  }
-  // No backdrop filter on the small controls: a row of tiny blurred layers over
-  // a canvas that repaints every frame drops out on some of them, and a button
-  // that flickers empty is worse than one that is merely opaque.
-  .galaxy-tools button,
-  .galaxy-zoom button,
-  .galaxy-exit,
-  .journal-return {
-    background: rgba(9, 13, 28, 0.88);
-    border-color: rgba(150, 178, 240, 0.16);
-    backdrop-filter: none;
-  }
-  .galaxy-tools button:hover,
-  .galaxy-zoom button:hover:not(:disabled),
-  .galaxy-exit:hover { border-color: rgba(160, 190, 255, 0.45); color: #f0f4ff; }
-
-  // Restated because the rule above outranks the shared pressed state, which
-  // would otherwise leave near-black text on a near-black chip.
-  .galaxy-tools button[aria-pressed="true"] {
-    background: $gold;
-    border-color: $gold;
-    color: #050914;
-  }
-
-  // The readout's own light, as if the panel were lit by what it is describing.
-  .readout-name { text-shadow: 0 0 18px rgba(242, 196, 107, 0.45); }
-  .hud-title span { text-shadow: 0 0 22px rgba(242, 196, 107, 0.5); }
-
-  #journal, body.entry, #list-view {
-    background:
-      radial-gradient(120% 60% at 50% 0%, rgba(46, 62, 130, 0.34), transparent 70%),
-      #070b1a;
-  }
-  #journal { border-top-color: rgba(150, 178, 240, 0.14); }
-  #journal-panel {
-    background: rgba(3, 5, 14, 0.55);
-    border-color: rgba(150, 178, 240, 0.14);
-    backdrop-filter: blur(6px);
-  }
-  .stat-value { text-shadow: 0 0 24px rgba(242, 196, 107, 0.35); }
-  .log-table td { border-bottom-color: rgba(150, 178, 240, 0.1); }
-  .log-table th { color: $d-dim; border-bottom-color: rgba(150, 178, 240, 0.22); }
-}
-
-// ---------------------------------------------------------------------------
-// -- data: a clean chart that happens to be shaped like a galaxy. Neutral greys,
-//    one accent, tabular figures, and no decoration that is not carrying a value.
-// ---------------------------------------------------------------------------
-
-html[data-style="dataviz"] {
-  $v-bg:    #12151c;
-  $v-panel: #191d26;
-  $v-line:  rgba(168, 184, 210, 0.16);
-  $v-line2: rgba(168, 184, 210, 0.28);
-  $v-text:  #ccd5e6;
-  $v-dim:   #8b96ab;
-  $v-accent:#7fd8f7;
-
-  body {
-    background: $v-bg;
-    color: $v-text;
-    font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 0.9375rem;
-    letter-spacing: -0.003em;
-  }
-  // A chart's numbers must line up in a column, everywhere, without exception.
-  .stat-value, .log-table .num, .readout-foot, .stamp { font-variant-numeric: tabular-nums; }
-
-  .navbar { background: rgba(18, 21, 28, 0.92); border-bottom: 1px solid $v-line; }
-  .galaxy-stage { background: $v-bg; }
-  h1, h2, h3, .hud-title, .panel-title { color: #eef2f8; }
-  a { color: $v-accent; }
-
-  .galaxy-readout, #journal-panel {
-    background: $v-panel;
-    border-color: $v-line;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-  }
-  #journal, body.entry, #list-view { background: #151921; }
-  #journal { border-top-color: $v-line; }
-
-  .galaxy-tools button, .galaxy-zoom button, .galaxy-exit, .journal-return {
-    background: rgba(25, 29, 38, 0.86);
-    border-color: $v-line;
-    color: $v-dim;
-  }
-  .galaxy-tools button:hover, .galaxy-zoom button:hover:not(:disabled),
-  .galaxy-exit:hover, .journal-return:hover { color: #eef2f8; border-color: $v-line2; }
-  .galaxy-tools button[aria-pressed="true"],
-  .view-toggle button[aria-pressed="true"],
-  .style-switch button[aria-pressed="true"] { background: $v-accent; color: #0d1016; }
-
-  .stat-value, .readout-name, .day-name { color: $v-accent; }
-  .readout-go, .orbit-return { background: $v-accent; color: #0d1016; }
-  .readout-go:hover, .orbit-return:hover { background: lighten($v-accent, 8%); }
-  .stamp .milestone, .stamp .idea, .log-table .marks,
-  .log-table th[aria-sort]::after { color: $v-accent; }
-
-  .log-table th { color: $v-dim; border-bottom-color: $v-line2; }
-  .log-table td { border-bottom-color: rgba(168, 184, 210, 0.1); }
-  .log-table tr:hover td { background: rgba(168, 184, 210, 0.05); }
-  .log-table .swatch { border-radius: 2px; }
-}
-
-// ---------------------------------------------------------------------------
-// -- pixel: the default. Everything here is on a whole-pixel grid on purpose —
-//    hard edges, no blur, no radius, and brackets instead of rounded corners.
-// ---------------------------------------------------------------------------
-
-html[data-style="pixel"] {
-  .galaxy-readout {
-    background: linear-gradient(180deg, rgba(19, 28, 48, 0.94), rgba(10, 16, 30, 0.94));
-    box-shadow: 0 0 0 1px rgba(7, 11, 22, 0.9), 0 14px 34px rgba(0, 0, 0, 0.5);
-    position: relative;
-  }
-  // Corner brackets, drawn with two gradients rather than four elements: the
-  // same mark the renderer puts around a selected planet.
-  .galaxy-readout::before,
-  .galaxy-readout::after {
-    content: "";
-    position: absolute;
-    width: 9px; height: 9px;
-    border: 2px solid $gold;
-    pointer-events: none;
-  }
-  .galaxy-readout::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
-  .galaxy-readout::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
-
-  .hud-title { text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.65); }
-  .galaxy-tools button, .galaxy-zoom button, .galaxy-exit, .journal-return,
-  .view-toggle button, .style-switch button, .readout-go, .orbit-return {
-    border-radius: 0;
-  }
-  .galaxy-tools button:hover, .galaxy-exit:hover, .journal-return:hover {
-    box-shadow: inset 0 0 0 1px rgba(242, 196, 107, 0.4);
-  }
-  .log-table .swatch { box-shadow: 0 0 0 1px rgba(7, 11, 22, 0.8); }
-}
-
-// The UFO stays in every style; it is the one piece of chrome that is pure joy.
-html[data-style="chart"] #galaxy, html[data-style="deep"] #galaxy,
-html[data-style="dataviz"] #galaxy { image-rendering: auto; }
 
 // ---------------------------------------------------------------------------
 // The list: the same collection, for when you need to find a date

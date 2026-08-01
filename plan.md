@@ -64,8 +64,15 @@ Colour and terrain are separate on purpose: **colour says what you worked on,
 terrain says how**. Two writing days on different projects look different; two
 coding days on the same project look related.
 
-Position is not decorative either — orbit is the week of the month, angle is the
-weekday. The map is a calendar you can fly through, not a picture of one.
+Position is not decorative either: **the orbit is the day of the month**. The 1st
+hugs the star and the 31st rides the rim, one body per orbit, which is what a
+stellar system looks like and what a calendar dial does not. The angle carries
+nothing, so it is scattered by the golden angle — the spacing a sunflower uses —
+and the days never line up into spokes.
+
+Putting the date in the radius alone is what lets the angles move: every day
+keeps its own clock, falling off as r^-1.5 exactly as Kepler requires, so inner
+worlds visibly overtake outer ones. Nothing about the record is lost by it.
 
 ## The arc: universe first, reading second
 
@@ -80,24 +87,16 @@ weekday. The map is a calendar you can fly through, not a picture of one.
 
 The one rule underneath all of that: exploring must never cost you your place.
 
-## Four visual languages, one geometry
+## One visual language
 
-The same universe is drawn four ways, switchable from the navbar and remembered.
+The site is pixel art: everything is drawn into a small integer-sized buffer and
+scaled up by a whole number, so every pixel on screen is a deliberate one. Lit
+worlds in deep space — spheres of value noise quantised to a five-colour ramp,
+over ordered-dithered nebulae.
 
-- **Pixel** — hard edges, quantised palettes, a bitmap font, drifting gas.
-- **Atlas** — an 18th-century celestial plate: generated parchment, iron gall
-  ink, gilt, one vermilion rubric, globes shaded with engraver's hatching.
-- **Deep** — photographic space. Most impact, least legible.
-- **Data** — a chart that happens to be galaxy-shaped: a measuring grid, flat
-  discs, month totals, annotation marks.
-
-Atlas, Deep and Data share **one draw path**, so layout, hit tests and meanings
-are provably identical between them and only the marks differ. That is the only
-way comparing them is fair — and it means a new style is a table of colours and
-a handful of mark functions, not a new renderer.
-
-Atlas inverts the entire site rather than putting one pale window in a dark
-page, because a parchment map above a black page reads as a bug.
+An earlier version carried four styles at once, and then two. Carrying one means
+every decision can be made for *this* look rather than for whatever survives
+translation into three others.
 
 ## Every collection has a map and a list
 

@@ -52,7 +52,7 @@ spiral so the systems never line up into a grid.
 | **Click** a planet | Its day, in the card — you stay where you are |
 | **Double-click** a planet | Go down and read it |
 | `Leave orbit`, `Esc`, or `Read it below` | Hand the scroll back, drop to the journal |
-| `Orbit`, `Back into orbit`, the navbar `Galaxy` link, or `Esc` | Fly back up |
+| `Back into orbit`, the navbar `Galaxy` link, or `Esc` | Fly back up |
 | `<-` / `->` / `Enter` | Step through days; open the selected one |
 
 Scrolling deliberately never exits: the universe keeps the wheel until you say
@@ -61,7 +61,7 @@ outermost system and no further, and the edge glows faintly when you reach it,
 so it reads as a limit rather than as the page having frozen.
 
 The cursor is a UFO, and switches to a tractor beam over anything clickable.
-Planets turn continuously, each at its own rate from its own starting angle.
+Planets turn on their axes and orbit their star, each on its own clock.
 All motion stops under `prefers-reduced-motion`, and pauses when the tab is
 hidden or you leave orbit.
 
@@ -72,6 +72,7 @@ same entry always produces the same world.
 
 | Planet property | Driven by |
 |:--|:--|
+| **Orbit** | **Day of the month — the 1st hugs the star, the 31st rides the rim** |
 | Surface pattern / terrain | Hash of the date — unique but stable |
 | Diameter | Hours worked, in six buckets |
 | **Colour** | **The projects worked that day, blended by hours** |
@@ -93,37 +94,24 @@ Every day is also named after something real — Vega, Europa, Kepler-442b — f
 a list of about 130 stars, exoplanets and moons, picked deterministically from
 the date. The name shows in the readout, on the entry, and in the list.
 
-## Two views, four styles
+## Two views
 
 Every collection has **a map and a list**. The map is for browsing and thinking;
 the list is a dense sortable table for finding what you did on 12 March. Toggle
 in the top left. Small screens open on the list, because a draggable universe on
 a phone is a demo, not a tool.
 
-The map has four visual languages, switched from the navbar and remembered:
+Nothing here is an image file. The nebulae are canvas gradients drawn into a
+buffer a sixth of the screen's size, then ordered-dithered down to a handful of
+tones with a 4x4 Bayer matrix — which is how the era actually drew a gradient,
+and the only way to band gas without every cloud showing its own outline.
 
-| Style | What it is |
-|:--|:--|
-| **Pixel** | Hard edges, quantised palettes, a 5x7 bitmap font, drifting gas |
-| **Atlas** | An 18th-century celestial plate. The sheet is parchment — laid, foxed, plate-marked — and the year is engraved on it in iron gall, sepia, gilt and one vermilion rubric. Sun in splendour, ruled orbits with a graduated limb, globes shaded with burin hatching |
-| **Deep** | Photographic space: near-black, nebulae, diffraction spikes, glowing bodies. Most impact, least legible |
-| **Data** | A clean chart that happens to be galaxy-shaped: a measuring grid, flat discs, month totals, annotation marks, no glow |
-
-Atlas, Deep and Data share one draw path in `render-vector.js` — so layout, hit
-tests and meanings are *provably* identical between them and only the marks
-differ, which is the only way comparing them is fair.
-
-Atlas inverts the whole site, not just the map: a light sheet with a dark chart
-on it, old-style serif, oldstyle figures in prose and lining tabular ones in
-every column of values. A parchment map above a black page would only look like
-a bug. The planet at the top of an entry is drawn in whichever style is active,
-for the same reason.
-
-Nothing here is an image file. The parchment — its gradient, laid lines, foxing,
-fibre, plate mark, ruled border and vignette — is generated once per window size
-into an offscreen canvas and blitted; the nebulae are drawn each frame at a
-quarter or a third of screen size and scaled back up, which is both cheaper and
-softer than drawing them full size.
+The gas depends on the camera and the zoom, never on time, so it is cached and
+only redrawn when you actually move. That is what makes watching the systems
+revolve nearly free, and it is why the frame cap could be removed: a cap inside
+an animation-frame loop is itself a source of judder, because the display
+refreshes on its own clock and a 24fps gate lands some frames two refreshes
+apart and some three.
 
 ## What is written by hand, and what is not
 
@@ -151,11 +139,10 @@ log/            one .qmd per day — the only files written by hand
 projects.yml    the constellation registry
 scripts/        new_day.py (scaffold), build.py (everything derived),
                 demo.py (sample days, --clear to remove)
-assets/         planet-core.js   the pixel sprite engine and its frame cache
+assets/         planet-core.js   the sprite engine, the bitmap font, the cache
                 galaxy.js        layout, camera, motion, interaction, the panel
-                render-pixel.js  the pixel style
-                render-vector.js atlas, deep and data, over one draw path
-                ui.js            the navbar style switch, map/list, sorting
+                render-pixel.js  the map: gas, orbits, bodies, constellations
+                ui.js            the map/list toggle and list sorting
                 day.js           the single planet atop an entry
 _templates/     the day template
 ```

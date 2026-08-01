@@ -1,5 +1,5 @@
-/* Chrome that sits outside the universe itself: the style switch, the map/list
- * toggle, and sorting on the list.
+/* Chrome that sits outside the universe itself: the map/list toggle and sorting
+ * on the list.
  *
  * The map and the list are two views of the same collection, on purpose. The map
  * is for browsing and thinking; the list is for finding what you did on 12 March.
@@ -9,57 +9,7 @@
 (function () {
   "use strict";
 
-  var STYLE_KEY = "odaily-style";
   var VIEW_KEY = "odaily-view";
-  var STYLES = [
-    { id: "pixel", label: "Pixel" },
-    { id: "chart", label: "Atlas" },
-    { id: "deep", label: "Deep" },
-    { id: "dataviz", label: "Data" }
-  ];
-
-  function currentStyle() {
-    var s = document.documentElement.dataset.style;
-    for (var i = 0; i < STYLES.length; i++) if (STYLES[i].id === s) return s;
-    return "pixel";
-  }
-
-  function applyStyle(id) {
-    document.documentElement.dataset.style = id;
-    try { localStorage.setItem(STYLE_KEY, id); } catch (e) { /* private mode */ }
-    syncStyle();
-    window.dispatchEvent(new CustomEvent("odaily:style", { detail: id }));
-  }
-
-  var styleBar = null;
-
-  function syncStyle() {
-    if (!styleBar) return;
-    Array.prototype.forEach.call(styleBar.querySelectorAll("button"), function (b) {
-      b.setAttribute("aria-pressed", String(b.dataset.style === currentStyle()));
-    });
-  }
-
-  function mountStyleSwitch() {
-    var nav = document.querySelector(".navbar-nav");
-    if (!nav) return;
-    var li = document.createElement("li");
-    li.className = "nav-item style-switch-item";
-    styleBar = document.createElement("span");
-    styleBar.className = "style-switch";
-    STYLES.forEach(function (s) {
-      var b = document.createElement("button");
-      b.type = "button";
-      b.dataset.style = s.id;
-      b.textContent = s.label;
-      b.title = "Visual style: " + s.label;
-      b.addEventListener("click", function () { applyStyle(s.id); });
-      styleBar.appendChild(b);
-    });
-    li.appendChild(styleBar);
-    nav.appendChild(li);
-    syncStyle();
-  }
 
   /* ------------------------------------------------------------ map/list -- */
 
@@ -124,7 +74,6 @@
   }
 
   function start() {
-    mountStyleSwitch();
     mountViewToggle();
     mountSort();
   }

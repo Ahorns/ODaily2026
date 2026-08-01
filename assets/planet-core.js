@@ -236,11 +236,27 @@
     this.buf = this.img.data;
   }
 
+  // Clearing is done once per frame over the whole buffer, so it is worth not
+  // doing it a byte at a time. Both paths hand the work to the engine's own
+  // memory primitives instead of a JavaScript loop.
   Surface.prototype.clear = function (alpha) {
+    var buf = this.buf;
     var a = alpha === undefined ? 255 : alpha;
-    for (var i = 0; i < this.buf.length; i += 4) {
-      this.buf[i] = this.bg[0]; this.buf[i + 1] = this.bg[1];
-      this.buf[i + 2] = this.bg[2]; this.buf[i + 3] = a;
+
+    // Fully transparent: the colour underneath is irrelevant, so this is a
+    // straight memset. This is the pixel skin's path, where the sprite buffer
+    // is composited over the gas.
+    if (a === 0) { buf.fill(0); return; }
+
+    // Opaque: write one pixel, then keep doubling it across the buffer. Each
+    // copyWithin is a block move, so the whole fill costs log2(n) of them.
+    buf[0] = this.bg[0]; buf[1] = this.bg[1]; buf[2] = this.bg[2]; buf[3] = a;
+    var len = buf.length, filled = 4;
+    while (filled < len) {
+      var n = filled;
+      if (filled + n > len) n = len - filled;
+      buf.copyWithin(filled, 0, n);
+      filled += n;
     }
   };
 
@@ -338,8 +354,9 @@
   //
   // Same starting phase and same rate the vector styles use, so a given day's
   // moons are in the same place whichever style you are looking at it in.
-  function drawMoons(surf, cx, cy, r, count, seed, k, time) {
+  function drawMoons(surf, cx, cy, r, count, seed, k, time, colour) {
     var t = time || 0;
+    var tone = hex(colour || "#cdd8f0");
     // Wide enough, and round enough, that the moon clears the limb at the top
     // and bottom of its circuit. At the old r+5 with a 0.45 squash it spent half
     // of every orbit crossing the planet's own face, where a two-pixel dot is
@@ -354,7 +371,7 @@
       // The far half of the orbit is dimmer, the same way the milestone ring's
       // back half is: without it the moon reads as sliding around on the glass
       // rather than as going behind the world.
-      var c = surf.fade(hex("#cdd8f0"), k * (Math.sin(a) < 0 ? 0.5 : 1));
+      var c = surf.fade(tone, k * (Math.sin(a) < 0 ? 0.5 : 1));
       for (var dy = 0; dy < size; dy++) {
         for (var dx = 0; dx < size; dx++) surf.px(mx + dx, my + dy, c);
       }

@@ -27,13 +27,33 @@
   // without ever lining them up on a grid, which is what makes the field read
   // as a galaxy rather than a calendar.
   var GOLDEN = 2.3999632297286533;
-  var SPREAD = 390;
-  var INNER = 42, OUTER = 148, RYF = 0.70;
+  var SPREAD = 540;
+  var RYF = 0.70;
+
+  // --- a system ---------------------------------------------------------------
+  // A day's orbit is its day of the month: the 1st hugs the star, the 31st rides
+  // the rim. One body per orbit, which is what a stellar system looks like and a
+  // calendar dial does not.
+  //
+  // The angle is free — it carries no meaning — so it is scattered by the golden
+  // angle, the same spacing a sunflower uses. Consecutive days land 137.5 degrees
+  // apart and never line up into spokes.
+  //
+  // Because the date is in the radius alone, the angles can move independently:
+  // see KEPLER.
+  var INNER = 44, DAY_GAP = 5.2;
+  var OUTER = INNER + 30 * DAY_GAP;
+
+  // Angular speed falls off as r^-1.5 — Kepler's third law. Tuned so the innermost
+  // day comes round in about seventy seconds and the outermost takes eleven
+  // minutes. The differential is the point: inner worlds visibly overtaking outer
+  // ones is the cue that says "solar system" more than any amount of shading.
+  var KEPLER = 26;
 
   // How far past the outermost system you may drift before the galaxy stops
   // you. Without this the field is unbounded and it is very easy to scroll off
   // into blank space with nothing to steer back by.
-  var SLACK = 300;
+  var SLACK = 360;
 
   // Zoom moves along a ladder, not continuously: the sprites are cached per
   // radius, and a smoothly varying radius would rebuild every one of them on
@@ -77,12 +97,7 @@
 
   /* ---------------------------------------------------------------- build -- */
 
-  function orbitsFor(weekRows) {
-    var rings = [];
-    var gap = weekRows > 1 ? (OUTER - INNER) / (weekRows - 1) : 0;
-    for (var i = 0; i < weekRows; i++) rings.push(INNER + gap * i);
-    return { rings: rings, maxR: Math.max(5, Math.min(11, Math.floor((gap || OUTER) * RYF / 2))) };
-  }
+  var MAX_BODY = 9;
 
   function radiusFor(hours, maxR) {
     var band = hours < 1 ? 0.36 : hours < 2 ? 0.46 : hours < 3.5 ? 0.62
@@ -105,15 +120,15 @@
 
       var month = sys.month - 1;
       var daysInMonth = new Date(sys.year, month + 1, 0).getDate();
-      var firstDow = new Date(sys.year, month, 1).getDay();
-      var plan = orbitsFor(Math.ceil((daysInMonth + firstDow) / 7));
+      // Each month starts its spiral somewhere different, so no two systems
+      // present the same arrangement.
+      var phase0 = hash(i, 41) * Math.PI * 2;
 
       var slots = [];
       for (var d = 1; d <= daysInMonth; d++) {
         var dow = new Date(sys.year, month, d).getDay();
-        var week = Math.floor((d + firstDow - 1) / 7);
-        var rx = plan.rings[Math.min(week, plan.rings.length - 1)];
-        var a = -Math.PI / 2 + (dow / 7) * Math.PI * 2;
+        var rx = INNER + (d - 1) * DAY_GAP;
+        var a = phase0 + (d - 1) * GOLDEN;
         var e = sys.days[String(d)] || null;
         var seed = (sys.year * 10000 + sys.month * 100 + d) | 0;
         slots.push({
@@ -122,7 +137,11 @@
           type: e ? e.type : "rock",
           color: e ? e.color : null,
           name: e ? e.name : "",
-          r: e ? radiusFor(e.hours, plan.maxR) : 0,
+          r: e ? radiusFor(e.hours, MAX_BODY) : 0,
+          // The orbit is the day's date; the angle is only where it happens to be
+          // standing. x and y are derived from both every frame — see advance().
+          rx: rx, baseA: a,
+          omega: KEPLER / Math.pow(rx, 1.5),
           x: cx + rx * Math.cos(a),
           y: cy + rx * RYF * Math.sin(a),
           seed: seed,
@@ -138,14 +157,39 @@
       return {
         key: sys.key, year: sys.year, month: sys.month,
         label: MONTH_NAMES[month] + " " + sys.year,
-        cx: cx, cy: cy, rings: plan.rings, slots: slots
+        cx: cx, cy: cy, slots: slots,
+        outer: INNER + (daysInMonth - 1) * DAY_GAP
       };
     });
 
     computeBounds();
     buildStars();
+    advance(0);          // before aiming: the camera needs real positions
     aimAtToday();
     buildFilters();
+  }
+
+  /* Revolution.
+   *
+   * Every day is on its own orbit, so every day keeps its own clock. The inner
+   * worlds come round in about a minute and the outer ones take a quarter of an
+   * hour, exactly as Kepler requires — and because the date is carried by the
+   * radius, nothing is lost by letting the angles run free.
+   *
+   * Positions are recomputed here rather than in the renderer so that picking,
+   * the camera and the constellation lines all agree with what is drawn.
+   */
+  function advance(t) {
+    for (var i = 0; i < scene.systems.length; i++) {
+      var sys = scene.systems[i];
+      var slots = sys.slots;
+      for (var j = 0; j < slots.length; j++) {
+        var sl = slots[j];
+        var a = sl.baseA + sl.omega * t;
+        sl.x = sys.cx + sl.rx * Math.cos(a);
+        sl.y = sys.cy + sl.rx * RYF * Math.sin(a);
+      }
+    }
   }
 
   // The camera may drift this far past the outermost system and no further.
@@ -420,9 +464,23 @@
   }
 
   // Scrolling never leaves the universe. Only this does.
+  // The one button that changes what it says. Left as a fixed "Leave orbit ↓" it
+  // lied twice over once you had already left: it pointed down when the only way
+  // left to go was up, and clicking it scrolled you back to the journal you were
+  // already reading instead of flying you home.
+  var exitBtn = document.getElementById("galaxy-exit");
+
+  function syncExit() {
+    if (!exitBtn) return;
+    exitBtn.textContent = inGalaxy ? "Leave orbit ↓" : "↑ Back into orbit";
+    exitBtn.setAttribute("aria-label",
+      inGalaxy ? "Leave orbit and read the journal below" : "Fly back into orbit");
+  }
+
   function leaveOrbit() {
     if (!inGalaxy) { scrollToY(journalTop()); return; }
     inGalaxy = false;
+    syncExit();
     document.documentElement.classList.remove("galaxy-locked");
     root.classList.add("is-left");
     document.body.classList.add("out-of-orbit");
@@ -437,6 +495,7 @@
   function enterOrbit() {
     if (inGalaxy) return;
     inGalaxy = true;
+    syncExit();
     root.classList.remove("is-left");
     document.body.classList.remove("out-of-orbit");
     // Only take the scrollbar away once we are actually back at the top, or the
@@ -602,16 +661,24 @@
 
   /* ---------------------------------------------------------------- loop -- */
 
-  var raf = null, t0 = 0, lastDraw = 0;
-  var FRAME_MS = 1000 / 24;
+  var raf = null, t0 = 0;
 
+  // Deliberately unthrottled, and it used to be capped at 24fps.
+  //
+  // A cap inside an animation-frame loop is the classic cause of judder: the
+  // display refreshes on its own clock, so a 24fps gate inside a 60Hz callback
+  // presents some frames after two refreshes and some after three. The motion is
+  // even; the presentation is not, and the eye reads the unevenness as stutter.
+  //
+  // Drawing on every callback hands the pacing back to vsync, where it belongs.
+  // requestAnimationFrame is already self-limiting on a slow machine, so there
+  // is nothing left for a cap to protect. This is only affordable because the
+  // gas is now cached — see drawNebula.
   function tick(ts) {
     if (!t0) t0 = ts;
-    if (ts - lastDraw >= FRAME_MS) {
-      scene.time = (ts - t0) / 1000;
-      lastDraw = ts;
-      if (renderer && DATA) renderer.draw(canvas, scene);
-    }
+    scene.time = (ts - t0) / 1000;
+    advance(scene.time);
+    if (renderer && DATA) renderer.draw(canvas, scene);
     raf = requestAnimationFrame(tick);
   }
 
@@ -658,16 +725,11 @@
     aimAtToday();
     draw();
   });
-  document.getElementById("galaxy-exit").addEventListener("click", leaveOrbit);
+  exitBtn.addEventListener("click", function () {
+    if (inGalaxy) leaveOrbit(); else enterOrbit();
+  });
   document.getElementById("galaxy-zoom-in").addEventListener("click", function () { setZoom(zoomIndex + 1); });
   document.getElementById("galaxy-zoom-out").addEventListener("click", function () { setZoom(zoomIndex - 1); });
-
-  // Three ways back into the universe, because being stuck below with no way up
-  // is the obvious failure of a view you can leave.
-  ["journal-return", "orbit-return"].forEach(function (id) {
-    var b = document.getElementById(id);
-    if (b) b.addEventListener("click", enterOrbit);
-  });
 
   // On this page the navbar's own "Galaxy" link should fly you back rather than
   // reload the whole document. "/" and "/index.html" are the same page, so the
@@ -682,15 +744,11 @@
   });
 
   function useRenderer() {
-    var style = document.documentElement.dataset.style || "pixel";
-    var next = style === "pixel" ? window.ODailyPixel : window.ODailyVector;
-    if (!next) return;
-    if (next.setSkin) next.setSkin(style);
-    if (next !== renderer) { renderer = next; renderer.init(canvas); }
+    if (!window.ODailyPixel) return;
+    renderer = window.ODailyPixel;
+    renderer.init(canvas);
     resize();
   }
-
-  window.addEventListener("odaily:style", function () { useRenderer(); });
 
   // The universe costs nothing while the list is showing.
   window.addEventListener("odaily:view", function (ev) {
