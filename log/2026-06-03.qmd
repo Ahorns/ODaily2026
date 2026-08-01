@@ -1,0 +1,66 @@
+---
+title: "Wednesday 3 June 2026"
+date: 2026-06-03
+demo: true
+milestone: false
+sessions:
+  - project: reading
+    hours: 3.0
+    category: admin
+    note: "Filing notes"
+  - project: thesis
+    hours: 3.0
+    category: meeting
+    note: "Supervision"
+system: "2026-06"
+hours: 6.0
+categories: [reading, thesis]
+---
+
+::: {.day-hero}
+<!-- odaily:planet:begin -->
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-06-03" data-seed="20260603" data-type="rock" data-color="#c6bd6e" data-moons="1" data-milestone="false" data-idea="false"></canvas>
+<p class="day-name">Megrez</p>
+<!-- odaily:planet:end -->
+:::
+
+::: {.callout-note appearance="simple"}
+Sample day, generated to show the map with something in it. Remove every one with `python scripts/demo.py --clear`.
+:::
+
+## What I did
+
+Short day. Tidied up and stopped early.
+
+## What I did well
+
+Kept a list of what I had already ruled out.
+
+## Time spent
+
+Edit the `sessions:` list at the top of this file; the table below is rebuilt
+from it by `scripts/build.py`. `category` decides what this day's planet is made
+of — writing, reading, coding, data, meeting or admin.
+
+<!-- odaily:time:begin -->
+| Constellation | Kind | Time |
+|:--|:--|--:|
+| [Reading](../projects/reading.qmd) | admin | 3h |
+| [Thesis](../projects/thesis.qmd) | meeting | 3h |
+| **Total** | | **6h** |
+
+- **Reading** — Filing notes
+- **Thesis** — Supervision
+<!-- odaily:time:end -->
+
+## What I learned
+
+Reading first makes the writing afterwards about twice as fast.
+
+## An idea that came up
+
+<!-- Ideas are comets: they arrive on their own schedule and are gone by
+     morning unless written down. Even a half-formed one is worth a line.
+     Write anything here and this day gets a comet on the map. -->
+
+## Other

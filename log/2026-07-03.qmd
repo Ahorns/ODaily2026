@@ -1,0 +1,66 @@
+---
+title: "Friday 3 July 2026"
+date: 2026-07-03
+demo: true
+milestone: false
+sessions:
+  - project: reading
+    hours: 1.5
+    category: reading
+    note: "Papers"
+  - project: odaily
+    hours: 1.5
+    category: coding
+    note: "Building the log"
+system: "2026-07"
+hours: 3.0
+categories: [odaily, reading]
+---
+
+::: {.day-hero}
+<!-- odaily:planet:begin -->
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-07-03" data-seed="20260703" data-type="gas" data-color="#71cac6" data-moons="1" data-milestone="false" data-idea="false"></canvas>
+<p class="day-name">Titania</p>
+<!-- odaily:planet:end -->
+:::
+
+::: {.callout-note appearance="simple"}
+Sample day, generated to show the map with something in it. Remove every one with `python scripts/demo.py --clear`.
+:::
+
+## What I did
+
+Short day. Tidied up and stopped early.
+
+## What I did well
+
+Wrote the note to myself before closing the laptop.
+
+## Time spent
+
+Edit the `sessions:` list at the top of this file; the table below is rebuilt
+from it by `scripts/build.py`. `category` decides what this day's planet is made
+of — writing, reading, coding, data, meeting or admin.
+
+<!-- odaily:time:begin -->
+| Constellation | Kind | Time |
+|:--|:--|--:|
+| [ODaily](../projects/odaily.qmd) | coding | 1h 30m |
+| [Reading](../projects/reading.qmd) | reading | 1h 30m |
+| **Total** | | **3h** |
+
+- **Reading** — Papers
+- **ODaily** — Building the log
+<!-- odaily:time:end -->
+
+## What I learned
+
+Most of what felt urgent today was not.
+
+## An idea that came up
+
+<!-- Ideas are comets: they arrive on their own schedule and are gone by
+     morning unless written down. Even a half-formed one is worth a line.
+     Write anything here and this day gets a comet on the map. -->
+
+## Other

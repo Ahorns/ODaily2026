@@ -1,0 +1,66 @@
+---
+title: "ODaily 2026"
+page-layout: custom
+body-classes: home
+toc: false
+---
+
+::: {#galaxy-root data-src="assets/sky.json"}
+
+<div class="galaxy-stage">
+<canvas id="galaxy" tabindex="0" role="img" aria-label="A universe of days. Drag or scroll to travel through it, click a planet to load that day's journal below. Every entry is also listed under All entries at the foot of this page."></canvas>
+
+<div class="galaxy-hud">
+<div class="hud-head">
+<p class="hud-title">ODaily <span>2026</span></p>
+<p class="hud-hint">Scroll to travel deeper · drag to steer · click a planet for the day, double-click to read it</p>
+<span class="view-toggle"><button type="button" data-view-btn="map" aria-pressed="true">Map</button><button type="button" data-view-btn="list" aria-pressed="false">List</button></span>
+</div>
+<div class="galaxy-readout" id="galaxy-readout"></div>
+<div class="galaxy-tools">
+<span class="label">Constellation</span><span id="galaxy-filters"></span>
+<button type="button" id="galaxy-home">Back to today</button>
+</div>
+</div>
+
+<!-- One line on purpose: given line breaks between these inline elements,
+     Pandoc wraps them in a <p> and the column layout collapses. -->
+<div class="galaxy-zoom"><button type="button" id="galaxy-zoom-in" aria-label="Zoom in">+</button><span id="galaxy-zoom-label">100%</span><button type="button" id="galaxy-zoom-out" aria-label="Zoom out">−</button></div>
+
+<button type="button" class="galaxy-exit" id="galaxy-exit">Leave orbit ↓</button>
+</div>
+
+:::
+
+::: {#list-view}
+::: {.journal-inner}
+
+<div class="list-head"><h2>Every day, as a table</h2><span class="view-toggle"><button type="button" data-view-btn="map" aria-pressed="false">Map</button><button type="button" data-view-btn="list" aria-pressed="true">List</button></span></div>
+
+{{< include _includes/summary.md >}}
+
+{{< include _includes/list.md >}}
+
+:::
+:::
+
+::: {#journal}
+::: {.journal-inner}
+
+<button type="button" class="journal-return" id="journal-return">↑ Back into orbit</button>
+
+<button type="button" class="orbit-return" id="orbit-return">↑ Orbit</button>
+
+{{< include _includes/summary.md >}}
+
+## The journal
+
+::: {#journal-panel}
+:::
+
+## All entries
+
+{{< include _includes/archive.md >}}
+
+:::
+:::

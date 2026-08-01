@@ -1,0 +1,5 @@
+# Applies to every day entry. Entries are the reading register: no galaxy
+# chrome, a narrow measure, and a body class the stylesheet can hook onto.
+body-classes: entry
+toc: false
+title-block-banner: false

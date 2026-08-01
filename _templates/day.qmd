@@ -1,0 +1,38 @@
+---
+title: "{{LONG_DATE}}"
+date: {{DATE}}
+milestone: {{MILESTONE}}
+sessions:
+  - project: odaily
+    hours: 0
+    category: coding
+    note: ""
+---
+
+::: {.day-hero}
+<!-- odaily:planet:begin -->
+<!-- odaily:planet:end -->
+:::
+
+## What I did
+
+## What I did well
+
+## Time spent
+
+Edit the `sessions:` list at the top of this file; the table below is rebuilt
+from it by `scripts/build.py`. `category` decides what this day's planet is made
+of — writing, reading, coding, data, meeting or admin.
+
+<!-- odaily:time:begin -->
+<!-- odaily:time:end -->
+
+## What I learned
+
+## An idea that came up
+
+<!-- Ideas are comets: they arrive on their own schedule and are gone by
+     morning unless written down. Even a half-formed one is worth a line.
+     Write anything here and this day gets a comet on the map. -->
+
+## Other

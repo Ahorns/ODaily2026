@@ -1,0 +1,60 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "index.qmd"
+    - "about.qmd"
+    - "comets.qmd"
+    - "log/*.qmd"
+    - "projects/*.qmd"
+    - "system/*.qmd"
+    - "sky/*.qmd"
+    - "galaxy/*.qmd"
+  resources:
+    - "assets/**"
+
+website:
+  title: "ODaily 2026"
+  description: "A year of days, charted as a galaxy."
+  navbar:
+    left:
+      - href: index.qmd
+        text: "Galaxy"
+      - href: projects/index.qmd
+        text: "Constellations"
+      - href: comets.qmd
+        text: "Comets"
+      - href: about.qmd
+        text: "Earth"
+  search:
+    location: navbar
+    type: overlay
+  page-footer:
+    center: "Every planet is drawn from the date it belongs to. Nothing here is hand-placed."
+
+format:
+  html:
+    theme:
+      - darkly
+      - styles.scss
+    toc: false
+    anchor-sections: false
+    link-external-newwindow: true
+    include-in-header:
+      - text: |
+          <script>
+            // Before first paint, so the page never flashes the wrong style.
+            try {
+              var s = localStorage.getItem("odaily-style") || "pixel";
+              document.documentElement.dataset.style =
+                ["pixel","chart","deep","dataviz"].indexOf(s) < 0 ? "pixel" : s;
+            } catch (e) { document.documentElement.dataset.style = "pixel"; }
+          </script>
+    include-after-body:
+      - text: |
+          <script src="/assets/planet-core.js"></script>
+          <script src="/assets/render-pixel.js"></script>
+          <script src="/assets/render-vector.js"></script>
+          <script src="/assets/ui.js"></script>
+          <script src="/assets/galaxy.js"></script>
+          <script src="/assets/day.js"></script>

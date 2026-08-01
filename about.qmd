@@ -1,0 +1,57 @@
+---
+title: "Earth"
+subtitle: "Where the observations are made from."
+toc: false
+---
+
+This is a daily log kept through 2026, written from Cambridge, UK.
+
+## Why it looks like this
+
+A log only works if it gets written on the seventh month as reliably as the
+first, so this one is built to be worth opening. Each day is a planet whose
+sprite is derived from a hash of its date — the same date always produces the
+same world, and no sprite is ever drawn by hand. Watching a month fill in is
+the point.
+
+The metaphor stops at the door of an entry. Pages you *navigate* are a pixel
+galaxy; pages you *read* are quiet, narrow and text-first, in the same palette.
+
+## What drives a planet
+
+Nothing is drawn by hand. Every day's world is generated from that day's own
+data, so the same entry always produces the same planet.
+
+| Planet property | Driven by |
+|:--|:--|
+| Surface pattern / terrain | Hash of the date — unique but stable |
+| Diameter | Hours worked, in six buckets |
+| Colour | The projects worked that day, blended by hours |
+| Terrain type — ice, rock, ocean, lava, gas, forest | Dominant category that day |
+| Number of moons | Extra projects beyond the first |
+| Ring | A milestone day |
+| Passing comet | An idea was recorded |
+| Asteroid debris, no planet | No entry that day |
+| Name | A real star, exoplanet or moon, picked from the date |
+
+Colour and terrain are deliberately separate: colour says *what* you worked on,
+terrain says *how*. Two days of writing on different projects look different;
+two days on the same project in different modes look related but not identical.
+
+## How it is kept
+
+| Idea | Here |
+|:--|:--|
+| Day | Planet |
+| Month | Stellar system |
+| Year | Galaxy |
+| Project | Constellation |
+| Group of projects | Constellation family |
+| Idea | Comet |
+| Milestone | Supernova |
+
+Entries live in `log/`, one file per day, each carrying a `sessions:` list of
+projects and hours — a day usually touches more than one. Projects live in
+`projects.yml` under stable slugs, so they can be regrouped at any time without
+rewriting history. Everything else on this site is generated from those two
+things by `scripts/build.py`.
