@@ -12,7 +12,6 @@ toc: false
 
 <div class="galaxy-hud">
 <div class="hud-head">
-<p class="hud-title">ODaily <span>2026</span></p>
 <p class="hud-hint">Scroll to travel deeper · drag to steer · click a planet for the day, double-click to read it</p>
 <span class="view-toggle"><button type="button" data-view-btn="map" aria-pressed="true">Map</button><button type="button" data-view-btn="list" aria-pressed="false">List</button></span>
 </div>

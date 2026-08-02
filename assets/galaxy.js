@@ -160,8 +160,12 @@
         label: MONTH_NAMES[month] + " " + sys.year,
         cx: cx, cy: cy, rings: plan.rings, slots: slots,
         outer: plan.rings[plan.rings.length - 1],
-        // Each month turns at its own rate, so the field is never in lockstep.
-        spin: 0.035 + hash(i, 31) * 0.020,
+        // Each month turns at its own rate, so the field is never in lockstep —
+        // and slowly, about six to nine minutes a revolution. The map is
+        // something you sit and read, not something that performs at you: fast
+        // enough that it is clearly alive when you look twice, slow enough that
+        // it never pulls your eye off the entry you are reading.
+        spin: 0.012 + hash(i, 31) * 0.008,
         rot: 0
       };
     });

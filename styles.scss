@@ -126,17 +126,8 @@ $ufo-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
 .galaxy-hud button,
 .galaxy-hud a { pointer-events: auto; }
 
-.hud-title {
-  margin: 0;
-  font-size: 0.9rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: $text;
-}
-.hud-title span { color: $gold; }
-
 .hud-hint {
-  margin: 0.35rem 0 0;
+  margin: 0;
   font-size: 0.75rem;
   color: rgba(111, 128, 168, 0.9);
 }
@@ -519,7 +510,6 @@ th {
 .galaxy-readout::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
 .galaxy-readout::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
 
-.hud-title { text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.65); }
 .galaxy-tools button, .galaxy-zoom button, .galaxy-exit,
 .view-toggle button, .readout-go {
   border-radius: 0;
