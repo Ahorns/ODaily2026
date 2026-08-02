@@ -50,6 +50,8 @@ spiral so the systems never line up into a grid.
 | Drag | Steer |
 | `Ctrl` + scroll, pinch, `+` / `-`, or the buttons | Zoom, along a fixed ladder |
 | **Click** a planet | Its day, in the card — you stay where you are |
+| Pick a **constellation** | The project traced across the whole galaxy, and a card introducing it |
+| Click the **title**, top left | Today's entry — the page you write on |
 | **Double-click** a planet | Go down and read it |
 | `Leave orbit`, `Esc`, or `Read it below` | Hand the scroll back, drop to the journal |
 | `Back into orbit`, the navbar `Galaxy` link, or `Esc` | Fly back up |
@@ -61,8 +63,10 @@ outermost system and no further, and the edge glows faintly when you reach it,
 so it reads as a limit rather than as the page having frozen.
 
 The cursor is a UFO, and switches to a tractor beam over anything clickable.
-Planets turn on their axes, and each month revolves around its own star as a
-rigid body — spokes included, so a day never leaves its weekday.
+Planets turn on their axes about once a minute, and each month revolves around
+its own star every six to nine minutes — as a rigid body, spokes included, so a
+day never leaves its weekday. Both are deliberately slow: the map is something
+you sit and read next to, not something that performs at you.
 All motion stops under `prefers-reduced-motion`, and pauses when the tab is
 hidden or you leave orbit.
 
@@ -77,11 +81,15 @@ same entry always produces the same world.
 | Diameter | Hours worked, in six buckets |
 | **Colour** | **The projects worked that day, blended by hours** |
 | Terrain type — ice, rock, ocean, lava, gas, forest | Dominant category that day |
-| Number of moons | Extra projects beyond the first |
+| Moons | Extra projects beyond the first — **each in that project's own colour** |
 | Ring | A milestone day |
 | Passing comet | An idea was recorded |
 | Asteroid debris, no planet | No entry that day |
 | Name | A real star, exoplanet or moon, from the date |
+
+A day's body is the blend of everything worked that day, so it cannot say
+*which* projects made it up. Its moons can, and do: one per project beyond the
+first, each in that project's colour.
 
 Colour and terrain are deliberately separate. **Colour says what you worked on**
 — each project has a `color:` in `projects.yml`, and a day is their blend
