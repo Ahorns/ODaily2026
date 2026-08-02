@@ -38,6 +38,32 @@
    "hours": 37.5,
    "first": "2026-06-01",
    "last": "2026-07-24"
+  },
+  "thinking": {
+   "name": "Thinking",
+   "group": "Gravity",
+   "color": "#b48ce8",
+   "blurb": "Time spent working something out rather than producing anything.",
+   "category": "writing",
+   "status": "active",
+   "url": "projects/thinking.html",
+   "days": 0,
+   "hours": 0.0,
+   "first": "",
+   "last": ""
+  },
+  "other": {
+   "name": "Other",
+   "group": "Others",
+   "color": "#9aa5b8",
+   "blurb": "The hours that belong somewhere, once it is clear where.",
+   "category": "admin",
+   "status": "active",
+   "url": "projects/other.html",
+   "days": 0,
+   "hours": 0.0,
+   "first": "",
+   "last": ""
   }
  },
  "systems": [

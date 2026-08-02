@@ -354,9 +354,13 @@
   //
   // Same starting phase and same rate the vector styles use, so a given day's
   // moons are in the same place whichever style you are looking at it in.
-  function drawMoons(surf, cx, cy, r, count, seed, k, time, colour) {
+  // `colours` may be one colour or one per moon. A moon stands for a project
+  // beyond the day's first, so giving each its own colour says *which* project
+  // rather than merely how many — the planet's own colour is the blend of them
+  // all and cannot answer that.
+  function drawMoons(surf, cx, cy, r, count, seed, k, time, colours) {
     var t = time || 0;
-    var tone = hex(colour || "#cdd8f0");
+    var list = !colours ? [] : (typeof colours === "string" ? [colours] : colours);
     // Wide enough, and round enough, that the moon clears the limb at the top
     // and bottom of its circuit. At the old r+5 with a 0.45 squash it spent half
     // of every orbit crossing the planet's own face, where a two-pixel dot is
@@ -371,6 +375,7 @@
       // The far half of the orbit is dimmer, the same way the milestone ring's
       // back half is: without it the moon reads as sliding around on the glass
       // rather than as going behind the world.
+      var tone = hex(list.length ? list[i % list.length] : "#cdd8f0");
       var c = surf.fade(tone, k * (Math.sin(a) < 0 ? 0.5 : 1));
       for (var dy = 0; dy < size; dy++) {
         for (var dx = 0; dx < size; dx++) surf.px(mx + dx, my + dy, c);

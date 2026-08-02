@@ -29,6 +29,14 @@ groups:
     name: "Life"
     blurb: "Everything that is not work but still counts."
 
+  gravity:
+    name: "Gravity"
+    blurb: "What I think. The ideas everything else falls towards."
+
+  others:
+    name: "Others"
+    blurb: "Not yet sorted — work counted before it has been named."
+
 projects:
   odaily:
     name: "ODaily"
@@ -57,3 +65,23 @@ projects:
     color: "#8ad17f"
     status: active
     blurb: "Papers and books, tracked as time rather than as a list."
+
+  # A group only appears once something lives in it, so each new family starts
+  # with one project. Rename these freely — `name` is yours to change. The key on
+  # the left is not: past entries refer to it forever.
+
+  thinking:
+    name: "Thinking"
+    group: gravity
+    category: writing
+    color: "#b48ce8"
+    status: active
+    blurb: "Time spent working something out rather than producing anything."
+
+  other:
+    name: "Other"
+    group: others
+    category: admin
+    color: "#9aa5b8"
+    status: active
+    blurb: "The hours that belong somewhere, once it is clear where."

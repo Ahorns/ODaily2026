@@ -458,7 +458,9 @@
       body(px2, py2, pr, sl, turn, kk);
 
       var extra = sl.projects.length - 1;
-      if (extra > 0 && pr >= 5) P.drawMoons(surf, px2, py2, pr, extra, sl.seed, kk, scene.time, S.moon);
+      if (extra > 0 && pr >= 5) {
+        P.drawMoons(surf, px2, py2, pr, extra, sl.seed, kk, scene.time, moonColours(scene, sl));
+      }
       if (sl.entry.idea) comet(px2 + pr + 3, py2 - pr - 3, kk);
 
       if (sl === scene.selected || sl === scene.hover || sl === scene.today) {
@@ -467,6 +469,19 @@
         bracket(px2, py2, pr + 3, col);
       }
     }
+  }
+
+  // Cached on the slot: the projects of a day never change once built, and this
+  // would otherwise allocate an array per planet per frame.
+  function moonColours(scene, sl) {
+    if (sl.moonCols) return sl.moonCols;
+    var out = [];
+    for (var i = 1; i < sl.projects.length; i++) {
+      var p = scene.projects[sl.projects[i]];
+      out.push((p && p.color) || S.moon);
+    }
+    sl.moonCols = out;
+    return out;
   }
 
   /* --------------------------------------------------------------- bodies -- */
@@ -541,7 +556,7 @@
       entry: { milestone: day.milestone }
     };
     body(C, C, R, slot, (day.seed % P.SPIN_STEPS) / P.SPIN_STEPS, 1);
-    if (day.moons > 0) P.drawMoons(s, C, C, R, day.moons, day.seed, 1, 0, S.moon);
+    if (day.moons > 0) P.drawMoons(s, C, C, R, day.moons, day.seed, 1, 0, day.moonColors || S.moon);
     if (day.idea) comet(C + R + 3, C - R - 3, 1);
     surf = was;
 

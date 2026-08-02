@@ -19,7 +19,7 @@ categories: [odaily, thesis]
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-07-21" data-seed="20260721" data-type="gas" data-color="#b7b5bd" data-moons="1" data-milestone="false" data-idea="false"></canvas>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-07-21" data-seed="20260721" data-type="gas" data-color="#b7b5bd" data-moons="1" data-moon-colors="#f2a65a" data-milestone="false" data-idea="false"></canvas>
 <p class="day-name">Alkaid</p>
 <!-- odaily:planet:end -->
 :::

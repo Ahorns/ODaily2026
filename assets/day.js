@@ -17,6 +17,7 @@
     type: el.dataset.type || "rock",
     color: el.dataset.color || null,
     moons: parseInt(el.dataset.moons, 10) || 0,
+    moonColors: (el.dataset.moonColors || "").split(",").filter(Boolean),
     milestone: el.dataset.milestone === "true",
     idea: el.dataset.idea === "true"
   };

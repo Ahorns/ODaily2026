@@ -19,7 +19,7 @@ categories: [thesis]
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-07-15" data-seed="20260715" data-type="lava" data-color="#f2a65a" data-moons="0" data-milestone="false" data-idea="false"></canvas>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-07-15" data-seed="20260715" data-type="lava" data-color="#f2a65a" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
 <p class="day-name">Ariel</p>
 <!-- odaily:planet:end -->
 :::

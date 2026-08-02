@@ -19,7 +19,7 @@ categories: [odaily, thesis]
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-05-30" data-seed="20260530" data-type="gas" data-color="#b7b5bd" data-moons="1" data-milestone="false" data-idea="true"></canvas>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-05-30" data-seed="20260530" data-type="gas" data-color="#b7b5bd" data-moons="1" data-moon-colors="#f2a65a" data-milestone="false" data-idea="true"></canvas>
 <p class="day-name">Enif</p>
 <!-- odaily:planet:end -->
 :::

@@ -358,7 +358,10 @@ def time_table(day: dict, projects: dict, prefix: str = "../") -> str:
 
 
 def planet_block(day: dict, projects: dict) -> str:
-    moons = max(0, len({s["project"] for s in day["sessions"]}) - 1)
+    # Sorted the same way the map sorts them, so a day's moons are the same
+    # projects in the same order in both places.
+    slugs = sorted({s["project"] for s in day["sessions"]})
+    moon_colors = [projects[s]["color"] for s in slugs[1:]]
     name = sky_name(day["date"])
     return (
         '<canvas class="day-planet" width="112" height="112" role="img" '
@@ -366,7 +369,8 @@ def planet_block(day: dict, projects: dict) -> str:
         f'data-seed="{seed_for(day["date"])}" '
         f'data-type="{dominant_type(day)}" '
         f'data-color="{day_color(day, projects)}" '
-        f'data-moons="{moons}" '
+        f'data-moons="{len(moon_colors)}" '
+        f'data-moon-colors="{",".join(moon_colors)}" '
         f'data-milestone="{str(day["milestone"]).lower()}" '
         f'data-idea="{str(day["idea"]).lower()}"></canvas>\n'
         f'<p class="day-name">{name}</p>'

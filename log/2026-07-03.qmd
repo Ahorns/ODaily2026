@@ -19,7 +19,7 @@ categories: [odaily, reading]
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-07-03" data-seed="20260703" data-type="gas" data-color="#71cac6" data-moons="1" data-milestone="false" data-idea="false"></canvas>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-07-03" data-seed="20260703" data-type="gas" data-color="#71cac6" data-moons="1" data-moon-colors="#8ad17f" data-milestone="false" data-idea="false"></canvas>
 <p class="day-name">Titania</p>
 <!-- odaily:planet:end -->
 :::

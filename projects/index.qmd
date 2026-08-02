@@ -26,3 +26,19 @@ Tools and skills sharpened along the way.
 |:--|:--|--:|--:|:--|
 | [ODaily](odaily.qmd) | coding | 51h | 16 | active |
 
+## [Gravity](../sky/gravity.qmd)
+
+What I think. The ideas everything else falls towards.
+
+| Constellation | Usually | Time | Days | Status |
+|:--|:--|--:|--:|:--|
+| [Thinking](thinking.qmd) | writing | — | — | active |
+
+## [Others](../sky/others.qmd)
+
+Not yet sorted — work counted before it has been named.
+
+| Constellation | Usually | Time | Days | Status |
+|:--|:--|--:|--:|:--|
+| [Other](other.qmd) | admin | — | — | active |
+
