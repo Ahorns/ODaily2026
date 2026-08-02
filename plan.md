@@ -64,15 +64,15 @@ Colour and terrain are separate on purpose: **colour says what you worked on,
 terrain says how**. Two writing days on different projects look different; two
 coding days on the same project look related.
 
-Position is not decorative either: **the orbit is the day of the month**. The 1st
-hugs the star and the 31st rides the rim, one body per orbit, which is what a
-stellar system looks like and what a calendar dial does not. The angle carries
-nothing, so it is scattered by the golden angle — the spacing a sunflower uses —
-and the days never line up into spokes.
+Position is not decorative either — the ring is the week of the month and the
+angle is the weekday, Sunday at the top. The map is a calendar you can fly
+through, not a picture of one.
 
-Putting the date in the radius alone is what lets the angles move: every day
-keeps its own clock, falling off as r^-1.5 exactly as Kepler requires, so inner
-worlds visibly overtake outer ones. Nothing about the record is lost by it.
+Which is exactly why a system turns as a **rigid body**, spokes and all. Letting
+each day orbit at its own speed looks more like real celestial mechanics and
+destroys the record: a Tuesday drifts into where Friday was and the reading is
+gone. Every planet keeps its place against its own weekday spoke while the whole
+system revolves.
 
 ## The arc: universe first, reading second
 

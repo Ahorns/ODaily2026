@@ -3,17 +3,41 @@
   "odaily": {
    "name": "ODaily",
    "group": "Craft",
-   "color": "#4fc3f7"
+   "color": "#4fc3f7",
+   "blurb": "This site \u2014 the log that keeps the rest of the log honest.",
+   "category": "coding",
+   "status": "active",
+   "url": "projects/odaily.html",
+   "days": 16,
+   "hours": 51.0,
+   "first": "2026-05-30",
+   "last": "2026-07-31"
   },
   "thesis": {
    "name": "Thesis",
    "group": "Research",
-   "color": "#f2a65a"
+   "color": "#f2a65a",
+   "blurb": "The main line of work.",
+   "category": "writing",
+   "status": "active",
+   "url": "projects/thesis.html",
+   "days": 25,
+   "hours": 107.0,
+   "first": "2026-05-29",
+   "last": "2026-07-27"
   },
   "reading": {
    "name": "Reading",
    "group": "Research",
-   "color": "#8ad17f"
+   "color": "#8ad17f",
+   "blurb": "Papers and books, tracked as time rather than as a list.",
+   "category": "reading",
+   "status": "active",
+   "url": "projects/reading.html",
+   "days": 13,
+   "hours": 37.5,
+   "first": "2026-06-01",
+   "last": "2026-07-24"
   }
  },
  "systems": [

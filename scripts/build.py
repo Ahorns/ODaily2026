@@ -439,12 +439,31 @@ def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
             ],
         }
 
+    # What each constellation amounts to, so the map can introduce one without
+    # fetching its page. Totals are derived here rather than in the browser
+    # because the browser only ever sees the days, never the sessions' shape.
+    tally: dict[str, dict] = {}
+    for day in days:
+        for session in day["sessions"]:
+            slug = session["project"]
+            item = tally.setdefault(slug, {"days": set(), "hours": 0.0})
+            item["days"].add(day["date"])
+            item["hours"] += session["hours"]
+
     return json.dumps({
         "projects": {
             slug: {
                 "name": meta.get("name", slug),
                 "group": groups.get(meta.get("group"), {}).get("name", ""),
                 "color": meta["color"],
+                "blurb": meta.get("blurb", ""),
+                "category": meta.get("category", ""),
+                "status": meta.get("status", ""),
+                "url": f"projects/{slug}.html",
+                "days": len(tally.get(slug, {}).get("days") or ()),
+                "hours": round(tally.get(slug, {}).get("hours", 0.0), 2),
+                "first": min(tally[slug]["days"]).isoformat() if slug in tally else "",
+                "last": max(tally[slug]["days"]).isoformat() if slug in tally else "",
             }
             for slug, meta in projects.items()
         },

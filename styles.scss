@@ -141,6 +141,90 @@ $ufo-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
   color: rgba(111, 128, 168, 0.9);
 }
 
+// The day card and the constellation card share the middle band of the HUD, so
+// they live in one wrapper — the HUD is space-between across three rows and a
+// fourth child would push the tools off the bottom.
+//
+// The wrapper is sized by the day card alone and the constellation hangs off it
+// absolutely. In normal flow the wrapper would grow when a constellation is
+// selected and, being the centred child of a space-between column, would drag
+// the day card upwards — so the date would shift under you every time you
+// touched a filter. This way the date never moves.
+.galaxy-cards {
+  position: relative;
+  align-self: flex-start;
+  max-width: 24rem;
+  pointer-events: none;
+}
+
+// An introduction to whatever constellation is selected: what it is for, how
+// much of the year it has taken, and when it started.
+// Shown by a class, never by :empty. Pandoc leaves a newline inside an empty
+// div, and a single whitespace text node is enough to defeat :empty — which is
+// how this shipped as a blank bordered bar hanging under the date card on every
+// fresh load.
+.constellation-card {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  left: 0;
+  width: 100%;
+  background: $panel;
+  border: 1px solid $rule;
+  border-left: 3px solid $gold;
+  padding: 0.9rem 1.15rem;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+.constellation-card h2 {
+  font-size: 1.05rem;
+  margin: 0.3rem 0 0.45rem;
+  line-height: 1.25;
+}
+.cc-eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $dim;
+}
+.cc-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.45rem;
+  vertical-align: baseline;
+}
+.cc-blurb { margin: 0 0 0.75rem; font-size: 0.8125rem; color: $text; line-height: 1.55; }
+
+// Three figures, stated as a row rather than a sentence, so the shape of the
+// project is legible at a glance.
+.cc-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+}
+.cc-stats div { display: flex; flex-direction: column; }
+.cc-stats dt {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $dim;
+  font-weight: 400;
+  order: 2;
+}
+.cc-stats dd {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.15;
+  color: $gold;
+  order: 1;
+}
+.cc-foot { margin: 0.75rem 0 0; font-size: 0.72rem; }
+.cc-foot a { color: $dim; }
+.cc-foot a:hover { color: $gold; }
+.constellation-card.is-on { display: block; }
+
 .galaxy-readout {
   align-self: flex-start;
   max-width: 24rem;
@@ -150,7 +234,7 @@ $ufo-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
   backdrop-filter: blur(10px);
   pointer-events: auto;
 }
-.galaxy-readout:empty { display: none; }
+.galaxy-readout:not(.is-on) { display: none; }
 .galaxy-readout h2 { font-size: 1.05rem; margin: 0.35rem 0 0.5rem; line-height: 1.3; }
 
 .stamp {
@@ -274,6 +358,9 @@ body.out-of-orbit .galaxy-exit {
   bottom: 1.4rem;
   z-index: 40;
 }
+// ...which lands squarely on the footer at the foot of the page unless the
+// footer is given room to sit clear of it.
+body.out-of-orbit footer { padding-bottom: 4.5rem; }
 
 // ---------------------------------------------------------------------------
 // Below the fold: the reading half of the page
@@ -288,7 +375,7 @@ body.out-of-orbit .galaxy-exit {
 .journal-inner { max-width: 44rem; margin: 0 auto; }
 
 #journal h2 {
-  font-size: 0.8125rem;
+  font-size: 1.0625rem;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -336,7 +423,7 @@ body.entry { background: $panel; }
 body.entry main { max-width: 42rem; line-height: 1.8; }
 
 body.entry h2 {
-  font-size: 0.8125rem;
+  font-size: 1.0625rem;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;

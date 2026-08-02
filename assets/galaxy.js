@@ -27,33 +27,20 @@
   // without ever lining them up on a grid, which is what makes the field read
   // as a galaxy rather than a calendar.
   var GOLDEN = 2.3999632297286533;
-  var SPREAD = 540;
+  var SPREAD = 390;
   var RYF = 0.70;
 
   // --- a system ---------------------------------------------------------------
-  // A day's orbit is its day of the month: the 1st hugs the star, the 31st rides
-  // the rim. One body per orbit, which is what a stellar system looks like and a
-  // calendar dial does not.
-  //
-  // The angle is free — it carries no meaning — so it is scattered by the golden
-  // angle, the same spacing a sunflower uses. Consecutive days land 137.5 degrees
-  // apart and never line up into spokes.
-  //
-  // Because the date is in the radius alone, the angles can move independently:
-  // see KEPLER.
-  var INNER = 44, DAY_GAP = 5.2;
-  var OUTER = INNER + 30 * DAY_GAP;
-
-  // Angular speed falls off as r^-1.5 — Kepler's third law. Tuned so the innermost
-  // day comes round in about seventy seconds and the outermost takes eleven
-  // minutes. The differential is the point: inner worlds visibly overtaking outer
-  // ones is the cue that says "solar system" more than any amount of shading.
-  var KEPLER = 26;
+  // A day's place is its date: the ring it sits on is the week of the month, and
+  // its angle is the weekday, Sunday at the top and going clockwise. Days in the
+  // same weekday column line up on one of seven spokes, which is what makes the
+  // month readable as a month.
+  var INNER = 42, OUTER = 148;
 
   // How far past the outermost system you may drift before the galaxy stops
   // you. Without this the field is unbounded and it is very easy to scroll off
   // into blank space with nothing to steer back by.
-  var SLACK = 360;
+  var SLACK = 300;
 
   // Zoom moves along a ladder, not continuously: the sprites are cached per
   // radius, and a smoothly varying radius would rebuild every one of them on
@@ -97,7 +84,13 @@
 
   /* ---------------------------------------------------------------- build -- */
 
-  var MAX_BODY = 9;
+  function orbitsFor(weekRows) {
+    var rings = [];
+    var gap = weekRows > 1 ? (OUTER - INNER) / (weekRows - 1) : 0;
+    for (var i = 0; i < weekRows; i++) rings.push(INNER + gap * i);
+    // A body must not outgrow the space between two rings, or the weeks collide.
+    return { rings: rings, maxR: Math.max(5, Math.min(11, Math.floor((gap || OUTER) * RYF / 2))) };
+  }
 
   function radiusFor(hours, maxR) {
     var band = hours < 1 ? 0.36 : hours < 2 ? 0.46 : hours < 3.5 ? 0.62
@@ -120,15 +113,15 @@
 
       var month = sys.month - 1;
       var daysInMonth = new Date(sys.year, month + 1, 0).getDate();
-      // Each month starts its spiral somewhere different, so no two systems
-      // present the same arrangement.
-      var phase0 = hash(i, 41) * Math.PI * 2;
+      var firstDow = new Date(sys.year, month, 1).getDay();
+      var plan = orbitsFor(Math.ceil((daysInMonth + firstDow) / 7));
 
       var slots = [];
       for (var d = 1; d <= daysInMonth; d++) {
         var dow = new Date(sys.year, month, d).getDay();
-        var rx = INNER + (d - 1) * DAY_GAP;
-        var a = phase0 + (d - 1) * GOLDEN;
+        var week = Math.floor((d + firstDow - 1) / 7);
+        var rx = plan.rings[Math.min(week, plan.rings.length - 1)];
+        var a = -Math.PI / 2 + (dow / 7) * Math.PI * 2;
         var e = sys.days[String(d)] || null;
         var seed = (sys.year * 10000 + sys.month * 100 + d) | 0;
         slots.push({
@@ -137,18 +130,26 @@
           type: e ? e.type : "rock",
           color: e ? e.color : null,
           name: e ? e.name : "",
-          r: e ? radiusFor(e.hours, MAX_BODY) : 0,
-          // The orbit is the day's date; the angle is only where it happens to be
-          // standing. x and y are derived from both every frame — see advance().
-          rx: rx, baseA: a,
-          omega: KEPLER / Math.pow(rx, 1.5),
+          r: e ? radiusFor(e.hours, plan.maxR) : 0,
+          // The ring and the angle are the date, not coordinates. x and y are
+          // derived from them every frame so the system can turn — see advance().
+          // ca/sa are taken once so that turn costs four multiplies, not two trig
+          // calls, per planet per frame.
+          rx: rx, baseA: a, ca: Math.cos(a), sa: Math.sin(a),
           x: cx + rx * Math.cos(a),
           y: cy + rx * RYF * Math.sin(a),
           seed: seed,
           // Each world turns at its own rate, from its own starting angle, so the
           // field never looks like one object spinning in lockstep.
+          //
+          // Slow on purpose. A sprite has only thirty-two rotation frames, and
+          // its surface is quantised to five colours, so a small turn tips a lot
+          // of pixels across a palette boundary at once. Spun fast the frame
+          // changes two or three times a second and the planet reads as shaking
+          // rather than turning. At roughly a minute a revolution the same
+          // machinery reads as a slow roll.
           phase: hash(seed, 21),
-          spinRate: 0.055 + hash(seed, 22) * 0.075,
+          spinRate: 0.012 + hash(seed, 22) * 0.020,
           projects: e ? e.projects : [],
           sys: i
         });
@@ -157,8 +158,11 @@
       return {
         key: sys.key, year: sys.year, month: sys.month,
         label: MONTH_NAMES[month] + " " + sys.year,
-        cx: cx, cy: cy, slots: slots,
-        outer: INNER + (daysInMonth - 1) * DAY_GAP
+        cx: cx, cy: cy, rings: plan.rings, slots: slots,
+        outer: plan.rings[plan.rings.length - 1],
+        // Each month turns at its own rate, so the field is never in lockstep.
+        spin: 0.035 + hash(i, 31) * 0.020,
+        rot: 0
       };
     });
 
@@ -171,10 +175,14 @@
 
   /* Revolution.
    *
-   * Every day is on its own orbit, so every day keeps its own clock. The inner
-   * worlds come round in about a minute and the outer ones take a quarter of an
-   * hour, exactly as Kepler requires — and because the date is carried by the
-   * radius, nothing is lost by letting the angles run free.
+   * A day's place on the map is its date: the ring is the week of the month and
+   * the angle is the weekday. So the planets cannot orbit at their own speeds —
+   * a Tuesday would drift into where Friday was and the map would stop being a
+   * calendar.
+   *
+   * Each system therefore turns as a rigid body, graticule included. Every planet
+   * keeps its position relative to its own weekday spoke, so the reading survives
+   * exactly while the system visibly revolves around its star.
    *
    * Positions are recomputed here rather than in the renderer so that picking,
    * the camera and the constellation lines all agree with what is drawn.
@@ -182,12 +190,17 @@
   function advance(t) {
     for (var i = 0; i < scene.systems.length; i++) {
       var sys = scene.systems[i];
+      var rot = sys.spin * t;
+      sys.rot = rot;
+      // Two trig calls per system rather than two per planet.
+      var cr = Math.cos(rot), sr = Math.sin(rot);
       var slots = sys.slots;
       for (var j = 0; j < slots.length; j++) {
         var sl = slots[j];
-        var a = sl.baseA + sl.omega * t;
-        sl.x = sys.cx + sl.rx * Math.cos(a);
-        sl.y = sys.cy + sl.rx * RYF * Math.sin(a);
+        var c = sl.ca * cr - sl.sa * sr;    // cos(baseA + rot)
+        var sn = sl.sa * cr + sl.ca * sr;   // sin(baseA + rot)
+        sl.x = sys.cx + sl.rx * c;
+        sl.y = sys.cy + sl.rx * RYF * sn;
       }
     }
   }
@@ -345,6 +358,7 @@
       '<button type="button" class="readout-go">Read it below ↓</button>' +
       '<p class="readout-tip">Double-click a planet to jump straight down</p>';
 
+    overlay.classList.add("is-on");
     overlay.querySelector(".readout-go").addEventListener("click", function () {
       openBelow(scene.selected);
     });
@@ -400,6 +414,42 @@
 
   /* -------------------------------------------------------------- filter -- */
 
+  /* What a constellation actually is.
+   *
+   * Selecting one used to light up the map and say nothing about the thing it
+   * had lit up. This introduces it: what it is for, how much of the year it has
+   * taken, and when it started — so the filter answers a question rather than
+   * only asking one.
+   */
+  function showConstellation(slug) {
+    var card = document.getElementById("galaxy-constellation");
+    if (!card) return;
+    var p = slug && scene.projects[slug];
+    if (!p) { card.innerHTML = ""; card.classList.remove("is-on"); return; }
+
+    var span = p.first
+      ? monthYear(p.first) + (monthYear(p.last) !== monthYear(p.first) ? " – " + monthYear(p.last) : "")
+      : "not yet logged";
+
+    card.innerHTML =
+      '<p class="cc-eyebrow"><i class="cc-dot" style="background:' + esc(p.color) + '"></i>' +
+      "Constellation" + (p.group ? " · " + esc(p.group) : "") + "</p>" +
+      "<h2>" + esc(p.name) + "</h2>" +
+      (p.blurb ? '<p class="cc-blurb">' + esc(p.blurb) + "</p>" : "") +
+      '<dl class="cc-stats">' +
+      "<div><dt>Days</dt><dd>" + p.days + "</dd></div>" +
+      "<div><dt>Hours</dt><dd>" + Math.round(p.hours) + "</dd></div>" +
+      "<div><dt>Since</dt><dd>" + esc(span) + "</dd></div>" +
+      "</dl>" +
+      '<p class="cc-foot"><a href="' + esc(p.url) + '">The whole constellation ↗</a></p>';
+    card.classList.add("is-on");
+  }
+
+  function monthYear(iso) {
+    var parts = String(iso).split("-");
+    return MONTH_NAMES[(parseInt(parts[1], 10) || 1) - 1].slice(0, 3) + " " + parts[0];
+  }
+
   function buildFilters() {
     var bar = document.getElementById("galaxy-filters");
     var present = {};
@@ -416,6 +466,7 @@
       b.addEventListener("click", function () {
         scene.filter = slug;
         buildFilters();
+        showConstellation(slug);
         draw();
       });
       bar.appendChild(b);

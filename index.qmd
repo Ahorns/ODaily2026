@@ -16,7 +16,10 @@ toc: false
 <p class="hud-hint">Scroll to travel deeper · drag to steer · click a planet for the day, double-click to read it</p>
 <span class="view-toggle"><button type="button" data-view-btn="map" aria-pressed="true">Map</button><button type="button" data-view-btn="list" aria-pressed="false">List</button></span>
 </div>
+<div class="galaxy-cards">
 <div class="galaxy-readout" id="galaxy-readout"></div>
+<div class="constellation-card" id="galaxy-constellation"></div>
+</div>
 <div class="galaxy-tools">
 <span class="label">Constellation</span><span id="galaxy-filters"></span>
 <button type="button" id="galaxy-home">Back to today</button>

@@ -61,7 +61,8 @@ outermost system and no further, and the edge glows faintly when you reach it,
 so it reads as a limit rather than as the page having frozen.
 
 The cursor is a UFO, and switches to a tractor beam over anything clickable.
-Planets turn on their axes and orbit their star, each on its own clock.
+Planets turn on their axes, and each month revolves around its own star as a
+rigid body — spokes included, so a day never leaves its weekday.
 All motion stops under `prefers-reduced-motion`, and pauses when the tab is
 hidden or you leave orbit.
 
@@ -72,7 +73,6 @@ same entry always produces the same world.
 
 | Planet property | Driven by |
 |:--|:--|
-| **Orbit** | **Day of the month — the 1st hugs the star, the 31st rides the rim** |
 | Surface pattern / terrain | Hash of the date — unique but stable |
 | Diameter | Hours worked, in six buckets |
 | **Colour** | **The projects worked that day, blended by hours** |

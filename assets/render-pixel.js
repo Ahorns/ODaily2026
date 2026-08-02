@@ -56,6 +56,8 @@
   // and nowhere else.
   var S = {
     bg: [7, 7, 21],       // every channel a multiple of STEP — see above
+    ring: [44, 58, 96], ringFar: [26, 35, 60],
+    ray: [17, 24, 42],
     empty: [46, 58, 88],
     label: "#93a4cc", labelShadow: [6, 9, 18],
     moon: "#cdd8f0",
@@ -401,8 +403,30 @@
     var outer = sys.outer * z;
     if (scx < -outer - 60 || scy < -outer - 60 || scx > w + outer + 60 || scy > h + outer + 60) return;
 
-    // A star, not another planet: it is the thing everything here is going round.
-    star(scx, scy, Math.max(3, Math.round(9 * z)));
+    // One ring per week of the month.
+    for (var r = 0; r < sys.rings.length; r++) {
+      var rr = sys.rings[r] * z;
+      var pts = P.ringPixels(scx, scy, rr, rr * RYF);
+      // The near half of each orbit is stated a shade firmer than the far half.
+      // One extra colour, and the rings stop looking like flat discs.
+      for (var pi = 0; pi < pts.length; pi += 3) {
+        surf.px(pts[pi][0], pts[pi][1], pts[pi][2] >= 0 ? S.ring : S.ringFar);
+      }
+    }
+
+    // Seven weekday spokes, Sunday at the top. They turn with the system they
+    // belong to — that is what keeps "angle is the weekday" true while the whole
+    // thing revolves.
+    for (var dow = 0; dow < 7; dow++) {
+      var a = -Math.PI / 2 + (dow / 7) * TAU + (sys.rot || 0);
+      for (var t = 24 * z; t < outer + 6; t += 5) {
+        var rx = scx + t * Math.cos(a), ry = scy + t * RYF * Math.sin(a);
+        if (Math.hypot((rx - scx) / (outer + 4), (ry - scy) / (outer * RYF + 4)) > 1) break;
+        surf.px(rx, ry, S.ray);
+      }
+    }
+
+    star(scx, scy, Math.max(2, Math.round(5 * z)));
 
     if (z > 0.55) {
       var lx = Math.round(scx - P.textWidth(sys.label) / 2);
