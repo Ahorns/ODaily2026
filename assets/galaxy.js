@@ -789,10 +789,44 @@
     return path.replace(/index\.html$/, "") === window.location.pathname.replace(/index\.html$/, "");
   }
   Array.prototype.forEach.call(document.querySelectorAll(".navbar a"), function (a) {
+    // The brand is deliberately exempt: on this page it is not a way back, it is
+    // the way *in*. See aimBrand.
+    if (a.classList.contains("navbar-brand")) return;
     if (a.getAttribute("href") && samePage(a.pathname)) {
       a.addEventListener("click", function (ev) { ev.preventDefault(); enterOrbit(); });
     }
   });
+
+  /* Where the title takes you.
+   *
+   * On every other page the brand already points at the galaxy, which is where
+   * you want to go from them. On the galaxy itself that link points at the page
+   * you are already looking at, so it is spent — and the one thing you cannot
+   * reach from here in a click is the day you are about to write.
+   *
+   * So here, and only here, the title opens today's entry.
+   */
+  function aimBrand() {
+    var brand = document.querySelector(".navbar-brand");
+    if (!brand) return;
+
+    var today = scene.today && scene.today.entry;
+    if (today) {
+      brand.setAttribute("href", today.url);
+      brand.setAttribute("title", "Write today's entry — " + today.title);
+      return;
+    }
+
+    // Today has not been started. A browser cannot create the file, so the
+    // honest thing is to say so and offer the newest day instead of a 404.
+    var logged = allLogged();
+    var newest = logged.length ? logged[logged.length - 1].entry : null;
+    if (!newest) return;
+    brand.setAttribute("href", newest.url);
+    brand.setAttribute("title",
+      "No entry for today yet — run: python scripts/new_day.py. " +
+      "This opens the most recent day instead.");
+  }
 
   function useRenderer() {
     if (!window.ODailyPixel) return;
@@ -828,6 +862,7 @@
       }
       useRenderer();
       buildGalaxy();
+      aimBrand();
       resize();
       syncZoomChrome();
       document.documentElement.classList.add("galaxy-locked");
