@@ -1,7 +1,7 @@
 ---
 title: "Saturday 8 August 2026"
 date: 2026-08-08
-planet_color: "#ffd54f"
+planet_color: "#ff9800"
 milestone: false
 sessions:
   - project: odaily
