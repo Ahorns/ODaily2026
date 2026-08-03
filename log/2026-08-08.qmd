@@ -1,29 +1,25 @@
 ---
-title: "Friday 31 July 2026"
-date: 2026-07-31
-milestone: true
+title: "Saturday 8 August 2026"
+date: 2026-08-08
+milestone: false
 sessions:
   - project: odaily
     hours: 0
     category: coding
-    note: "Set the log up — replace the 0 above with the real number of hours."
-system: "2026-07"
+    note: ""
+system: "2026-08"
 hours: 0.0
 categories: [odaily]
 ---
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-07-31" data-seed="20260731" data-type="gas" data-color="#4fc3f7" data-moons="0" data-moon-colors="" data-milestone="true" data-idea="false"></canvas>
-<p class="day-name">Sadalmelik</p>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-08" data-seed="20260808" data-type="gas" data-color="#4fc3f7" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
+<p class="day-name">Saturn</p>
 <!-- odaily:planet:end -->
 :::
 
 ## What I did
-
-Built ODaily: one file per day under `log/`, a project registry in
-`projects.yml`, and a build script that turns those two into the month map, the
-constellation pages and the running totals.
 
 ## What I did well
 
@@ -38,8 +34,6 @@ of — writing, reading, coding, data, meeting or admin.
 |:--|:--|--:|
 | [ODaily](../projects/odaily.qmd) | coding | 0m |
 | **Total** | | **0m** |
-
-- **ODaily** — Set the log up — replace the 0 above with the real number of hours.
 <!-- odaily:time:end -->
 
 ## What I learned
@@ -51,6 +45,3 @@ of — writing, reading, coding, data, meeting or admin.
      Write anything here and this day gets a comet on the map. -->
 
 ## Other
-
-Day one, so this day is flagged as a milestone — that is the gold ring around
-its planet.
