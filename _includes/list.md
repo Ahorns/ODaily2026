@@ -10,7 +10,6 @@
 <tr data-date="2026-08-06" data-hours="0.0"><td><a href="log/2026-08-06.html">2026-08-06</a></td><td class="dim">Regulus</td><td class="num">—</td><td>coding</td><td><i class="swatch" style="background:#4fc3f7"></i>ODaily</td><td class="marks"></td></tr>
 <tr data-date="2026-08-05" data-hours="0.0"><td><a href="log/2026-08-05.html">2026-08-05</a></td><td class="dim">Shaula</td><td class="num">—</td><td>coding</td><td><i class="swatch" style="background:#4fc3f7"></i>ODaily</td><td class="marks"></td></tr>
 <tr data-date="2026-08-04" data-hours="0.0"><td><a href="log/2026-08-04.html">2026-08-04</a></td><td class="dim">Phecda</td><td class="num">—</td><td>coding</td><td><i class="swatch" style="background:#4fc3f7"></i>ODaily</td><td class="marks"></td></tr>
-<tr data-date="2026-08-03" data-hours="0.0"><td><a href="log/2026-08-03.html">2026-08-03</a></td><td class="dim">Mira</td><td class="num">—</td><td>coding</td><td><i class="swatch" style="background:#4fc3f7"></i>ODaily</td><td class="marks"></td></tr>
 </tbody>
 </table>
 

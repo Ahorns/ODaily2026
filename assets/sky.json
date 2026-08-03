@@ -8,9 +8,9 @@
    "category": "coding",
    "status": "active",
    "url": "projects/odaily.html",
-   "days": 8,
+   "days": 7,
    "hours": 0.0,
-   "first": "2026-08-03",
+   "first": "2026-08-04",
    "last": "2026-08-10"
   },
   "thesis": {
@@ -72,26 +72,6 @@
    "year": 2026,
    "month": 8,
    "days": {
-    "3": {
-     "hours": 0.0,
-     "type": "gas",
-     "color": "#4fc3f7",
-     "name": "Mira",
-     "projects": [
-      "odaily"
-     ],
-     "milestone": false,
-     "idea": false,
-     "title": "Monday 3 August 2026",
-     "url": "log/2026-08-03.html",
-     "sessions": [
-      [
-       "ODaily",
-       0.0,
-       ""
-      ]
-     ]
-    },
     "4": {
      "hours": 0.0,
      "type": "gas",
