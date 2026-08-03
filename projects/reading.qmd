@@ -7,20 +7,4 @@ subtitle: "Constellation in Research"
 
 Papers and books, tracked as time rather than as a list.
 
-<div class="stat-row"><div class="stat"><span class="stat-value">37h 30m</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">13</span><span class="stat-label">days visited</span></div><div class="stat"><span class="stat-value">2026-06-01</span><span class="stat-label">first seen</span></div></div>
-
-| Day | Kind | Time | Note |
-|:--|:--|--:|:--|
-| [2026-07-24](../log/2026-07-24.qmd) | reading | 3h | Papers |
-| [2026-07-18](../log/2026-07-18.qmd) | admin | 1h | Filing notes |
-| [2026-07-10](../log/2026-07-10.qmd) | reading | 2h | Papers |
-| [2026-07-03](../log/2026-07-03.qmd) | reading | 1h 30m | Papers |
-| [2026-06-29](../log/2026-06-29.qmd) | reading | 2h 30m | Papers |
-| [2026-06-22](../log/2026-06-22.qmd) | reading | 2h | Papers |
-| [2026-06-17](../log/2026-06-17.qmd) | admin | 4h | Filing notes |
-| [2026-06-15](../log/2026-06-15.qmd) | admin, reading | 3h | Papers Filing notes |
-| [2026-06-10](../log/2026-06-10.qmd) | admin | 3h 30m | Filing notes |
-| [2026-06-09](../log/2026-06-09.qmd) | reading | 5h | Papers |
-| [2026-06-08](../log/2026-06-08.qmd) | reading | 1h | Papers |
-| [2026-06-03](../log/2026-06-03.qmd) | admin | 3h | Filing notes |
-| [2026-06-01](../log/2026-06-01.qmd) | reading | 6h | Papers |
+_No days logged against this constellation yet._

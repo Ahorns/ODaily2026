@@ -363,12 +363,14 @@ def planet_block(day: dict, projects: dict) -> str:
     slugs = sorted({s["project"] for s in day["sessions"]})
     moon_colors = [projects[s]["color"] for s in slugs[1:]]
     name = sky_name(day["date"])
+    # Use planet-color if specified, else auto-generate from projects
+    color = day.get("planet_color") or day_color(day, projects)
     return (
         '<canvas class="day-planet" width="112" height="112" role="img" '
         f'aria-label="The planet for {day["date"].isoformat()}" '
         f'data-seed="{seed_for(day["date"])}" '
         f'data-type="{dominant_type(day)}" '
-        f'data-color="{day_color(day, projects)}" '
+        f'data-color="{color}" '
         f'data-moons="{len(moon_colors)}" '
         f'data-moon-colors="{",".join(moon_colors)}" '
         f'data-milestone="{str(day["milestone"]).lower()}" '

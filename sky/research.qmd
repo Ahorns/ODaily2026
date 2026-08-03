@@ -7,9 +7,9 @@ subtitle: "Constellation family"
 
 The long arc — thesis, papers, experiments.
 
-<div class="stat-row"><div class="stat"><span class="stat-value">144h 30m</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">35</span><span class="stat-label">days touched</span></div><div class="stat"><span class="stat-value">2</span><span class="stat-label">constellations</span></div></div>
+<div class="stat-row"><div class="stat"><span class="stat-value">0h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">0</span><span class="stat-label">days touched</span></div><div class="stat"><span class="stat-value">2</span><span class="stat-label">constellations</span></div></div>
 
 | Constellation | Time | Days | Status |
 |:--|--:|--:|:--|
-| [Thesis](../projects/thesis.qmd) | 107h | 25 | active |
-| [Reading](../projects/reading.qmd) | 37h 30m | 13 | active |
+| [Reading](../projects/reading.qmd) | — | — | active |
+| [Thesis](../projects/thesis.qmd) | — | — | active |
