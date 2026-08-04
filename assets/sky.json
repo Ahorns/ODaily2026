@@ -9,7 +9,7 @@
    "status": "active",
    "url": "projects/odaily.html",
    "days": 1,
-   "hours": 0.0,
+   "hours": 1.0,
    "first": "2026-08-04",
    "last": "2026-08-04"
   },
@@ -52,14 +52,14 @@
    "first": "",
    "last": ""
   },
-  "threedic": {
+  "3DIC": {
    "name": "3DIC",
    "group": "Research",
    "color": "#e07a5f",
    "blurb": "",
    "category": "coding",
    "status": "active",
-   "url": "projects/threedic.html",
+   "url": "projects/3DIC.html",
    "days": 0,
    "hours": 0.0,
    "first": "",
@@ -113,7 +113,7 @@
    "end": "2026-08-16",
    "days": {
     "2026-08-04": {
-     "hours": 0.0,
+     "hours": 1.0,
      "type": "gas",
      "color": "#4fc3f7",
      "name": "Phecda",
@@ -121,15 +121,15 @@
      "projects": [
       "odaily"
      ],
-     "milestone": false,
+     "milestone": true,
      "idea": false,
      "title": "Tuesday 4 August 2026",
      "url": "log/2026-08-04.html",
      "sessions": [
       [
        "ODaily",
-       0.0,
-       ""
+       1.0,
+       "Update this pages, finally start it!"
       ]
      ]
     }
