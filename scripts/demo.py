@@ -90,7 +90,7 @@ def build_day(day: date, i: int) -> str:
     if day.day % 3 == 0:
         sessions.append(SHAPES[(i * 5 + day.day + 2) % len(SHAPES)])
 
-    block = "sessions:\n"
+    block = ""
     for k, (slug, category, note) in enumerate(sessions):
         hours = round(1.0 + ((day.day * 7 + k * 11 + i) % 11) * 0.5, 2)
         block += (f"  - project: {slug}\n"
@@ -102,10 +102,12 @@ def build_day(day: date, i: int) -> str:
     text = (TEMPLATE.read_text(encoding="utf-8")
             .replace("{{DATE}}", day.isoformat())
             .replace("{{LONG_DATE}}", long_date)
-            .replace("{{MILESTONE}}", "true" if milestone else "false"))
+            .replace("{{MILESTONE}}", "true" if milestone else "false")
+            .replace("{{PROJECTS}}", ""))
 
+    # The template's starter entry, replaced with this day's own sessions.
     text = text.replace(
-        'sessions:\n  - project: odaily\n    hours: 0\n    category: coding\n    note: ""\n',
+        '  - project: odaily\n    hours: 0\n    note: ""\n',
         block,
     )
     # The flag goes straight after the date so --clear can find it cheaply.
