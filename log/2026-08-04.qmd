@@ -10,7 +10,7 @@ milestone: false
 ## What I did
 
 <!-- time
-  - project: odaily
+  - project: 3DIC
     hours: 0
     note: ""
 

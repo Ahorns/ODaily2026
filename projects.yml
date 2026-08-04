@@ -74,7 +74,7 @@ projects:
     status: active
     blurb: ""
 
-  threedic:
+  3DIC:
     name: "3DIC"
     group: research
     category: coding

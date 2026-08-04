@@ -9,6 +9,6 @@ subtitle: "Stellar system"
 
 | Day | Time | Constellations |
 |:--|--:|:--|
-| [Tue 04](../log/2026-08-04.qmd) | 0m | ODaily |
+| [Tue 04](../log/2026-08-04.qmd) | 0m | 3DIC |
 
 [← the whole galaxy](../index.qmd)
