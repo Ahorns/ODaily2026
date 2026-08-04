@@ -8,10 +8,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/odaily.html",
-   "days": 0,
-   "hours": 0.0,
-   "first": "",
-   "last": ""
+   "days": 1,
+   "hours": 1.0,
+   "first": "2026-08-04",
+   "last": "2026-08-04"
   },
   "thesis": {
    "name": "Thesis",
@@ -60,10 +60,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/3DIC.html",
-   "days": 1,
+   "days": 0,
    "hours": 0.0,
-   "first": "2026-08-04",
-   "last": "2026-08-04"
+   "first": "",
+   "last": ""
   },
   "pnr": {
    "name": "P&R",
@@ -113,23 +113,23 @@
    "end": "2026-08-16",
    "days": {
     "2026-08-04": {
-     "hours": 0.0,
+     "hours": 1.0,
      "type": "gas",
-     "color": "#e07a5f",
+     "color": "#4fc3f7",
      "name": "Phecda",
      "orbitAu": null,
      "projects": [
-      "3DIC"
+      "odaily"
      ],
-     "milestone": false,
+     "milestone": true,
      "idea": false,
      "title": "Tuesday 4 August 2026",
      "url": "log/2026-08-04.html",
      "sessions": [
       [
-       "3DIC",
-       0.0,
-       ""
+       "ODaily",
+       1.0,
+       "Update this pages, finally start it!"
       ]
      ]
     }

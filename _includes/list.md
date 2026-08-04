@@ -3,7 +3,7 @@
 <table class="log-table" id="log-table">
 <thead><tr><th data-sort="date" aria-sort="descending">Date</th><th data-sort="name">Name</th><th data-sort="hours" class="num">Hours</th><th data-sort="kind">Kind</th><th data-sort="projects">Constellations</th><th data-sort="marks">·</th></tr></thead>
 <tbody>
-<tr data-date="2026-08-04" data-hours="0.0"><td><a href="log/2026-08-04.html">2026-08-04</a></td><td class="dim">Phecda</td><td class="num">—</td><td>coding</td><td><i class="swatch" style="background:#e07a5f"></i>3DIC</td><td class="marks"></td></tr>
+<tr data-date="2026-08-04" data-hours="1.0"><td><a href="log/2026-08-04.html">2026-08-04</a></td><td class="dim">Phecda</td><td class="num">1h</td><td>coding</td><td><i class="swatch" style="background:#4fc3f7"></i>ODaily</td><td class="marks">✦</td></tr>
 </tbody>
 </table>
 

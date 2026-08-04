@@ -1,28 +1,28 @@
 ---
 title: "Tuesday 4 August 2026"
 date: 2026-08-04
-milestone: false
+milestone: yes
 ---
 
 ## The start
-
+Today is the first day of galaxy, I am a green hand in my subject, which is integrated circuits. Because I am too lazy so that is why i wanna create this website. So each of day I try to write one sentence by myself to practice my English. Well, nihao Galaxy!
 
 ## What I did
 
 <!-- time
-  - project: 3DIC
-    hours: 0
-    note: ""
+  - project: odaily
+    hours: 1
+    note: "Update this pages, finally start it!"
 
   Craft     odaily
   Gravity   thinking
   Others    other
-  Research  multicoding, pnr, reading, thesis, threedic
+  Research  3DIC, multicoding, pnr, reading, thesis
 -->
 
 
 ## What I did well
-
+At least I start it.
 
 ## What I learned
 
