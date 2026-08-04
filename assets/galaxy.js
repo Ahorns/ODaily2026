@@ -126,9 +126,17 @@
         var dt = new Date(start.getFullYear(), start.getMonth(), start.getDate() + offset);
         var dow = dt.getDay();
         var week = Math.floor((offset + startDow) / 7);
-        var rx = plan.rings[Math.min(week, plan.rings.length - 1)];
-        var a = -Math.PI / 2 + (dow / 7) * Math.PI * 2;
         var e = sys.days[isoFromDate(dt)] || null;
+        // A day with a real `orbit` sits at its own distance from the sun —
+        // Mercury near it, Eris at the outer edge — regardless of which
+        // calendar week it falls in. Angle stays weekday-only either way, so
+        // every Monday still lines up on one spoke, just at each planet's
+        // own distance along it. Without an `orbit`, the old week-ring
+        // position is the fallback, unchanged.
+        var rx = (e && e.orbit != null)
+          ? INNER + e.orbit * (OUTER - INNER)
+          : plan.rings[Math.min(week, plan.rings.length - 1)];
+        var a = -Math.PI / 2 + (dow / 7) * Math.PI * 2;
         var seed = (dt.getFullYear() * 10000 + (dt.getMonth() + 1) * 100 + dt.getDate()) | 0;
         slots.push({
           d: dt.getDate(), yr: dt.getFullYear(), m: dt.getMonth() + 1, dow: dow, entry: e,
