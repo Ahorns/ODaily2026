@@ -1,9 +1,9 @@
 ---
 title: "Sunday 16 August 2026"
 date: 2026-08-16
-planet_color: "#d3d3d3"
-planet_name: "Haumea"
-planet_orbit_au: 43.3
+planet_color: "#e6e6e6"
+planet_name: "Eris"
+planet_orbit_au: 67.8
 milestone: false
 sessions:
   - project: odaily
@@ -17,8 +17,8 @@ categories: [odaily]
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-16" data-seed="20260816" data-type="gas" data-color="#d3d3d3" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
-<p class="day-name">Haumea</p>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-16" data-seed="20260816" data-type="gas" data-color="#e6e6e6" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
+<p class="day-name">Eris</p>
 <!-- odaily:planet:end -->
 :::
 
