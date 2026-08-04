@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/sky/research.html</loc>
-    <lastmod>2026-08-04T09:30:20.744Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/galaxy/2026.html</loc>
+    <lastmod>2026-08-04T11:26:39.428Z</lastmod>
   </url>
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/sky/life.html</loc>
-    <lastmod>2026-08-04T09:30:20.744Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/sky/others.html</loc>
+    <lastmod>2026-08-04T11:26:39.430Z</lastmod>
   </url>
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/sky/craft.html</loc>
-    <lastmod>2026-08-04T09:30:20.744Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/sky/gravity.html</loc>
+    <lastmod>2026-08-04T11:26:39.428Z</lastmod>
   </url>
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/projects/thesis.html</loc>
-    <lastmod>2026-08-04T09:30:20.734Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/system/2026-08.html</loc>
+    <lastmod>2026-08-04T11:26:39.425Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Ahorns.github.io/ODaily2026/projects/thinking.html</loc>
+    <lastmod>2026-08-04T11:26:39.416Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Ahorns.github.io/ODaily2026/projects/reading.html</loc>
+    <lastmod>2026-08-04T11:26:39.414Z</lastmod>
   </url>
   <url>
     <loc>https://Ahorns.github.io/ODaily2026/projects/other.html</loc>
-    <lastmod>2026-08-04T09:30:20.736Z</lastmod>
+    <lastmod>2026-08-04T11:26:39.416Z</lastmod>
   </url>
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/projects/index.html</loc>
-    <lastmod>2026-08-04T09:30:20.736Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/projects/multicoding.html</loc>
+    <lastmod>2026-08-04T11:26:39.414Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Ahorns.github.io/ODaily2026/log/2026-08-04.html</loc>
+    <lastmod>2026-08-04T11:20:37.564Z</lastmod>
   </url>
   <url>
     <loc>https://Ahorns.github.io/ODaily2026/about.html</loc>
@@ -34,26 +46,38 @@
   </url>
   <url>
     <loc>https://Ahorns.github.io/ODaily2026/comets.html</loc>
-    <lastmod>2026-08-03T09:07:28.866Z</lastmod>
+    <lastmod>2026-08-04T11:26:39.430Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Ahorns.github.io/ODaily2026/projects/index.html</loc>
+    <lastmod>2026-08-04T11:26:39.416Z</lastmod>
   </url>
   <url>
     <loc>https://Ahorns.github.io/ODaily2026/projects/odaily.html</loc>
-    <lastmod>2026-08-04T09:30:20.734Z</lastmod>
+    <lastmod>2026-08-04T11:26:39.414Z</lastmod>
   </url>
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/projects/reading.html</loc>
-    <lastmod>2026-08-04T09:30:20.734Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/projects/pnr.html</loc>
+    <lastmod>2026-08-04T11:26:39.414Z</lastmod>
   </url>
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/projects/thinking.html</loc>
-    <lastmod>2026-08-04T09:30:20.734Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/projects/thesis.html</loc>
+    <lastmod>2026-08-04T11:26:39.414Z</lastmod>
   </url>
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/sky/gravity.html</loc>
-    <lastmod>2026-08-04T09:30:20.744Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/projects/threedic.html</loc>
+    <lastmod>2026-08-04T11:26:39.414Z</lastmod>
   </url>
   <url>
-    <loc>https://Ahorns.github.io/ODaily2026/sky/others.html</loc>
-    <lastmod>2026-08-04T09:30:20.744Z</lastmod>
+    <loc>https://Ahorns.github.io/ODaily2026/sky/craft.html</loc>
+    <lastmod>2026-08-04T11:26:39.428Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Ahorns.github.io/ODaily2026/sky/life.html</loc>
+    <lastmod>2026-08-04T11:26:39.428Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Ahorns.github.io/ODaily2026/sky/research.html</loc>
+    <lastmod>2026-08-04T11:26:39.428Z</lastmod>
   </url>
 </urlset>

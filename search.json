@@ -1,31 +1,45 @@
 [
   {
-    "objectID": "sky/research.html",
-    "href": "sky/research.html",
-    "title": "Research",
+    "objectID": "galaxy/2026.html",
+    "href": "galaxy/2026.html",
+    "title": "2026",
     "section": "",
-    "text": "The long arc — thesis, papers, experiments.\n\n\n0htotal time\n\n\n0days touched\n\n\n2constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus\n\n\n\n\nReading\n—\n—\nactive\n\n\nThesis\n—\n—\nactive"
+    "text": "1days logged\n\n\n0mtime logged\n\n\n1systems\n\n\n\n\n\nSystem\nDays\nTime\n\n\n\n\nAugust\n1\n0m"
   },
   {
-    "objectID": "sky/life.html",
-    "href": "sky/life.html",
-    "title": "Life",
+    "objectID": "sky/others.html",
+    "href": "sky/others.html",
+    "title": "Others",
     "section": "",
-    "text": "Everything that is not work but still counts.\n\n\n0htotal time\n\n\n0days touched\n\n\n0constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus"
+    "text": "Not yet sorted — work counted before it has been named.\n\n\n0htotal time\n\n\n0days touched\n\n\n1constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus\n\n\n\n\nOther\n—\n—\nactive"
   },
   {
-    "objectID": "sky/craft.html",
-    "href": "sky/craft.html",
-    "title": "Craft",
+    "objectID": "sky/gravity.html",
+    "href": "sky/gravity.html",
+    "title": "Gravity",
     "section": "",
-    "text": "Tools and skills sharpened along the way.\n\n\n0htotal time\n\n\n0days touched\n\n\n1constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus\n\n\n\n\nODaily\n—\n—\nactive"
+    "text": "What I think. The ideas everything else falls towards.\n\n\n0htotal time\n\n\n0days touched\n\n\n1constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus\n\n\n\n\nThinking\n—\n—\nactive"
   },
   {
-    "objectID": "projects/thesis.html",
-    "href": "projects/thesis.html",
-    "title": "Thesis",
+    "objectID": "system/2026-08.html",
+    "href": "system/2026-08.html",
+    "title": "August 2026",
     "section": "",
-    "text": "The main line of work.\nNo days logged against this constellation yet."
+    "text": "1planets\n\n\n0htime logged\n\n\n\n\n\nDay\nTime\nConstellations\n\n\n\n\nTue 04\n0m\nODaily\n\n\n\n← the whole galaxy"
+  },
+  {
+    "objectID": "projects/thinking.html",
+    "href": "projects/thinking.html",
+    "title": "Thinking",
+    "section": "",
+    "text": "Time spent working something out rather than producing anything.\nNo days logged against this constellation yet."
+  },
+  {
+    "objectID": "projects/reading.html",
+    "href": "projects/reading.html",
+    "title": "Reading",
+    "section": "",
+    "text": "Papers and books, tracked as time rather than as a list.\nNo days logged against this constellation yet."
   },
   {
     "objectID": "projects/other.html",
@@ -35,39 +49,46 @@
     "text": "The hours that belong somewhere, once it is clear where.\nNo days logged against this constellation yet."
   },
   {
-    "objectID": "projects/index.html",
-    "href": "projects/index.html",
-    "title": "Constellations",
+    "objectID": "projects/multicoding.html",
+    "href": "projects/multicoding.html",
+    "title": "Multi-Coding",
     "section": "",
-    "text": "A day is a planet and a month is a system, but a project is a constellation: a pattern drawn across whatever nights it happened to appear in. Pick one on the galaxy map to see it traced across a month."
+    "text": "No days logged against this constellation yet."
   },
   {
-    "objectID": "projects/index.html#research",
-    "href": "projects/index.html#research",
-    "title": "Constellations",
-    "section": "Research",
-    "text": "Research\nThe long arc — thesis, papers, experiments.\n\n\n\nConstellation\nUsually\nTime\nDays\nStatus\n\n\n\n\nReading\nreading\n—\n—\nactive\n\n\nThesis\nwriting\n—\n—\nactive"
+    "objectID": "log/2026-08-04.html#what-i-did",
+    "href": "log/2026-08-04.html#what-i-did",
+    "title": "Tuesday 4 August 2026",
+    "section": "What I did",
+    "text": "What I did"
   },
   {
-    "objectID": "projects/index.html#craft",
-    "href": "projects/index.html#craft",
-    "title": "Constellations",
-    "section": "Craft",
-    "text": "Craft\nTools and skills sharpened along the way.\n\n\n\nConstellation\nUsually\nTime\nDays\nStatus\n\n\n\n\nODaily\ncoding\n—\n—\nactive"
+    "objectID": "log/2026-08-04.html#what-i-did-well",
+    "href": "log/2026-08-04.html#what-i-did-well",
+    "title": "Tuesday 4 August 2026",
+    "section": "What I did well",
+    "text": "What I did well"
   },
   {
-    "objectID": "projects/index.html#gravity",
-    "href": "projects/index.html#gravity",
-    "title": "Constellations",
-    "section": "Gravity",
-    "text": "Gravity\nWhat I think. The ideas everything else falls towards.\n\n\n\nConstellation\nUsually\nTime\nDays\nStatus\n\n\n\n\nThinking\nwriting\n—\n—\nactive"
+    "objectID": "log/2026-08-04.html#what-i-learned",
+    "href": "log/2026-08-04.html#what-i-learned",
+    "title": "Tuesday 4 August 2026",
+    "section": "What I learned",
+    "text": "What I learned"
   },
   {
-    "objectID": "projects/index.html#others",
-    "href": "projects/index.html#others",
-    "title": "Constellations",
-    "section": "Others",
-    "text": "Others\nNot yet sorted — work counted before it has been named.\n\n\n\nConstellation\nUsually\nTime\nDays\nStatus\n\n\n\n\nOther\nadmin\n—\n—\nactive"
+    "objectID": "log/2026-08-04.html#an-idea-that-came-up",
+    "href": "log/2026-08-04.html#an-idea-that-came-up",
+    "title": "Tuesday 4 August 2026",
+    "section": "An idea that came up",
+    "text": "An idea that came up"
+  },
+  {
+    "objectID": "log/2026-08-04.html#other",
+    "href": "log/2026-08-04.html#other",
+    "title": "Tuesday 4 August 2026",
+    "section": "Other",
+    "text": "Other"
   },
   {
     "objectID": "about.html",
@@ -109,7 +130,7 @@
     "href": "index.html#all-entries",
     "title": "ODaily 2026",
     "section": "All entries",
-    "text": "All entries"
+    "text": "All entries\n\n\nAugust 2026\n1 days · 0m · the 2026 galaxy\n\nTuesday 4 August 2026 — 0m"
   },
   {
     "objectID": "comets.html",
@@ -119,38 +140,87 @@
     "text": "No ideas recorded yet. Write anything under An idea that came up in a day’s entry and it appears here."
   },
   {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Constellations",
+    "section": "",
+    "text": "A day is a planet and a month is a system, but a project is a constellation: a pattern drawn across whatever nights it happened to appear in. Pick one on the galaxy map to see it traced across a month."
+  },
+  {
+    "objectID": "projects/index.html#research",
+    "href": "projects/index.html#research",
+    "title": "Constellations",
+    "section": "Research",
+    "text": "Research\nThe long arc — thesis, papers, experiments.\n\n\n\nConstellation\nUsually\nTime\nDays\nStatus\n\n\n\n\nMulti-Coding\ncoding\n—\n—\nactive\n\n\nP&R\ncoding\n—\n—\nactive\n\n\nReading\nreading\n—\n—\nactive\n\n\nThesis\nwriting\n—\n—\nactive\n\n\n3DIC\ncoding\n—\n—\nactive"
+  },
+  {
+    "objectID": "projects/index.html#craft",
+    "href": "projects/index.html#craft",
+    "title": "Constellations",
+    "section": "Craft",
+    "text": "Craft\nTools and skills sharpened along the way.\n\n\n\nConstellation\nUsually\nTime\nDays\nStatus\n\n\n\n\nODaily\ncoding\n—\n1\nactive"
+  },
+  {
+    "objectID": "projects/index.html#gravity",
+    "href": "projects/index.html#gravity",
+    "title": "Constellations",
+    "section": "Gravity",
+    "text": "Gravity\nWhat I think. The ideas everything else falls towards.\n\n\n\nConstellation\nUsually\nTime\nDays\nStatus\n\n\n\n\nThinking\nwriting\n—\n—\nactive"
+  },
+  {
+    "objectID": "projects/index.html#others",
+    "href": "projects/index.html#others",
+    "title": "Constellations",
+    "section": "Others",
+    "text": "Others\nNot yet sorted — work counted before it has been named.\n\n\n\nConstellation\nUsually\nTime\nDays\nStatus\n\n\n\n\nOther\nadmin\n—\n—\nactive"
+  },
+  {
     "objectID": "projects/odaily.html",
     "href": "projects/odaily.html",
     "title": "ODaily",
     "section": "",
-    "text": "This site — the log that keeps the rest of the log honest.\nNo days logged against this constellation yet."
+    "text": "This site — the log that keeps the rest of the log honest.\n\n\n0mtotal time\n\n\n1days visited\n\n\n2026-08-04first seen\n\n\n\n\n\nDay\nKind\nTime\nNote\n\n\n\n\n2026-08-04\ncoding\n0m\n—"
   },
   {
-    "objectID": "projects/reading.html",
-    "href": "projects/reading.html",
-    "title": "Reading",
+    "objectID": "projects/pnr.html",
+    "href": "projects/pnr.html",
+    "title": "P&R",
     "section": "",
-    "text": "Papers and books, tracked as time rather than as a list.\nNo days logged against this constellation yet."
+    "text": "No days logged against this constellation yet."
   },
   {
-    "objectID": "projects/thinking.html",
-    "href": "projects/thinking.html",
-    "title": "Thinking",
+    "objectID": "projects/thesis.html",
+    "href": "projects/thesis.html",
+    "title": "Thesis",
     "section": "",
-    "text": "Time spent working something out rather than producing anything.\nNo days logged against this constellation yet."
+    "text": "The main line of work.\nNo days logged against this constellation yet."
   },
   {
-    "objectID": "sky/gravity.html",
-    "href": "sky/gravity.html",
-    "title": "Gravity",
+    "objectID": "projects/threedic.html",
+    "href": "projects/threedic.html",
+    "title": "3DIC",
     "section": "",
-    "text": "What I think. The ideas everything else falls towards.\n\n\n0htotal time\n\n\n0days touched\n\n\n1constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus\n\n\n\n\nThinking\n—\n—\nactive"
+    "text": "No days logged against this constellation yet."
   },
   {
-    "objectID": "sky/others.html",
-    "href": "sky/others.html",
-    "title": "Others",
+    "objectID": "sky/craft.html",
+    "href": "sky/craft.html",
+    "title": "Craft",
     "section": "",
-    "text": "Not yet sorted — work counted before it has been named.\n\n\n0htotal time\n\n\n0days touched\n\n\n1constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus\n\n\n\n\nOther\n—\n—\nactive"
+    "text": "Tools and skills sharpened along the way.\n\n\n0htotal time\n\n\n1days touched\n\n\n1constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus\n\n\n\n\nODaily\n—\n1\nactive"
+  },
+  {
+    "objectID": "sky/life.html",
+    "href": "sky/life.html",
+    "title": "Life",
+    "section": "",
+    "text": "Everything that is not work but still counts.\n\n\n0htotal time\n\n\n0days touched\n\n\n0constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus"
+  },
+  {
+    "objectID": "sky/research.html",
+    "href": "sky/research.html",
+    "title": "Research",
+    "section": "",
+    "text": "The long arc — thesis, papers, experiments.\n\n\n0htotal time\n\n\n0days touched\n\n\n5constellations\n\n\n\n\n\nConstellation\nTime\nDays\nStatus\n\n\n\n\nMulti-Coding\n—\n—\nactive\n\n\nP&R\n—\n—\nactive\n\n\nReading\n—\n—\nactive\n\n\nThesis\n—\n—\nactive\n\n\n3DIC\n—\n—\nactive"
   }
 ]
