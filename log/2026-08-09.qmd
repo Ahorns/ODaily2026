@@ -3,6 +3,7 @@ title: "Sunday 9 August 2026"
 date: 2026-08-09
 planet_color: "#ffd54f"
 planet_name: "Saturn"
+planet_orbit_au: 9.58
 milestone: false
 sessions:
   - project: odaily

@@ -3,6 +3,7 @@ title: "Friday 7 August 2026"
 date: 2026-08-07
 planet_color: "#ff5722"
 planet_name: "Mars"
+planet_orbit_au: 1.52
 milestone: false
 sessions:
   - project: odaily

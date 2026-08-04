@@ -3,6 +3,7 @@ title: "Thursday 6 August 2026"
 date: 2026-08-06
 planet_color: "#2196f3"
 planet_name: "Earth"
+planet_orbit_au: 1.00
 milestone: false
 sessions:
   - project: odaily

@@ -3,6 +3,7 @@ title: "Sunday 16 August 2026"
 date: 2026-08-16
 planet_color: "#d3d3d3"
 planet_name: "Haumea"
+planet_orbit_au: 43.3
 milestone: false
 sessions:
   - project: odaily

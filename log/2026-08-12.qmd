@@ -3,6 +3,7 @@ title: "Wednesday 12 August 2026"
 date: 2026-08-12
 planet_color: "#c9a882"
 planet_name: "Pluto"
+planet_orbit_au: 39.5
 milestone: false
 sessions:
   - project: odaily

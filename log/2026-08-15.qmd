@@ -3,6 +3,7 @@ title: "Saturday 15 August 2026"
 date: 2026-08-15
 planet_color: "#a0522d"
 planet_name: "Makemake"
+planet_orbit_au: 45.8
 milestone: false
 sessions:
   - project: odaily

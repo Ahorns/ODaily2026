@@ -15,6 +15,7 @@ markers. Everything else in the file is left exactly as written.
 from __future__ import annotations
 
 import json
+import math
 import re
 import shutil
 import sys
@@ -395,6 +396,14 @@ def planet_color_for(day: dict, projects: dict) -> str:
     return day["fm"].get("planet_color") or day_color(day, projects)
 
 
+def planet_orbit_au_for(day: dict) -> float | None:
+    """A day's own `planet_orbit_au:` — a real (or invented) distance from its
+    system's star, in whatever unit that system uses. None if the day is an
+    ordinary logged day rather than a named body."""
+    v = day["fm"].get("planet_orbit_au")
+    return float(v) if v is not None else None
+
+
 def planet_block(day: dict, projects: dict) -> str:
     # Sorted the same way the map sorts them, so a day's moons are the same
     # projects in the same order in both places.
@@ -472,6 +481,7 @@ def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
             "type": dominant_type(day),
             "color": planet_color_for(day, projects),
             "name": planet_name_for(day),
+            "orbitAu": planet_orbit_au_for(day),
             "projects": sorted({s["project"] for s in day["sessions"]}),
             "milestone": day["milestone"],
             "idea": day["idea"],
@@ -482,6 +492,27 @@ def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
                 for s in day["sessions"]
             ],
         }
+
+    # A day with a real `planet_orbit_au` sits at its own distance from the
+    # sun rather than on the ring its calendar week happens to land on — that
+    # is what makes Mercury sit near the sun and Eris sit at the outer edge
+    # regardless of which week either falls in. Distances are compressed with
+    # log10 (Eris is 170x further out than Mercury) and normalised against
+    # only the other named bodies in the *same* system, so every system's
+    # bodies use the full width of the ring band no matter its own scale.
+    for system in systems.values():
+        aus = [d["orbitAu"] for d in system["days"].values() if d["orbitAu"] is not None]
+        if not aus:
+            continue
+        logs = [math.log10(au) for au in aus]
+        lo, hi = min(logs), max(logs)
+        for d in system["days"].values():
+            if d["orbitAu"] is None:
+                d["orbit"] = None
+            elif hi == lo:
+                d["orbit"] = 0.5
+            else:
+                d["orbit"] = (math.log10(d["orbitAu"]) - lo) / (hi - lo)
 
     # What each constellation amounts to, so the map can introduce one without
     # fetching its page. Totals are derived here rather than in the browser

@@ -3,6 +3,7 @@ title: "Wednesday 5 August 2026"
 date: 2026-08-05
 planet_color: "#ffc649"
 planet_name: "Venus"
+planet_orbit_au: 0.72
 milestone: false
 sessions:
   - project: odaily

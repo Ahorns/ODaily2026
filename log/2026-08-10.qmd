@@ -3,6 +3,7 @@ title: "Monday 10 August 2026"
 date: 2026-08-10
 planet_color: "#00bcd4"
 planet_name: "Uranus"
+planet_orbit_au: 19.2
 milestone: false
 sessions:
   - project: odaily

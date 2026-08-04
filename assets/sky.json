@@ -78,6 +78,7 @@
      "type": "gas",
      "color": "#888888",
      "name": "Mercury",
+     "orbitAu": 0.39,
      "projects": [
       "odaily"
      ],
@@ -91,13 +92,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.0
     },
     "2026-08-05": {
      "hours": 0.0,
      "type": "gas",
      "color": "#ffc649",
      "name": "Venus",
+     "orbitAu": 0.72,
      "projects": [
       "odaily"
      ],
@@ -111,13 +114,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.11886083350236583
     },
     "2026-08-06": {
      "hours": 0.0,
      "type": "gas",
      "color": "#2196f3",
      "name": "Earth",
+     "orbitAu": 1.0,
      "projects": [
       "odaily"
      ],
@@ -131,13 +136,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.1825469896730898
     },
     "2026-08-07": {
      "hours": 0.0,
      "type": "gas",
      "color": "#ff5722",
      "name": "Mars",
+     "orbitAu": 1.52,
      "projects": [
       "odaily"
      ],
@@ -151,13 +158,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.2637211803668824
     },
     "2026-08-08": {
      "hours": 0.0,
      "type": "gas",
      "color": "#ff9800",
      "name": "Jupiter",
+     "orbitAu": 5.2,
      "projects": [
       "odaily"
      ],
@@ -171,13 +180,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.502167783622977
     },
     "2026-08-09": {
      "hours": 0.0,
      "type": "gas",
      "color": "#ffd54f",
      "name": "Saturn",
+     "orbitAu": 9.58,
      "projects": [
       "odaily"
      ],
@@ -191,13 +202,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.6206243058688447
     },
     "2026-08-10": {
      "hours": 0.0,
      "type": "gas",
      "color": "#00bcd4",
      "name": "Uranus",
+     "orbitAu": 19.2,
      "projects": [
       "odaily"
      ],
@@ -211,13 +224,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.7554071044218044
     },
     "2026-08-11": {
      "hours": 0.0,
      "type": "gas",
      "color": "#1976d2",
      "name": "Neptune",
+     "orbitAu": 30.1,
      "projects": [
       "odaily"
      ],
@@ -231,13 +246,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.8425726745118585
     },
     "2026-08-12": {
      "hours": 0.0,
      "type": "gas",
      "color": "#c9a882",
      "name": "Pluto",
+     "orbitAu": 39.5,
      "projects": [
       "odaily"
      ],
@@ -251,13 +268,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.8952610235652234
     },
     "2026-08-13": {
      "hours": 0.0,
      "type": "gas",
      "color": "#8c8c8c",
      "name": "Ceres",
+     "orbitAu": 2.77,
      "projects": [
       "odaily"
      ],
@@ -271,13 +290,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.3800680436631346
     },
     "2026-08-14": {
      "hours": 0.0,
      "type": "gas",
      "color": "#e6e6e6",
      "name": "Eris",
+     "orbitAu": 67.8,
      "projects": [
       "odaily"
      ],
@@ -291,13 +312,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 1.0
     },
     "2026-08-15": {
      "hours": 0.0,
      "type": "gas",
      "color": "#a0522d",
      "name": "Makemake",
+     "orbitAu": 45.8,
      "projects": [
       "odaily"
      ],
@@ -311,13 +334,15 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.923950151324129
     },
     "2026-08-16": {
      "hours": 0.0,
      "type": "gas",
      "color": "#d3d3d3",
      "name": "Haumea",
+     "orbitAu": 43.3,
      "projects": [
       "odaily"
      ],
@@ -331,7 +356,8 @@
        0.0,
        ""
       ]
-     ]
+     ],
+     "orbit": 0.9130681043742388
     }
    }
   }
