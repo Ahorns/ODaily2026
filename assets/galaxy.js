@@ -301,7 +301,7 @@
       clampCamera();
       // Arriving with today already loaded below means the journal is never an
       // empty box on first visit.
-      if (target.entry) { showInfo(target); loadInto(target.entry.url, target.entry.title); }
+      if (target.entry) { showInfo(target); loadInto(target.entry.url, target.entry.title, target.entry); }
     }
   }
 
@@ -429,13 +429,13 @@
   function openBelow(slot) {
     if (!slot || !slot.entry) return;
     showInfo(slot);
-    loadInto(slot.entry.url, slot.entry.title);
+    loadInto(slot.entry.url, slot.entry.title, slot.entry);
     leaveOrbit();
   }
 
   // The entry is fetched from its own already-rendered page, so the journal
   // below is never a second copy of the writing that could drift out of step.
-  function loadInto(url, title) {
+  function loadInto(url, title, entry) {
     if (entryCache[url]) { panel.innerHTML = entryCache[url]; return; }
     panel.setAttribute("aria-busy", "true");
     panel.innerHTML = '<p class="readout-empty">Loading ' + esc(title) + "…</p>";
@@ -453,9 +453,16 @@
         // underneath it just reads as a duplicate.
         var hero = content.querySelector(".day-hero");
         if (hero) hero.remove();
+        // The table is drawn by day.js on the entry's own page, so the
+        // fetched HTML has none — build the same one from the data we hold.
+        var table = "";
+        if (entry && window.ODailyDay) {
+          var node = window.ODailyDay.timeTable(DATA, entry);
+          if (node) table = node.outerHTML;
+        }
         var built =
           '<p class="panel-eyebrow">Journal · <a href="' + url + '">open as its own page ↗</a></p>' +
-          '<h2 class="panel-title">' + esc(title) + "</h2>" + content.innerHTML;
+          '<h2 class="panel-title">' + esc(title) + "</h2>" + table + content.innerHTML;
         entryCache[url] = built;
         panel.innerHTML = built;
       })
@@ -717,7 +724,7 @@
       tapTimer = null; tapSlot = null;
       showInfo(hit);
       // Loaded quietly so "Read it below" and a later double-click are instant.
-      loadInto(hit.entry.url, hit.entry.title);
+      loadInto(hit.entry.url, hit.entry.title, hit.entry);
     }, 260);
   }
 
@@ -785,7 +792,7 @@
     scene.camera.y = target.y;
     clampCamera();
     showInfo(target);
-    loadInto(target.entry.url, target.entry.title);
+    loadInto(target.entry.url, target.entry.title, target.entry);
   }
 
   canvas.addEventListener("keydown", function (ev) {

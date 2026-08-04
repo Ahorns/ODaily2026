@@ -1,0 +1,33 @@
+---
+title: "Tuesday 4 August 2026"
+date: 2026-08-04
+milestone: false
+---
+
+## The start
+
+
+## What I did
+
+<!-- time
+  - project: odaily
+    hours: 0
+    note: ""
+
+  Craft     odaily
+  Gravity   thinking
+  Others    other
+  Research  multicoding, pnr, reading, thesis, threedic
+-->
+
+
+## What I did well
+
+
+## What I learned
+
+
+## An idea that came up
+
+
+## Other

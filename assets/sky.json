@@ -8,10 +8,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/odaily.html",
-   "days": 0,
+   "days": 1,
    "hours": 0.0,
-   "first": "",
-   "last": ""
+   "first": "2026-08-04",
+   "last": "2026-08-04"
   },
   "thesis": {
    "name": "Thesis",
@@ -34,6 +34,45 @@
    "category": "reading",
    "status": "active",
    "url": "projects/reading.html",
+   "days": 0,
+   "hours": 0.0,
+   "first": "",
+   "last": ""
+  },
+  "multicoding": {
+   "name": "Multi-Coding",
+   "group": "Research",
+   "color": "#5fa8d3",
+   "blurb": "",
+   "category": "coding",
+   "status": "active",
+   "url": "projects/multicoding.html",
+   "days": 0,
+   "hours": 0.0,
+   "first": "",
+   "last": ""
+  },
+  "threedic": {
+   "name": "3DIC",
+   "group": "Research",
+   "color": "#e07a5f",
+   "blurb": "",
+   "category": "coding",
+   "status": "active",
+   "url": "projects/threedic.html",
+   "days": 0,
+   "hours": 0.0,
+   "first": "",
+   "last": ""
+  },
+  "pnr": {
+   "name": "P&R",
+   "group": "Research",
+   "color": "#4ecdc4",
+   "blurb": "",
+   "category": "coding",
+   "status": "active",
+   "url": "projects/pnr.html",
    "days": 0,
    "hours": 0.0,
    "first": "",
@@ -66,5 +105,35 @@
    "last": ""
   }
  },
- "systems": []
+ "systems": [
+  {
+   "key": "2026-08-solar",
+   "name": "Solar System",
+   "start": "2026-08-04",
+   "end": "2026-08-16",
+   "days": {
+    "2026-08-04": {
+     "hours": 0.0,
+     "type": "gas",
+     "color": "#4fc3f7",
+     "name": "Phecda",
+     "orbitAu": null,
+     "projects": [
+      "odaily"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Tuesday 4 August 2026",
+     "url": "log/2026-08-04.html",
+     "sessions": [
+      [
+       "ODaily",
+       0.0,
+       ""
+      ]
+     ]
+    }
+   }
+  }
+ ]
 }

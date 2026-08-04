@@ -66,6 +66,30 @@ projects:
     status: active
     blurb: "Papers and books, tracked as time rather than as a list."
 
+  multicoding:
+    name: "Multi-Coding"
+    group: research
+    category: coding
+    color: "#5fa8d3"
+    status: active
+    blurb: ""
+
+  threedic:
+    name: "3DIC"
+    group: research
+    category: coding
+    color: "#e07a5f"
+    status: active
+    blurb: ""
+
+  pnr:
+    name: "P&R"
+    group: research
+    category: coding
+    color: "#4ecdc4"
+    status: active
+    blurb: ""
+
   # A group only appears once something lives in it, so each new family starts
   # with one project. Rename these freely — `name` is yours to change. The key on
   # the left is not: past entries refer to it forever.

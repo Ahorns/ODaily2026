@@ -24,32 +24,35 @@ PROJECTS = ROOT / "projects.yml"
 
 
 def project_comment() -> str:
-    """The registry, as YAML comment lines, so the slugs to type are in front
-    of you while you type them. Generated per file rather than hard-coded in
-    the template so it can never fall out of step with projects.yml."""
+    """The slugs you may write in `project:`, one line per family.
+
+    Sits inside the `<!-- time -->` block, after a blank line, so build.py
+    stops parsing before it and the list can stay free-form. Generated per
+    file rather than hard-coded in the template so it can never fall out of
+    step with projects.yml.
+    """
     try:
         reg = yaml.safe_load(PROJECTS.read_text(encoding="utf-8")) or {}
     except (OSError, yaml.YAMLError):
-        return "#   (could not read projects.yml)"
+        return "  (could not read projects.yml)"
 
     groups = reg.get("groups") or {}
     projects = reg.get("projects") or {}
     if not projects:
-        return "#   (no projects registered yet — see projects.yml)"
+        return "  (no projects yet — add one to projects.yml)"
 
-    width = max(len(slug) for slug in projects)
-    lines, seen = [], None
-    for slug, meta in sorted(
-        projects.items(), key=lambda kv: (kv[1].get("group") or "", kv[0])
-    ):
-        meta = meta or {}
-        group = meta.get("group") or ""
-        if group != seen:
-            seen = group
-            lines.append(f"#   {groups.get(group, {}).get('name', group) or 'Ungrouped'}")
-        name = meta.get("name", slug)
-        category = meta.get("category") or "admin"
-        lines.append(f"#     {slug.ljust(width)}  {name} · {category}")
+    by_group: dict[str, list[str]] = {}
+    for slug, meta in sorted(projects.items()):
+        group = (meta or {}).get("group") or ""
+        by_group.setdefault(group, []).append(slug)
+
+    label = {g: (groups.get(g, {}) or {}).get("name", g) or "Other" for g in by_group}
+    width = max(len(v) for v in label.values())
+
+    lines = []
+    for group in sorted(by_group, key=lambda g: label[g]):
+        slugs = ", ".join(by_group[group])
+        lines.append(f"  {label[group].ljust(width)}  {slugs}")
     return "\n".join(lines)
 
 

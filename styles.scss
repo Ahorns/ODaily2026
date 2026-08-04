@@ -445,6 +445,45 @@ canvas.day-planet {
   image-rendering: crisp-edges;
 }
 
+// What the day was spent on, under the planet. Quiet on purpose: it is a
+// caption to the writing, not a report — no header row, no rules, and the
+// project names carry the only weight.
+.day-time {
+  margin: 0 auto 2.25rem;
+  max-width: 30rem;
+
+  table { width: 100%; margin: 0; border-collapse: collapse; }
+  th, td { border: 0; padding: 0.2rem 0; vertical-align: baseline; }
+
+  th {
+    font-weight: 400;
+    color: $text;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .day-time-hours {
+    color: $gold;
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 1rem;
+    // Lining, tabular figures: the hours are a column of numbers to compare,
+    // and oldstyle digits turn "10h" into something closer to "1oh".
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .day-time-note {
+    color: $dim;
+    padding-left: 1rem;
+    width: 100%;
+  }
+
+  .day-time-total {
+    th, td { border-top: 1px solid $rule-dim; padding-top: 0.45rem; }
+    th { color: $dim; }
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Shared furniture
 // ---------------------------------------------------------------------------
