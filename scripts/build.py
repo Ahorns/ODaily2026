@@ -59,6 +59,34 @@ CATEGORY_TYPE = {
 # The heading whose emptiness decides whether the day gets a comet.
 IDEA_HEADING = "An idea that came up"
 
+# Stellar systems are custom day-ranges, not necessarily whole months — once a
+# system runs out of things to name (the last planet of the Solar System, say)
+# a new one can start mid-month with its own name and its own ring of weeks.
+# A day not covered by any range here falls back to its own calendar month,
+# unnamed (the map then shows "Month Year", as it always used to).
+SYSTEM_RANGES = [
+    {"key": "2026-08-solar", "name": "Solar System",
+     "start": date(2026, 8, 4), "end": date(2026, 8, 16)},
+    {"key": "2026-08-alpha-centauri", "name": "Alpha Centauri",
+     "start": date(2026, 8, 17), "end": date(2026, 8, 31)},
+]
+
+
+def system_for(day: date) -> dict:
+    """Which stellar system a day belongs to: an explicit range if one covers
+    it, else the whole calendar month it falls in."""
+    for rng in SYSTEM_RANGES:
+        if rng["start"] <= day <= rng["end"]:
+            return rng
+    first = day.replace(day=1)
+    next_month = date(day.year + (day.month == 12), day.month % 12 + 1, 1)
+    return {
+        "key": f"{day.year}-{day.month:02d}",
+        "name": "",
+        "start": first,
+        "end": next_month - timedelta(days=1),
+    }
+
 # Assigned in order to any project that does not name its own colour. Chosen to
 # stay distinguishable from each other once two or three of them are blended.
 HOUSE_COLORS = [
@@ -357,14 +385,23 @@ def time_table(day: dict, projects: dict, prefix: str = "../") -> str:
     return out
 
 
+def planet_name_for(day: dict) -> str:
+    """A day's own `planet_name:` wins; otherwise the seeded catalogue name."""
+    return day["fm"].get("planet_name") or sky_name(day["date"])
+
+
+def planet_color_for(day: dict, projects: dict) -> str:
+    """A day's own `planet_color:` wins; otherwise the projects' blend."""
+    return day["fm"].get("planet_color") or day_color(day, projects)
+
+
 def planet_block(day: dict, projects: dict) -> str:
     # Sorted the same way the map sorts them, so a day's moons are the same
     # projects in the same order in both places.
     slugs = sorted({s["project"] for s in day["sessions"]})
     moon_colors = [projects[s]["color"] for s in slugs[1:]]
-    name = sky_name(day["date"])
-    # Use planet-color if specified, else auto-generate from projects
-    color = day.get("planet_color") or day_color(day, projects)
+    name = planet_name_for(day)
+    color = planet_color_for(day, projects)
     return (
         '<canvas class="day-planet" width="112" height="112" role="img" '
         f'aria-label="The planet for {day["date"].isoformat()}" '
@@ -420,20 +457,21 @@ def write_if_changed(path: Path, content: str) -> bool:
 
 def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
     """Everything the map needs, newest system first."""
-    systems: dict[tuple[int, int], dict] = {}
+    systems: dict[str, dict] = {}
     for day in days:
-        key = (day["date"].year, day["date"].month)
-        system = systems.setdefault(key, {
-            "key": f"{key[0]}-{key[1]:02d}",
-            "year": key[0],
-            "month": key[1],
+        rng = system_for(day["date"])
+        system = systems.setdefault(rng["key"], {
+            "key": rng["key"],
+            "name": rng["name"],
+            "start": rng["start"],
+            "end": rng["end"],
             "days": {},
         })
-        system["days"][str(day["date"].day)] = {
+        system["days"][day["date"].isoformat()] = {
             "hours": round(day["hours"], 2),
             "type": dominant_type(day),
-            "color": day_color(day, projects),
-            "name": sky_name(day["date"]),
+            "color": planet_color_for(day, projects),
+            "name": planet_name_for(day),
             "projects": sorted({s["project"] for s in day["sessions"]}),
             "milestone": day["milestone"],
             "idea": day["idea"],
@@ -473,7 +511,10 @@ def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
             }
             for slug, meta in projects.items()
         },
-        "systems": [systems[k] for k in sorted(systems, reverse=True)],
+        "systems": [
+            {**s, "start": s["start"].isoformat(), "end": s["end"].isoformat()}
+            for s in sorted(systems.values(), key=lambda s: s["start"], reverse=True)
+        ],
     }, indent=1)
 
 

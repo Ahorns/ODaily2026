@@ -2,6 +2,7 @@
 title: "Sunday 9 August 2026"
 date: 2026-08-09
 planet_color: "#ffd54f"
+planet_name: "Saturn"
 milestone: false
 sessions:
   - project: odaily
@@ -15,8 +16,8 @@ categories: [odaily]
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-09" data-seed="20260809" data-type="gas" data-color="#4fc3f7" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
-<p class="day-name">Dione</p>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-09" data-seed="20260809" data-type="gas" data-color="#ffd54f" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
+<p class="day-name">Saturn</p>
 <!-- odaily:planet:end -->
 :::
 

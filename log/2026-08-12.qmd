@@ -1,8 +1,8 @@
 ---
-title: "Thursday 6 August 2026"
-date: 2026-08-06
-planet_color: "#2196f3"
-planet_name: "Earth"
+title: "Wednesday 12 August 2026"
+date: 2026-08-12
+planet_color: "#c9a882"
+planet_name: "Pluto"
 milestone: false
 sessions:
   - project: odaily
@@ -16,8 +16,8 @@ categories: [odaily]
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-06" data-seed="20260806" data-type="gas" data-color="#2196f3" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
-<p class="day-name">Earth</p>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-12" data-seed="20260812" data-type="gas" data-color="#c9a882" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
+<p class="day-name">Pluto</p>
 <!-- odaily:planet:end -->
 :::
 

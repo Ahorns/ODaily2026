@@ -1,8 +1,8 @@
 ---
-title: "Thursday 6 August 2026"
-date: 2026-08-06
-planet_color: "#2196f3"
-planet_name: "Earth"
+title: "Sunday 16 August 2026"
+date: 2026-08-16
+planet_color: "#d3d3d3"
+planet_name: "Haumea"
 milestone: false
 sessions:
   - project: odaily
@@ -16,8 +16,8 @@ categories: [odaily]
 
 ::: {.day-hero}
 <!-- odaily:planet:begin -->
-<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-06" data-seed="20260806" data-type="gas" data-color="#2196f3" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
-<p class="day-name">Earth</p>
+<canvas class="day-planet" width="112" height="112" role="img" aria-label="The planet for 2026-08-16" data-seed="20260816" data-type="gas" data-color="#d3d3d3" data-moons="0" data-moon-colors="" data-milestone="false" data-idea="false"></canvas>
+<p class="day-name">Haumea</p>
 <!-- odaily:planet:end -->
 :::
 
