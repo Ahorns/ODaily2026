@@ -16,8 +16,41 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "_templates" / "day.qmd"
+PROJECTS = ROOT / "projects.yml"
+
+
+def project_comment() -> str:
+    """The registry, as YAML comment lines, so the slugs to type are in front
+    of you while you type them. Generated per file rather than hard-coded in
+    the template so it can never fall out of step with projects.yml."""
+    try:
+        reg = yaml.safe_load(PROJECTS.read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError):
+        return "#   (could not read projects.yml)"
+
+    groups = reg.get("groups") or {}
+    projects = reg.get("projects") or {}
+    if not projects:
+        return "#   (no projects registered yet — see projects.yml)"
+
+    width = max(len(slug) for slug in projects)
+    lines, seen = [], None
+    for slug, meta in sorted(
+        projects.items(), key=lambda kv: (kv[1].get("group") or "", kv[0])
+    ):
+        meta = meta or {}
+        group = meta.get("group") or ""
+        if group != seen:
+            seen = group
+            lines.append(f"#   {groups.get(group, {}).get('name', group) or 'Ungrouped'}")
+        name = meta.get("name", slug)
+        category = meta.get("category") or "admin"
+        lines.append(f"#     {slug.ljust(width)}  {name} · {category}")
+    return "\n".join(lines)
 
 
 def main() -> int:
@@ -45,6 +78,7 @@ def main() -> int:
         .replace("{{DATE}}", day.isoformat())
         .replace("{{LONG_DATE}}", long_date)
         .replace("{{MILESTONE}}", "true" if args.milestone else "false")
+        .replace("{{PROJECTS}}", project_comment())
     )
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(text, encoding="utf-8")

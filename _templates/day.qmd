@@ -2,10 +2,12 @@
 title: "{{LONG_DATE}}"
 date: {{DATE}}
 milestone: {{MILESTONE}}
+# One entry per project you worked on. `project` must be a slug from the list
+# below; `category` may be left off and the project's own default is used.
+{{PROJECTS}}
 sessions:
   - project: odaily
     hours: 0
-    category: coding
     note: ""
 ---
 
