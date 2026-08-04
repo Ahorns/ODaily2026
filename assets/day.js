@@ -14,7 +14,7 @@
   // The galaxy's journal panel shows the same entry, fetched as HTML — which
   // no longer carries the table, since nothing generated is written into a
   // day file any more. Sharing the builder keeps the two identical.
-  window.ODailyDay = { timeTable: timeTable };
+  window.ODailyDay = { timeTable: timeTable, placeTable: placeTable };
 
   var main = document.querySelector("#quarto-document-content") ||
     document.querySelector("main");
@@ -73,18 +73,16 @@
     hero.appendChild(canvas);
     hero.appendChild(el("p", "day-name", day.name || ""));
 
-    var frag = document.createDocumentFragment();
-    frag.appendChild(hero);
-
-    var table = timeTable(data, day);
-    if (table) frag.appendChild(table);
-
     // After the date, before the writing: the planet is the day's portrait,
     // and a portrait belongs under the name rather than above it.
     var title = main.querySelector("#title-block-header");
-    if (title && title.nextSibling) main.insertBefore(frag, title.nextSibling);
-    else if (title) main.appendChild(frag);
-    else main.insertBefore(frag, main.firstChild);
+    if (title && title.nextSibling) main.insertBefore(hero, title.nextSibling);
+    else if (title) main.appendChild(hero);
+    else main.insertBefore(hero, main.firstChild);
+
+    // The hours are part of what the day was, so they open that section
+    // rather than sitting up with the portrait.
+    placeTable(main, timeTable(data, day));
 
     if (window.ODailyPixel) {
       window.ODailyPixel.sprite(canvas, {
@@ -99,6 +97,30 @@
         idea: !!day.idea
       });
     }
+  }
+
+  // Puts the table at the top of "What I did". Quarto's own id is the first
+  // choice; the heading text is the fallback, so renaming the section in the
+  // template does not silently strand the table at the bottom of the page.
+  function placeTable(root, table) {
+    if (!table) return;
+
+    var section = root.querySelector("#what-i-did");
+    if (!section) {
+      var heads = root.querySelectorAll("h1, h2, h3");
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i].textContent.trim().toLowerCase() === "what i did") {
+          section = heads[i].parentNode;
+          break;
+        }
+      }
+    }
+    if (!section) { root.appendChild(table); return; }
+
+    var heading = section.querySelector("h1, h2, h3");
+    if (heading && heading.nextSibling) section.insertBefore(table, heading.nextSibling);
+    else if (heading) section.appendChild(table);
+    else section.insertBefore(table, section.firstChild);
   }
 
   function timeTable(data, day) {

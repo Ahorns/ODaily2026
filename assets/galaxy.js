@@ -454,15 +454,14 @@
         var hero = content.querySelector(".day-hero");
         if (hero) hero.remove();
         // The table is drawn by day.js on the entry's own page, so the
-        // fetched HTML has none — build the same one from the data we hold.
-        var table = "";
+        // fetched HTML has none — build the same one from the data we hold,
+        // and put it where the entry's own page puts it.
         if (entry && window.ODailyDay) {
-          var node = window.ODailyDay.timeTable(DATA, entry);
-          if (node) table = node.outerHTML;
+          window.ODailyDay.placeTable(content, window.ODailyDay.timeTable(DATA, entry));
         }
         var built =
           '<p class="panel-eyebrow">Journal · <a href="' + url + '">open as its own page ↗</a></p>' +
-          '<h2 class="panel-title">' + esc(title) + "</h2>" + table + content.innerHTML;
+          '<h2 class="panel-title">' + esc(title) + "</h2>" + content.innerHTML;
         entryCache[url] = built;
         panel.innerHTML = built;
       })
