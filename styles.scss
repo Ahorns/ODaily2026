@@ -449,8 +449,10 @@ canvas.day-planet {
 // caption to the writing, not a report — no header row, no rules, and the
 // project names carry the only weight.
 .day-time {
-  margin: 0 auto 2.25rem;
-  max-width: 30rem;
+  // Opens "What I did", so it sits in the prose column rather than centred
+  // under the planet the way a caption would.
+  margin: 0 0 1.5rem;
+  max-width: 34rem;
 
   table { width: 100%; margin: 0; border-collapse: collapse; }
   th, td { border: 0; padding: 0.2rem 0; vertical-align: baseline; }
