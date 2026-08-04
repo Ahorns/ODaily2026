@@ -111,21 +111,27 @@
       var cx = Math.cos(angle) * dist;
       var cy = Math.sin(angle) * dist * 0.82;   // slight flattening: a disc, not a ball
 
-      var month = sys.month - 1;
-      var daysInMonth = new Date(sys.year, month + 1, 0).getDate();
-      var firstDow = new Date(sys.year, month, 1).getDay();
-      var plan = orbitsFor(Math.ceil((daysInMonth + firstDow) / 7));
+      // A system's own span of dates, not necessarily a whole month: the ring
+      // a day sits on is the week since the Sunday on or before the system's
+      // first day, so weeks still line up as real weeks even when a system
+      // starts mid-month.
+      var start = dateFromISO(sys.start);
+      var end = dateFromISO(sys.end);
+      var startDow = start.getDay();
+      var totalDays = Math.round((end - start) / 86400000) + 1;
+      var plan = orbitsFor(Math.ceil((totalDays + startDow) / 7));
 
       var slots = [];
-      for (var d = 1; d <= daysInMonth; d++) {
-        var dow = new Date(sys.year, month, d).getDay();
-        var week = Math.floor((d + firstDow - 1) / 7);
+      for (var offset = 0; offset < totalDays; offset++) {
+        var dt = new Date(start.getFullYear(), start.getMonth(), start.getDate() + offset);
+        var dow = dt.getDay();
+        var week = Math.floor((offset + startDow) / 7);
         var rx = plan.rings[Math.min(week, plan.rings.length - 1)];
         var a = -Math.PI / 2 + (dow / 7) * Math.PI * 2;
-        var e = sys.days[String(d)] || null;
-        var seed = (sys.year * 10000 + sys.month * 100 + d) | 0;
+        var e = sys.days[isoFromDate(dt)] || null;
+        var seed = (dt.getFullYear() * 10000 + (dt.getMonth() + 1) * 100 + dt.getDate()) | 0;
         slots.push({
-          d: d, dow: dow, entry: e,
+          d: dt.getDate(), yr: dt.getFullYear(), m: dt.getMonth() + 1, dow: dow, entry: e,
           hours: e ? e.hours : 0,
           type: e ? e.type : "rock",
           color: e ? e.color : null,
@@ -155,9 +161,14 @@
         });
       }
 
+      // The short header drawn above the rings: the system's own name if it
+      // has one, else the month it spans (the old behaviour, for a plain
+      // calendar-month system that was never given a name).
+      var label = sys.name || (MONTH_NAMES[start.getMonth()] + " " + start.getFullYear());
+
       return {
-        key: sys.key, year: sys.year, month: sys.month,
-        label: MONTH_NAMES[month] + " " + sys.year,
+        key: sys.key, name: sys.name || "", label: label, range: rangeLabel(start, end),
+        start: start, end: end,
         cx: cx, cy: cy, rings: plan.rings, slots: slots,
         outer: plan.rings[plan.rings.length - 1],
         // Each month turns at its own rate, so the field is never in lockstep —
@@ -257,13 +268,19 @@
   // still the right place to be standing.
   function aimAtToday() {
     var now = new Date();
-    var key = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
+    var y = now.getFullYear(), m = now.getMonth() + 1, d = now.getDate();
     var target = null;
 
-    for (var i = 0; i < scene.systems.length; i++) {
-      if (scene.systems[i].key !== key) continue;
-      var slot = scene.systems[i].slots[now.getDate() - 1];
-      if (slot) { target = slot; scene.today = slot; }
+    // A system's key is no longer always "YYYY-MM" — a custom range has its
+    // own name-derived key — so today's slot is found by its actual date,
+    // not by matching the system it happens to belong to.
+    for (var i = 0; i < scene.systems.length && !target; i++) {
+      var slots = scene.systems[i].slots;
+      for (var j = 0; j < slots.length; j++) {
+        if (slots[j].yr === y && slots[j].m === m && slots[j].d === d) {
+          target = slots[j]; scene.today = slots[j]; break;
+        }
+      }
     }
     if (!target) {
       var newest = scene.systems[scene.systems.length - 1];
@@ -340,6 +357,23 @@
     return hit;
   }
 
+  // The sun at a system's centre is a small, fixed-size target — it does not
+  // shrink with the planets, so it stays clickable even zoomed far out.
+  function systemAt(wx, wy) {
+    var pad = 10 / scene.camera.zoom;
+    // The sun's own sprite is tiny, but the space between it and the first
+    // ring (INNER = 42) is otherwise dead — so the target can be generous
+    // without ever overlapping a planet's own hit area.
+    var r = 34 + pad;
+    var hit = null, best = Infinity;
+    for (var i = 0; i < scene.systems.length; i++) {
+      var sys = scene.systems[i];
+      var d = Math.hypot(wx - sys.cx, wy - sys.cy);
+      if (d <= r && d < best) { best = d; hit = sys; }
+    }
+    return hit;
+  }
+
   /* ------------------------------------------------------------ the read -- */
 
   // One click: what this day was, without moving you anywhere.
@@ -349,7 +383,7 @@
     if (!e) return;
 
     var stamp = DAY_NAMES[slot.dow] + " " + slot.d + " " +
-      MONTH_NAMES[scene.systems[slot.sys].month - 1] + " " + scene.systems[slot.sys].year;
+      MONTH_NAMES[slot.m - 1] + " " + slot.yr;
     var names = e.projects.map(function (p) { return esc(scene.projects[p].name); }).join(", ");
 
     overlay.innerHTML =
@@ -366,6 +400,20 @@
     overlay.querySelector(".readout-go").addEventListener("click", function () {
       openBelow(scene.selected);
     });
+    draw();
+  }
+
+  // Clicking the sun tells you what the system itself is — its own name if it
+  // has been given one, and always the month it represents.
+  function showSystemInfo(sys) {
+    scene.selected = null;
+    var logged = sys.slots.filter(function (s) { return s.entry; }).length;
+    overlay.innerHTML =
+      '<p class="stamp"><span>Stellar system</span></p>' +
+      '<p class="readout-name">' + esc(sys.name || sys.range) + "</p>" +
+      "<h2>" + esc(sys.range) + "</h2>" +
+      '<p class="readout-foot">' + logged + (logged === 1 ? " day logged" : " days logged") + "</p>";
+    overlay.classList.add("is-on");
     draw();
   }
 
@@ -452,6 +500,34 @@
   function monthYear(iso) {
     var parts = String(iso).split("-");
     return MONTH_NAMES[(parseInt(parts[1], 10) || 1) - 1].slice(0, 3) + " " + parts[0];
+  }
+
+  // Parsed by hand rather than `new Date(iso)`: the built-in ISO parser reads
+  // a bare date as UTC midnight, which lands on the wrong day in any
+  // negative-UTC-offset timezone.
+  function dateFromISO(iso) {
+    var p = String(iso).split("-");
+    return new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+  }
+
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+  function isoFromDate(dt) {
+    return dt.getFullYear() + "-" + pad2(dt.getMonth() + 1) + "-" + pad2(dt.getDate());
+  }
+
+  // A human span for a system's own dates: "August 2026" when it is a whole
+  // calendar month, otherwise the day range it actually covers.
+  function rangeLabel(start, end) {
+    var sameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
+    var wholeMonth = start.getDate() === 1 &&
+      end.getDate() === new Date(end.getFullYear(), end.getMonth() + 1, 0).getDate();
+    if (sameMonth && wholeMonth) return MONTH_NAMES[start.getMonth()] + " " + start.getFullYear();
+    if (sameMonth) {
+      return start.getDate() + "–" + end.getDate() + " " + MONTH_NAMES[start.getMonth()] + " " + start.getFullYear();
+    }
+    return start.getDate() + " " + MONTH_NAMES[start.getMonth()] + " " + start.getFullYear() +
+      " – " + end.getDate() + " " + MONTH_NAMES[end.getMonth()] + " " + end.getFullYear();
   }
 
   function buildFilters() {
@@ -649,7 +725,11 @@
     if (moved < 5 && ev) {
       var w = clientToWorld(ev.clientX, ev.clientY);
       var hit = slotAt(w.x, w.y);
-      if (hit) onTap(hit);
+      if (hit) { onTap(hit); }
+      else {
+        var sysHit = systemAt(w.x, w.y);
+        if (sysHit) showSystemInfo(sysHit);
+      }
     }
   }
 
