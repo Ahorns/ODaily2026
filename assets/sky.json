@@ -8,10 +8,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/odaily.html",
-   "days": 1,
+   "days": 2,
    "hours": 1.0,
    "first": "2026-08-04",
-   "last": "2026-08-04"
+   "last": "2026-08-05"
   },
   "thesis": {
    "name": "Thesis",
@@ -130,6 +130,27 @@
        "ODaily",
        1.0,
        "Update this pages, finally start it!"
+      ]
+     ]
+    },
+    "2026-08-05": {
+     "hours": 0.0,
+     "type": "gas",
+     "color": "#4fc3f7",
+     "name": "Shaula",
+     "orbitAu": null,
+     "projects": [
+      "odaily"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Wednesday 5 August 2026",
+     "url": "log/2026-08-05.html",
+     "sessions": [
+      [
+       "ODaily",
+       0.0,
+       ""
       ]
      ]
     }

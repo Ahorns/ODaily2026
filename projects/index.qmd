@@ -27,7 +27,7 @@ Tools and skills sharpened along the way.
 
 | Constellation | Usually | Time | Days | Status |
 |:--|:--|--:|--:|:--|
-| [ODaily](odaily.qmd) | coding | 1h | 1 | active |
+| [ODaily](odaily.qmd) | coding | 1h | 2 | active |
 
 ## [Gravity](../sky/gravity.qmd)
 

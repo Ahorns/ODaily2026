@@ -2,7 +2,8 @@
 
 ### [August 2026](system/2026-08.qmd)
 
-1 days · 1h · [the 2026 galaxy](galaxy/2026.qmd)
+2 days · 1h · [the 2026 galaxy](galaxy/2026.qmd)
 
+- [Wednesday 5 August 2026](log/2026-08-05.qmd) — 0m
 - [Tuesday 4 August 2026](log/2026-08-04.qmd) — 1h  ✦
 
