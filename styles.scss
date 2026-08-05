@@ -144,6 +144,11 @@ $ufo-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
 .galaxy-cards {
   position: relative;
   align-self: flex-start;
+  // The wrapper shrink-wraps its content, and the constellation card is sized
+  // from it — so a short readout (a system's "1 day logged") would drag both
+  // cards narrow enough to wrap "Aug 2026" onto two lines. A floor keeps the
+  // pair a steady width whatever is being shown in them.
+  min-width: 17rem;
   max-width: 24rem;
   pointer-events: none;
 }
