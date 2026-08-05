@@ -154,10 +154,14 @@ $ufo-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
 // div, and a single whitespace text node is enough to defeat :empty — which is
 // how this shipped as a blank bordered bar hanging under the date card on every
 // fresh load.
+// Anchored above the day card rather than below it. Hanging below, a long
+// blurb grew down into the filter row and overlapped it; there is no room to
+// give there, and the tools sit at the foot of the stage. Upwards the space is
+// the stage's own top padding, which is always clear.
 .constellation-card {
   display: none;
   position: absolute;
-  top: calc(100% + 0.7rem);
+  bottom: calc(100% + 0.7rem);
   left: 0;
   width: 100%;
   background: $panel;
