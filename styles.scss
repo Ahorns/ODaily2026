@@ -404,6 +404,10 @@ body.out-of-orbit footer { padding-bottom: 4.5rem; }
   color: $bright;
   text-transform: none;
   letter-spacing: normal;
+  // The theme rules every h2. On a section label that reads as a divider;
+  // under the day's own name it reads as the panel having a second header.
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 #journal-panel h2 { margin: 2rem 0 0.5rem; }
 // The fetched page brings its own title block; the panel supplies its own.
