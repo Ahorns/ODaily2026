@@ -1,0 +1,33 @@
+---
+title: "Saturday 8 August 2026"
+date: 2026-08-08
+milestone: false
+---
+
+## The start
+I am back. Previous day I did something, but most of time wasting the time and have a class for summer school students. I restart the multi coding projects, but it did not run very well. The accuracy is too low.
+
+## What I did
+
+<!-- time
+  - project: multicoding
+    hours: 6
+    note: ""
+
+  Craft     odaily
+  Gravity   thinking
+  Others    other
+  Research  3DIC, multicoding, pnr, reading, thesis
+-->
+
+
+## What I did well
+At least I always wanna study.
+
+## What I learned
+
+
+## An idea that came up
+Why music could help us to remember lyric?
+
+## Other

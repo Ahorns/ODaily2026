@@ -15,8 +15,8 @@ The long arc — thesis, papers, experiments.
 
 | Constellation | Usually | Time | Days | Status |
 |:--|:--|--:|--:|:--|
+| [Multi-Coding](multicoding.qmd) | coding | 6h | 1 | active |
 | [3DIC](3DIC.qmd) | coding | — | — | active |
-| [Multi-Coding](multicoding.qmd) | coding | — | — | active |
 | [P&R](pnr.qmd) | coding | — | — | active |
 | [Reading](reading.qmd) | reading | — | — | active |
 | [Thesis](thesis.qmd) | writing | — | — | active |

@@ -47,10 +47,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/multicoding.html",
-   "days": 0,
-   "hours": 0.0,
-   "first": "",
-   "last": ""
+   "days": 1,
+   "hours": 6.0,
+   "first": "2026-08-08",
+   "last": "2026-08-08"
   },
   "3DIC": {
    "name": "3DIC",
@@ -150,6 +150,27 @@
       [
        "ODaily",
        0.0,
+       ""
+      ]
+     ]
+    },
+    "2026-08-08": {
+     "hours": 6.0,
+     "type": "gas",
+     "color": "#5fa8d3",
+     "name": "Haumea",
+     "orbitAu": null,
+     "projects": [
+      "multicoding"
+     ],
+     "milestone": false,
+     "idea": true,
+     "title": "Saturday 8 August 2026",
+     "url": "log/2026-08-08.html",
+     "sessions": [
+      [
+       "Multi-Coding",
+       6.0,
        ""
       ]
      ]
