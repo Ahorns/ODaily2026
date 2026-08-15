@@ -68,6 +68,7 @@ export async function onRequestPut(context) {
     return Response.json({
       ok: true,
       sha: result.sha,
+      commitSha: result.commitSha,
       commit: result.commit,
       publicUrl: base ? `${base}/log/${input.date}.html` : "",
       message: "Saved. The public site is updating automatically.",

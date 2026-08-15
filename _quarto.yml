@@ -26,6 +26,8 @@ website:
         text: "Comets"
       - href: about.qmd
         text: "Earth"
+      - href: https://odaily-write.pages.dev/
+        text: "Write"
   search:
     location: navbar
     type: overlay

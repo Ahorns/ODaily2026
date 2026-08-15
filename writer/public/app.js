@@ -15,6 +15,7 @@ const elements = {
   cloudText: document.querySelector("#cloudStateText"),
   saveTitle: document.querySelector("#saveTitle"),
   saveDetail: document.querySelector("#saveDetail"),
+  publicLink: document.querySelector("#publicEntryLink"),
   toast: document.querySelector("#toast"),
   fields: {
     start: document.querySelector("#startText"),
@@ -34,6 +35,7 @@ const state = {
   hydrating: false,
   draftTimer: null,
   toastTimer: null,
+  publishSequence: 0,
 };
 
 function localToday() {
@@ -49,6 +51,66 @@ function draftKey(date) {
 function setCloud(status, text) {
   elements.cloud.dataset.state = status;
   elements.cloudText.textContent = text;
+}
+
+function setPublicLink(url = "") {
+  let safeUrl = "";
+  try {
+    const parsed = new URL(url);
+    if (parsed.origin === "https://odaily2026.pages.dev") safeUrl = parsed.href;
+  } catch {
+    safeUrl = "";
+  }
+  elements.publicLink.hidden = !safeUrl;
+  if (safeUrl) elements.publicLink.href = safeUrl;
+}
+
+function delay(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+async function monitorPublication({ commitSha, publicUrl }, sequence) {
+  if (!commitSha) {
+    elements.saveDetail.textContent = "The galaxy is updating. Check the public site in a minute.";
+    setCloud("ready", "Saved");
+    return;
+  }
+
+  let failedChecks = 0;
+  for (let attempt = 0; attempt < 24; attempt += 1) {
+    await delay(attempt === 0 ? 2500 : 5000);
+    if (sequence !== state.publishSequence) return;
+    try {
+      const result = await request(`/api/publish-status?commit=${encodeURIComponent(commitSha)}`);
+      failedChecks = 0;
+      if (result.state === "success") {
+        elements.saveTitle.textContent = "3/3 · Galaxy updated";
+        elements.saveDetail.textContent = "Your published entry is now live.";
+        setPublicLink(publicUrl);
+        setCloud("ready", "Galaxy updated");
+        notify("Galaxy updated. Your entry is live.", "success");
+        return;
+      }
+      if (result.state === "failure") {
+        elements.saveTitle.textContent = "Saved to GitHub";
+        elements.saveDetail.textContent = "The galaxy build failed, but your entry is safe in GitHub.";
+        setCloud("error", "Build failed");
+        notify("The public-site build needs attention.", "error");
+        return;
+      }
+      elements.saveTitle.textContent = "1/3 · Saved to GitHub";
+      elements.saveDetail.textContent = "2/3 · Building galaxy…";
+      setCloud("loading", "Building galaxy");
+    } catch {
+      failedChecks += 1;
+      if (failedChecks >= 3) break;
+    }
+  }
+
+  if (sequence !== state.publishSequence) return;
+  elements.saveTitle.textContent = "Saved to GitHub";
+  elements.saveDetail.textContent = "The galaxy is still updating. You can keep writing and check it shortly.";
+  setCloud("ready", "Saved");
 }
 
 function notify(message, kind = "success") {
@@ -168,6 +230,7 @@ function saveDraft() {
 
 function changed() {
   if (state.hydrating) return;
+  state.publishSequence += 1;
   updateHours();
   clearTimeout(state.draftTimer);
   state.draftTimer = setTimeout(saveDraft, 450);
@@ -225,6 +288,8 @@ async function loadDates() {
 
 async function loadDate(date, { quiet = false } = {}) {
   if (!date) return;
+  state.publishSequence += 1;
+  setPublicLink();
   setCloud("loading", "Loading");
   state.sha = "";
   state.exists = false;
@@ -265,11 +330,14 @@ async function saveEntry(event) {
     state.sha = data.sha;
     state.exists = true;
     localStorage.removeItem(draftKey(elements.date.value));
-    elements.saveTitle.textContent = "Synced to GitHub";
-    elements.saveDetail.textContent = "The galaxy site is rebuilding and usually updates within a minute or two.";
-    setCloud("ready", "Saved");
-    notify(data.message || "Entry saved.", "success");
+    const publishSequence = ++state.publishSequence;
+    setPublicLink();
+    elements.saveTitle.textContent = "1/3 · Saved to GitHub";
+    elements.saveDetail.textContent = "2/3 · Waiting for the galaxy build…";
+    setCloud("loading", "Building galaxy");
+    notify("Saved to GitHub. The galaxy build is starting.", "success");
     await loadDates();
+    void monitorPublication(data, publishSequence);
   } catch (error) {
     setCloud("error", "Save failed");
     notify(error.message, "error");

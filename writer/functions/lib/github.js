@@ -106,6 +106,38 @@ export async function writeRepoFile(env, { path, text, sha, message }) {
     conflict: false,
     sha: data.content?.sha || "",
     url: data.content?.html_url || "",
+    commitSha: data.commit?.sha || "",
     commit: data.commit?.html_url || "",
+  };
+}
+
+export async function readPublishRun(env, commitSha) {
+  const config = settings(env);
+  const workflow = String(env.PUBLIC_WORKFLOW || "publish-site.yml").trim();
+  const url = new URL(
+    `https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/actions/workflows/${encodeURIComponent(workflow)}/runs`,
+  );
+  url.searchParams.set("head_sha", commitSha);
+  url.searchParams.set("event", "push");
+  url.searchParams.set("per_page", "1");
+
+  const response = await fetch(url, {
+    headers: {
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": API_VERSION,
+      "User-Agent": "ODaily-Writer",
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`GitHub Actions status failed (${response.status}).`);
+  }
+
+  const data = await response.json();
+  const run = data.workflow_runs?.[0];
+  if (!run) return null;
+  return {
+    status: run.status || "queued",
+    conclusion: run.conclusion || "",
+    url: run.html_url || "",
   };
 }

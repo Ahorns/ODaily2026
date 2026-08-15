@@ -253,6 +253,9 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.78); }
 .save-copy strong, .save-copy span { display: block; }
 .save-copy strong { color: var(--bright); font-size: 0.75rem; font-weight: 500; }
 .save-copy span { margin-top: 3px; color: var(--dim); font-size: 0.65rem; }
+.published-link { display: inline-block; margin-top: 6px; color: var(--gold); font-size: 0.65rem; letter-spacing: 0.05em; text-decoration: none; }
+.published-link:hover { color: #f7d68e; text-decoration: underline; text-underline-offset: 3px; }
+.published-link[hidden] { display: none; }
 .save-actions { display: flex; gap: 8px; }
 .toast { position: fixed; right: 22px; bottom: 88px; z-index: 50; max-width: min(420px, calc(100vw - 44px)); padding: 12px 15px; border: 1px solid var(--rule); border-left: 3px solid var(--gold); color: var(--bright); background: var(--panel-2); box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45); opacity: 0; transform: translateY(10px); pointer-events: none; transition: 160ms ease; }
 .toast[data-show="true"] { opacity: 1; transform: translateY(0); }

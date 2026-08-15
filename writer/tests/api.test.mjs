@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 
 import { onRequest as authorize } from "../functions/api/_middleware.js";
 import { onRequestPut as saveEntry } from "../functions/api/entry.js";
+import { onRequestGet as publishStatus } from "../functions/api/publish-status.js";
 import { parseEntry } from "../functions/lib/entry-format.js";
 
 const env = {
@@ -73,7 +74,7 @@ test("save endpoint creates a QMD file and returns its public URL", async () => 
       written = JSON.parse(init.body);
       return Response.json({
         content: { sha: "entry-sha", html_url: "https://github.example/entry" },
-        commit: { html_url: "https://github.example/commit" },
+        commit: { sha: "a".repeat(40), html_url: "https://github.example/commit" },
       });
     }
     return new Response("Unexpected request", { status: 500 });
@@ -106,6 +107,7 @@ test("save endpoint creates a QMD file and returns its public URL", async () => 
     assert.equal(response.status, 200);
     const result = await response.json();
     assert.equal(result.sha, "entry-sha");
+    assert.equal(result.commitSha, "a".repeat(40));
     assert.equal(result.publicUrl, "https://odaily2026.pages.dev/log/2026-08-15.html");
     assert.ok(written);
     assert.deepEqual(parseEntry(fromBase64(written.content)), {
@@ -113,6 +115,35 @@ test("save endpoint creates a QMD file and returns its public URL", async () => 
       milestone: false,
       sections: payload.sections,
       sessions: [{ project: "odaily", hours: 2, note: "Writer", category: "" }],
+    });
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("publish status reports the real public-site workflow result", async () => {
+  const originalFetch = globalThis.fetch;
+  const commit = "b".repeat(40);
+  globalThis.fetch = async (url, init = {}) => {
+    const address = String(url);
+    assert.match(address, /actions\/workflows\/publish-site\.yml\/runs/);
+    assert.match(address, new RegExp(`head_sha=${commit}`));
+    assert.equal(init.headers.Authorization, undefined);
+    return Response.json({
+      workflow_runs: [{ status: "completed", conclusion: "success", html_url: "https://github.example/run" }],
+    });
+  };
+
+  try {
+    const response = await publishStatus({
+      env,
+      request: new Request(`https://writer.example/api/publish-status?commit=${commit}`),
+    });
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), {
+      state: "success",
+      conclusion: "success",
+      runUrl: "https://github.example/run",
     });
   } finally {
     globalThis.fetch = originalFetch;
