@@ -3,5 +3,5 @@
 <div class="stat-row">
 <div class="stat"><span class="stat-value">3</span><span class="stat-label">planets charted</span></div>
 <div class="stat"><span class="stat-value">7h</span><span class="stat-label">time logged</span></div>
-<div class="stat"><span class="stat-value">1</span><span class="stat-label">day streak</span></div>
+<div class="stat"><span class="stat-value">0</span><span class="stat-label">day streak</span></div>
 </div>

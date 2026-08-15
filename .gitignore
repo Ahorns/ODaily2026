@@ -1,4 +1,5 @@
 /.quarto/
+/.wrangler/
 **/*.quarto_ipynb
 /_site/
 __pycache__/
