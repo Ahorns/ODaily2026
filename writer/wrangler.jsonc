@@ -5,10 +5,6 @@
   "compatibility_date": "2026-08-15",
   "compatibility_flags": ["nodejs_compat"],
   "send_metrics": false,
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1
-  },
   "vars": {
     "GITHUB_OWNER": "Ahorns",
     "GITHUB_REPO": "ODaily2026",
