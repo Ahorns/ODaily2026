@@ -15,7 +15,7 @@ async function registry(env) {
 export async function onRequestGet(context) {
   const url = new URL(context.request.url);
   const date = String(url.searchParams.get("date") || "");
-  if (!validDate(date)) return Response.json({ error: "日期无效。" }, { status: 400 });
+  if (!validDate(date)) return Response.json({ error: "Invalid date." }, { status: 400 });
 
   try {
     const file = await readRepoFile(context.env, `log/${date}.qmd`);
@@ -36,7 +36,7 @@ export async function onRequestPut(context) {
   try {
     input = await context.request.json();
   } catch {
-    return Response.json({ error: "提交内容不是有效的 JSON。" }, { status: 400 });
+    return Response.json({ error: "The submitted content is not valid JSON." }, { status: 400 });
   }
 
   try {
@@ -49,7 +49,7 @@ export async function onRequestPut(context) {
     const submittedSha = String(input.sha || "");
     if ((current && submittedSha !== current.sha) || (!current && submittedSha)) {
       return Response.json(
-        { error: "这一天的记录已经在别处发生变化，请重新载入后再保存。" },
+        { error: "This entry changed elsewhere. Reload it before saving again." },
         { status: 409 },
       );
     }
@@ -61,7 +61,7 @@ export async function onRequestPut(context) {
       message: `${current ? "Update" : "Add"} ODaily entry for ${input.date}`,
     });
     if (result.conflict) {
-      return Response.json({ error: "保存时发生版本冲突，请重新载入。" }, { status: 409 });
+      return Response.json({ error: "A version conflict occurred while saving. Reload the entry." }, { status: 409 });
     }
 
     const base = String(context.env.PUBLIC_SITE_URL || "").replace(/\/$/, "");
@@ -70,7 +70,7 @@ export async function onRequestPut(context) {
       sha: result.sha,
       commit: result.commit,
       publicUrl: base ? `${base}/log/${input.date}.html` : "",
-      message: "已经保存，公开网站正在自动更新。",
+      message: "Saved. The public site is updating automatically.",
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 502 });

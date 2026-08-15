@@ -121,6 +121,6 @@ test("validation rejects impossible totals and unknown projects", () => {
     },
     ["odaily"],
   );
-  assert.ok(errors.some((error) => error.includes("未知项目")));
+  assert.ok(errors.some((error) => error.includes("Unknown project")));
   assert.ok(errors.some((error) => error.includes("24")));
 });

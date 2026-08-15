@@ -68,7 +68,7 @@ async function request(path, options = {}) {
   let data = {};
   try { data = await response.json(); } catch { data = {}; }
   if (!response.ok) {
-    const error = new Error(data.error || `请求失败（${response.status}）`);
+    const error = new Error(data.error || `Request failed (${response.status})`);
     error.status = response.status;
     throw error;
   }
@@ -162,8 +162,8 @@ function saveDraft() {
   if (state.hydrating || !elements.date.value) return;
   const draft = { ...model(), savedAt: new Date().toISOString() };
   localStorage.setItem(draftKey(elements.date.value), JSON.stringify(draft));
-  elements.saveTitle.textContent = "草稿已保存在这台设备上";
-  elements.saveDetail.textContent = `最后暂存：${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  elements.saveTitle.textContent = "Draft saved on this device";
+  elements.saveDetail.textContent = `Last saved locally: ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
 }
 
 function changed() {
@@ -181,9 +181,9 @@ function restoreDraft(date) {
     if (draft.sha !== state.sha) return false;
     fill(draft);
     const when = new Date(draft.savedAt).toLocaleString();
-    elements.saveTitle.textContent = "已恢复这台设备上的草稿";
-    elements.saveDetail.textContent = `暂存时间：${when}`;
-    notify("已恢复尚未发布的草稿。", "info");
+    elements.saveTitle.textContent = "Local draft restored";
+    elements.saveDetail.textContent = `Saved locally: ${when}`;
+    notify("An unpublished local draft was restored.", "info");
     return true;
   } catch {
     localStorage.removeItem(draftKey(date));
@@ -196,7 +196,7 @@ function renderHistory() {
   if (!state.dates.length) {
     const empty = document.createElement("p");
     empty.className = "muted";
-    empty.textContent = "还没有历史记录。";
+    empty.textContent = "No entries yet.";
     elements.history.append(empty);
     return;
   }
@@ -214,7 +214,7 @@ function renderHistory() {
 async function loadProjects() {
   const data = await request("/api/projects");
   state.projects = data.projects || [];
-  if (!state.projects.length) throw new Error("没有读取到任何项目。请检查 projects.yml。 ");
+  if (!state.projects.length) throw new Error("No projects were found. Check projects.yml.");
 }
 
 async function loadDates() {
@@ -225,7 +225,7 @@ async function loadDates() {
 
 async function loadDate(date, { quiet = false } = {}) {
   if (!date) return;
-  setCloud("loading", "正在读取");
+  setCloud("loading", "Loading");
   state.sha = "";
   state.exists = false;
   try {
@@ -234,20 +234,20 @@ async function loadDate(date, { quiet = false } = {}) {
     state.exists = true;
     fill(data.entry);
     if (!restoreDraft(date)) {
-      elements.saveTitle.textContent = "正在编辑已发布的记录";
-      elements.saveDetail.textContent = "保存后会产生新的 GitHub 版本。";
+      elements.saveTitle.textContent = "Editing a published entry";
+      elements.saveDetail.textContent = "Publishing will create a new GitHub revision.";
     }
-    setCloud("ready", "已连接云端");
+    setCloud("ready", "Cloud connected");
   } catch (error) {
     if (error.status === 404) {
       fill(blankEntry(date));
       restoreDraft(date);
-      elements.saveTitle.textContent = "这一天还没有记录";
-      elements.saveDetail.textContent = "填写后点击“保存并发布”。";
-      setCloud("ready", "已连接云端");
+      elements.saveTitle.textContent = "No entry for this date yet";
+      elements.saveDetail.textContent = "Complete any section, then select Save & publish.";
+      setCloud("ready", "Cloud connected");
     } else {
       fill(blankEntry(date));
-      setCloud("error", "连接失败");
+      setCloud("error", "Connection failed");
       if (!quiet) notify(error.message, "error");
     }
   }
@@ -259,21 +259,21 @@ async function saveEntry(event) {
   clearTimeout(state.draftTimer);
   elements.save.disabled = true;
   elements.save.setAttribute("aria-busy", "true");
-  setCloud("loading", "正在保存");
+  setCloud("loading", "Saving");
   try {
     const data = await request("/api/entry", { method: "PUT", body: JSON.stringify(model()) });
     state.sha = data.sha;
     state.exists = true;
     localStorage.removeItem(draftKey(elements.date.value));
-    elements.saveTitle.textContent = "已同步到 GitHub";
-    elements.saveDetail.textContent = "银河网站正在自动构建，通常一两分钟后更新。";
-    setCloud("ready", "保存成功");
-    notify(data.message || "记录已经保存。", "success");
+    elements.saveTitle.textContent = "Synced to GitHub";
+    elements.saveDetail.textContent = "The galaxy site is rebuilding and usually updates within a minute or two.";
+    setCloud("ready", "Saved");
+    notify(data.message || "Entry saved.", "success");
     await loadDates();
   } catch (error) {
-    setCloud("error", "保存失败");
+    setCloud("error", "Save failed");
     notify(error.message, "error");
-    if (error.status === 409) elements.saveDetail.textContent = "请先点击“重新载入”，确认内容后再保存。";
+    if (error.status === 409) elements.saveDetail.textContent = "Select Reload, review the latest entry, and then save again.";
   } finally {
     elements.save.disabled = false;
     elements.save.removeAttribute("aria-busy");
@@ -286,7 +286,7 @@ async function boot() {
     await Promise.all([loadProjects(), loadDates()]);
     await loadDate(elements.date.value, { quiet: true });
   } catch (error) {
-    setCloud("error", "需要登录或配置");
+    setCloud("error", "Login or setup required");
     notify(error.message, "error");
   }
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});

@@ -1,24 +1,24 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="theme-color" content="#070b18" />
-    <meta name="description" content="ODaily 私人记录台" />
+    <meta name="description" content="ODaily private log console" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="stylesheet" href="/styles.css" />
-    <title>ODaily · 记录台</title>
+    <title>ODaily · Private Log Console</title>
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="ODaily 记录台首页">
+      <a class="brand" href="#top" aria-label="ODaily log console home">
         <span class="brand-orbit" aria-hidden="true"><span></span></span>
         <span><strong>ODAILY</strong><small>PRIVATE LOG CONSOLE</small></span>
       </a>
       <div class="cloud-state" id="cloudState" data-state="loading">
         <span class="state-dot" aria-hidden="true"></span>
-        <span id="cloudStateText">正在连接</span>
+        <span id="cloudStateText">Connecting</span>
       </div>
     </header>
 
@@ -27,33 +27,33 @@
         <div class="panel-heading">
           <div>
             <p class="eyebrow">ORBIT ARCHIVE</p>
-            <h2 id="historyTitle">最近记录</h2>
+            <h2 id="historyTitle">Recent entries</h2>
           </div>
-          <button class="icon-button" id="refreshDates" type="button" title="刷新记录列表" aria-label="刷新记录列表">↻</button>
+          <button class="icon-button" id="refreshDates" type="button" title="Refresh entry list" aria-label="Refresh entry list">↻</button>
         </div>
         <div class="history-list" id="historyList" aria-live="polite">
-          <p class="muted">正在读取记录……</p>
+          <p class="muted">Loading entries…</p>
         </div>
-        <p class="history-help">选择过去的日期即可查看和修改。GitHub 会保留每一次修改记录。</p>
+        <p class="history-help">Select a previous date to view or edit it. GitHub keeps every published revision.</p>
       </aside>
 
       <form class="editor" id="entryForm">
         <section class="hero-card">
           <div>
             <p class="eyebrow">TODAY'S PLANET</p>
-            <h1>今天发生了什么？</h1>
-            <p class="intro">写下来就好。保存、构建和发布会在后台自动完成。</p>
+            <h1>What happened today?</h1>
+            <p class="intro">Write it down. Saving, building, and publishing happen automatically in the background.</p>
           </div>
           <div class="date-controls">
-            <label for="entryDate">记录日期</label>
+            <label for="entryDate">Entry date</label>
             <div class="date-row">
               <input id="entryDate" name="date" type="date" required />
-              <button class="secondary-button" id="todayButton" type="button">今天</button>
+              <button class="secondary-button" id="todayButton" type="button">Today</button>
             </div>
             <label class="switch-row" for="milestone">
               <span>
-                <strong>里程碑</strong>
-                <small>为这一天的行星加上星环</small>
+                <strong>Milestone</strong>
+                <small>Add a ring to this day's planet</small>
               </span>
               <span class="switch"><input id="milestone" type="checkbox" /><span aria-hidden="true"></span></span>
             </label>
@@ -63,24 +63,24 @@
         <section class="entry-card prose-card">
           <label class="field-heading" for="startText">
             <span class="field-index">01</span>
-            <span><strong>今天开始时</strong><small>The start</small></span>
+            <span><strong>The start</strong><small>How the day began</small></span>
           </label>
-          <textarea id="startText" rows="4" placeholder="今天准备做什么？现在是什么状态？"></textarea>
+          <textarea id="startText" rows="4" placeholder="What did you plan to do? How were things when you started?"></textarea>
         </section>
 
         <section class="entry-card work-card">
           <div class="section-heading">
             <label class="field-heading" for="didText">
               <span class="field-index">02</span>
-              <span><strong>今天做了什么</strong><small>What I did</small></span>
+              <span><strong>What I did</strong><small>Progress, problems, and outcomes</small></span>
             </label>
-            <div class="hours-total"><span id="hoursTotal">0</span> 小时</div>
+            <div class="hours-total"><span id="hoursTotal">0</span> hours</div>
           </div>
-          <textarea id="didText" rows="5" placeholder="简单写下进展、遇到的问题或完成的事情。"></textarea>
+          <textarea id="didText" rows="5" placeholder="Briefly record your progress, any problems you met, or what you completed."></textarea>
 
           <div class="sessions-heading">
-            <div><strong>项目时间</strong><small>可以记录多个项目</small></div>
-            <button class="secondary-button" id="addSession" type="button">＋ 添加项目</button>
+            <div><strong>Project time</strong><small>Track time across multiple projects</small></div>
+            <button class="secondary-button" id="addSession" type="button">＋ Add project</button>
           </div>
           <div class="session-list" id="sessionList"></div>
         </section>
@@ -89,46 +89,46 @@
           <section class="entry-card prose-card">
             <label class="field-heading" for="wellText">
               <span class="field-index">03</span>
-              <span><strong>做得好的地方</strong><small>What I did well</small></span>
+              <span><strong>What I did well</strong><small>Even one small thing counts</small></span>
             </label>
-            <textarea id="wellText" rows="5" placeholder="哪怕只是一件很小的事。"></textarea>
+            <textarea id="wellText" rows="5" placeholder="What went well today, however small?"></textarea>
           </section>
 
           <section class="entry-card prose-card">
             <label class="field-heading" for="learnedText">
               <span class="field-index">04</span>
-              <span><strong>今天学到了什么</strong><small>What I learned</small></span>
+              <span><strong>What I learned</strong><small>Knowledge, judgment, or failure</small></span>
             </label>
-            <textarea id="learnedText" rows="5" placeholder="一个知识点、一个判断或一次失败。"></textarea>
+            <textarea id="learnedText" rows="5" placeholder="Record one fact, insight, decision, or useful failure."></textarea>
           </section>
 
           <section class="entry-card prose-card comet-card">
             <label class="field-heading" for="ideaText">
               <span class="field-index">05</span>
-              <span><strong>突然出现的想法</strong><small>An idea that came up · 填写后会出现彗星</small></span>
+              <span><strong>An idea that came up</strong><small>Completing this field creates a comet</small></span>
             </label>
-            <textarea id="ideaText" rows="5" placeholder="先记住，不急着证明它。"></textarea>
+            <textarea id="ideaText" rows="5" placeholder="Capture it now. You do not need to prove it yet."></textarea>
           </section>
 
           <section class="entry-card prose-card">
             <label class="field-heading" for="otherText">
               <span class="field-index">06</span>
-              <span><strong>其他</strong><small>Other</small></span>
+              <span><strong>Other</strong><small>Anything that belongs nowhere else</small></span>
             </label>
-            <textarea id="otherText" rows="5" placeholder="任何不属于上面几类的内容。"></textarea>
+            <textarea id="otherText" rows="5" placeholder="Add anything that does not fit the sections above."></textarea>
           </section>
         </div>
 
-        <section class="save-dock" aria-label="保存控制">
+        <section class="save-dock" aria-label="Save controls">
           <div class="save-copy">
-            <strong id="saveTitle">草稿会自动保存在这台设备上</strong>
-            <span id="saveDetail">点击保存后才会同步到 GitHub 并更新网站。</span>
+            <strong id="saveTitle">Drafts are saved automatically on this device</strong>
+            <span id="saveDetail">Publishing syncs the entry to GitHub and updates the public site.</span>
           </div>
           <div class="save-actions">
-            <button class="secondary-button" id="reloadButton" type="button">重新载入</button>
+            <button class="secondary-button" id="reloadButton" type="button">Reload</button>
             <button class="primary-button" id="saveButton" type="submit">
-              <span class="button-idle">保存并发布</span>
-              <span class="button-busy">正在保存…</span>
+              <span class="button-idle">Save &amp; publish</span>
+              <span class="button-busy">Saving…</span>
             </button>
           </div>
         </section>
@@ -137,15 +137,15 @@
 
     <template id="sessionTemplate">
       <div class="session-row">
-        <label class="session-project"><span>项目</span><select required></select></label>
-        <label class="session-hours"><span>小时</span><input type="number" min="0" max="24" step="0.25" inputmode="decimal" value="0" required /></label>
-        <label class="session-note"><span>备注</span><input type="text" maxlength="500" placeholder="可选，例如：完成实验设置" /></label>
-        <button class="remove-session" type="button" aria-label="删除这个项目">×</button>
+        <label class="session-project"><span>Project</span><select required></select></label>
+        <label class="session-hours"><span>Hours</span><input type="number" min="0" max="24" step="0.25" inputmode="decimal" value="0" required /></label>
+        <label class="session-note"><span>Note</span><input type="text" maxlength="500" placeholder="Optional, e.g. completed the experiment setup" /></label>
+        <button class="remove-session" type="button" aria-label="Remove this project">×</button>
       </div>
     </template>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <noscript>这个记录页面需要启用 JavaScript。</noscript>
+    <noscript>This log console requires JavaScript.</noscript>
     <script src="/app.js" type="module"></script>
   </body>
 </html>

@@ -1,10 +1,10 @@
 {
-  "name": "ODaily 私人记录台",
+  "name": "ODaily Private Log Console",
   "short_name": "ODaily",
-  "description": "快速记录一天，并自动更新 ODaily 银河。",
+  "description": "Capture the day quickly and update the ODaily galaxy automatically.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#050814",
   "theme_color": "#070b18",
-  "lang": "zh-CN"
+  "lang": "en"
 }

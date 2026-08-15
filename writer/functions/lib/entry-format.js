@@ -105,7 +105,7 @@ export function validateEntry(input, projectSlugs = []) {
   const errors = [];
   const date = String(input?.date || "");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) {
-    errors.push("日期无效。");
+    errors.push("Invalid date.");
   }
   const allowed = new Set(projectSlugs);
   const sessions = Array.isArray(input?.sessions) ? input.sessions : [];
@@ -113,18 +113,18 @@ export function validateEntry(input, projectSlugs = []) {
   sessions.forEach((session, index) => {
     const project = String(session?.project || "").trim();
     const hours = Number(session?.hours);
-    if (!project) errors.push(`第 ${index + 1} 个项目没有选择名称。`);
-    if (allowed.size && !allowed.has(project)) errors.push(`未知项目：${project}`);
+    if (!project) errors.push(`Project ${index + 1} has no name.`);
+    if (allowed.size && !allowed.has(project)) errors.push(`Unknown project: ${project}`);
     if (!Number.isFinite(hours) || hours < 0 || hours > 24) {
-      errors.push(`项目 ${project || index + 1} 的时间无效。`);
+      errors.push(`Project ${project || index + 1} has invalid hours.`);
     } else {
       total += hours;
     }
-    if (String(session?.note || "").length > 500) errors.push(`项目 ${project || index + 1} 的备注过长。`);
+    if (String(session?.note || "").length > 500) errors.push(`The note for project ${project || index + 1} is too long.`);
   });
-  if (total > 24) errors.push("一天的项目时间合计不能超过 24 小时。");
+  if (total > 24) errors.push("Total project time cannot exceed 24 hours in one day.");
   for (const [key, value] of Object.entries(input?.sections || {})) {
-    if (String(value || "").length > 20000) errors.push(`${key} 内容过长。`);
+    if (String(value || "").length > 20000) errors.push(`${key} is too long.`);
   }
   return errors;
 }
