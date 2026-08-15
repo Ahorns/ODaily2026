@@ -10,6 +10,21 @@ text-first, in the same palette. The metaphor stops at the door of an entry.
 
 ## Writing a day
 
+### From the private web writer
+
+The easiest route is the private `odaily-write` Cloudflare Pages application in
+`writer/`. Open it on a phone or computer, choose a date, fill the sections and
+project hours, then press **Save and publish**. It writes the same
+`log/<date>.qmd` format described below, commits it to GitHub, and lets GitHub
+Actions rebuild and publish the galaxy automatically.
+
+The writer restores device-local drafts, loads existing days for editing, and
+uses the GitHub file SHA to prevent silently overwriting a version changed
+elsewhere. Its API accepts requests only from the email configured in
+Cloudflare Access. See `writer/README.md` for the one-time deployment settings.
+
+### From the command line
+
 ```sh
 python scripts/new_day.py            # today
 python scripts/new_day.py 2026-08-04 # a specific day

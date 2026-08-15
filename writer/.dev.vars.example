@@ -1,0 +1,6 @@
+GITHUB_TOKEN=github_pat_replace_me
+GITHUB_OWNER=Ahorns
+GITHUB_REPO=ODaily2026
+GITHUB_BRANCH=main
+WRITER_EMAIL=you@example.com
+PUBLIC_SITE_URL=https://odaily2026.pages.dev

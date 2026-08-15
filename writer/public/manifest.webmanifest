@@ -1,0 +1,10 @@
+{
+  "name": "ODaily 私人记录台",
+  "short_name": "ODaily",
+  "description": "快速记录一天，并自动更新 ODaily 银河。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050814",
+  "theme_color": "#070b18",
+  "lang": "zh-CN"
+}

@@ -1,0 +1,46 @@
+name: Publish ODaily private writer
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "writer/**"
+      - ".github/workflows/publish-writer.yml"
+
+concurrency:
+  group: odaily-private-writer
+  cancel-in-progress: true
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    defaults:
+      run:
+        working-directory: writer
+    steps:
+      - name: Check out ODaily
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Test writer data conversion
+        run: npm test
+
+      - name: Check browser and function code
+        run: npm run check
+
+      - name: Publish private writer to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: writer
+          command: pages deploy public --project-name=odaily-write
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#070b18" />
+    <meta name="description" content="ODaily 私人记录台" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>ODaily · 记录台</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="ODaily 记录台首页">
+        <span class="brand-orbit" aria-hidden="true"><span></span></span>
+        <span><strong>ODAILY</strong><small>PRIVATE LOG CONSOLE</small></span>
+      </a>
+      <div class="cloud-state" id="cloudState" data-state="loading">
+        <span class="state-dot" aria-hidden="true"></span>
+        <span id="cloudStateText">正在连接</span>
+      </div>
+    </header>
+
+    <main class="shell" id="top">
+      <aside class="history-panel" aria-labelledby="historyTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">ORBIT ARCHIVE</p>
+            <h2 id="historyTitle">最近记录</h2>
+          </div>
+          <button class="icon-button" id="refreshDates" type="button" title="刷新记录列表" aria-label="刷新记录列表">↻</button>
+        </div>
+        <div class="history-list" id="historyList" aria-live="polite">
+          <p class="muted">正在读取记录……</p>
+        </div>
+        <p class="history-help">选择过去的日期即可查看和修改。GitHub 会保留每一次修改记录。</p>
+      </aside>
+
+      <form class="editor" id="entryForm">
+        <section class="hero-card">
+          <div>
+            <p class="eyebrow">TODAY'S PLANET</p>
+            <h1>今天发生了什么？</h1>
+            <p class="intro">写下来就好。保存、构建和发布会在后台自动完成。</p>
+          </div>
+          <div class="date-controls">
+            <label for="entryDate">记录日期</label>
+            <div class="date-row">
+              <input id="entryDate" name="date" type="date" required />
+              <button class="secondary-button" id="todayButton" type="button">今天</button>
+            </div>
+            <label class="switch-row" for="milestone">
+              <span>
+                <strong>里程碑</strong>
+                <small>为这一天的行星加上星环</small>
+              </span>
+              <span class="switch"><input id="milestone" type="checkbox" /><span aria-hidden="true"></span></span>
+            </label>
+          </div>
+        </section>
+
+        <section class="entry-card prose-card">
+          <label class="field-heading" for="startText">
+            <span class="field-index">01</span>
+            <span><strong>今天开始时</strong><small>The start</small></span>
+          </label>
+          <textarea id="startText" rows="4" placeholder="今天准备做什么？现在是什么状态？"></textarea>
+        </section>
+
+        <section class="entry-card work-card">
+          <div class="section-heading">
+            <label class="field-heading" for="didText">
+              <span class="field-index">02</span>
+              <span><strong>今天做了什么</strong><small>What I did</small></span>
+            </label>
+            <div class="hours-total"><span id="hoursTotal">0</span> 小时</div>
+          </div>
+          <textarea id="didText" rows="5" placeholder="简单写下进展、遇到的问题或完成的事情。"></textarea>
+
+          <div class="sessions-heading">
+            <div><strong>项目时间</strong><small>可以记录多个项目</small></div>
+            <button class="secondary-button" id="addSession" type="button">＋ 添加项目</button>
+          </div>
+          <div class="session-list" id="sessionList"></div>
+        </section>
+
+        <div class="reflection-grid">
+          <section class="entry-card prose-card">
+            <label class="field-heading" for="wellText">
+              <span class="field-index">03</span>
+              <span><strong>做得好的地方</strong><small>What I did well</small></span>
+            </label>
+            <textarea id="wellText" rows="5" placeholder="哪怕只是一件很小的事。"></textarea>
+          </section>
+
+          <section class="entry-card prose-card">
+            <label class="field-heading" for="learnedText">
+              <span class="field-index">04</span>
+              <span><strong>今天学到了什么</strong><small>What I learned</small></span>
+            </label>
+            <textarea id="learnedText" rows="5" placeholder="一个知识点、一个判断或一次失败。"></textarea>
+          </section>
+
+          <section class="entry-card prose-card comet-card">
+            <label class="field-heading" for="ideaText">
+              <span class="field-index">05</span>
+              <span><strong>突然出现的想法</strong><small>An idea that came up · 填写后会出现彗星</small></span>
+            </label>
+            <textarea id="ideaText" rows="5" placeholder="先记住，不急着证明它。"></textarea>
+          </section>
+
+          <section class="entry-card prose-card">
+            <label class="field-heading" for="otherText">
+              <span class="field-index">06</span>
+              <span><strong>其他</strong><small>Other</small></span>
+            </label>
+            <textarea id="otherText" rows="5" placeholder="任何不属于上面几类的内容。"></textarea>
+          </section>
+        </div>
+
+        <section class="save-dock" aria-label="保存控制">
+          <div class="save-copy">
+            <strong id="saveTitle">草稿会自动保存在这台设备上</strong>
+            <span id="saveDetail">点击保存后才会同步到 GitHub 并更新网站。</span>
+          </div>
+          <div class="save-actions">
+            <button class="secondary-button" id="reloadButton" type="button">重新载入</button>
+            <button class="primary-button" id="saveButton" type="submit">
+              <span class="button-idle">保存并发布</span>
+              <span class="button-busy">正在保存…</span>
+            </button>
+          </div>
+        </section>
+      </form>
+    </main>
+
+    <template id="sessionTemplate">
+      <div class="session-row">
+        <label class="session-project"><span>项目</span><select required></select></label>
+        <label class="session-hours"><span>小时</span><input type="number" min="0" max="24" step="0.25" inputmode="decimal" value="0" required /></label>
+        <label class="session-note"><span>备注</span><input type="text" maxlength="500" placeholder="可选，例如：完成实验设置" /></label>
+        <button class="remove-session" type="button" aria-label="删除这个项目">×</button>
+      </div>
+    </template>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <noscript>这个记录页面需要启用 JavaScript。</noscript>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
