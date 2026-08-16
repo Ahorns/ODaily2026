@@ -1,22 +1,5 @@
 # Constellation registry.
-#
-# Slugs are permanent: a day entry refers to a project by slug forever, so
-# renaming one orphans history. Change `name` freely, never the key. Grouping
-# lives here rather than in the entries so it can be reorganised at any time
-# without touching a single past day.
-#
-# Two separate things drive how a day's planet looks, and they are deliberately
-# not the same thing:
-#
-#   `color`     WHAT you worked on. A day's planet is the blend of its projects'
-#               colours, weighted by hours, so a split day is visibly a mixture
-#               and no two working patterns look alike.
-#   `category`  HOW you worked. It picks the terrain, when a session does not say
-#               otherwise:
-#                 writing -> ice     reading -> forest   coding  -> gas giant
-#                 data    -> ocean   meeting -> volcanic admin   -> barren rock
-#
-# Omit `color` and the build assigns a stable one from the house palette.
+# Managed from the private ODaily editor.
 
 groups:
   research:
@@ -28,11 +11,9 @@ groups:
   life:
     name: "Life"
     blurb: "Everything that is not work but still counts."
-
   gravity:
     name: "Gravity"
     blurb: "What I think. The ideas everything else falls towards."
-
   others:
     name: "Others"
     blurb: "Not yet sorted — work counted before it has been named."
@@ -41,71 +22,61 @@ projects:
   odaily:
     name: "ODaily"
     group: craft
-    category: coding
+    category: "coding"
     color: "#4fc3f7"
     started: 2026-07-31
     status: active
     blurb: "This site — the log that keeps the rest of the log honest."
-
-  # ---- Replace the examples below with your real projects. ----
-
   thesis:
     name: "Thesis"
     group: research
-    category: writing
+    category: "writing"
     color: "#f2a65a"
     started: 2026-07-31
     status: active
     blurb: "The main line of work."
-
   reading:
     name: "Reading"
     group: research
-    category: reading
+    category: "reading"
     color: "#8ad17f"
     status: active
     blurb: "Papers and books, tracked as time rather than as a list."
-
   multicoding:
     name: "Multi-Coding"
     group: research
-    category: coding
+    category: "coding"
     color: "#5fa8d3"
     status: active
-    blurb: ""
-
   3DIC:
     name: "3DIC"
     group: research
-    category: coding
+    category: "coding"
     color: "#e07a5f"
     status: active
-    blurb: ""
-
   pnr:
     name: "P&R"
     group: research
-    category: coding
+    category: "coding"
     color: "#4ecdc4"
     status: active
-    blurb: ""
-
-  # A group only appears once something lives in it, so each new family starts
-  # with one project. Rename these freely — `name` is yours to change. The key on
-  # the left is not: past entries refer to it forever.
-
   thinking:
     name: "Thinking"
     group: gravity
-    category: writing
+    category: "writing"
     color: "#b48ce8"
     status: active
     blurb: "Time spent working something out rather than producing anything."
-
   other:
     name: "Other"
     group: others
-    category: admin
+    category: "admin"
     color: "#9aa5b8"
     status: active
     blurb: "The hours that belong somewhere, once it is clear where."
+  wos:
+    name: "Words of Song"
+    group: research
+    category: "coding"
+    color: "#7fd8f7"
+    status: active
