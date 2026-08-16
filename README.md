@@ -4,6 +4,11 @@ A daily log built as a galaxy. A day is a planet, a run of days is a stellar
 system, a project is a constellation traced across whatever nights it appeared
 in.
 
+## Live websites
+
+- **ODaily journal:** <https://odaily2026.pages.dev/>
+- **Private writer:** <https://odaily-write.pages.dev/>
+
 The site has two registers on purpose. What you **navigate** — the month map on
 the home page — is pixel art. What you **read** — an entry — is quiet and
 text-first, in the same palette. The metaphor stops at the door of an entry.
