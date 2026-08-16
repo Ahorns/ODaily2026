@@ -1,0 +1,40 @@
+---
+title: "Sunday 16 August 2026"
+date: 2026-08-16
+milestone: false
+---
+
+## The start
+
+I am back again.
+
+## What I did
+
+<!-- time
+  - project: odaily
+    hours: 0
+    note: ""
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, pnr, reading, thesis
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
