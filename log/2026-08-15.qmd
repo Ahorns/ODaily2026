@@ -1,0 +1,43 @@
+---
+title: "Saturday 15 August 2026"
+date: 2026-08-15
+milestone: false
+---
+
+## The start
+
+Back again.
+
+## What I did
+
+<!-- time
+  - project: odaily
+    hours: 1
+    note: "Update Cloudeflare with ODaily, more easy to update."
+  - project: thesis
+    hours: 3
+    note: "Finishing Report"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, pnr, reading, thesis
+-->
+
+Today I finish first version of Report, but it did not that well, I will update that tomorrow. I spent a lot of time optimizing the website. I also integrated Cloudflare with it, so now I can update it from either my phone or the website itself, instead of relying only on Python code. This makes it much more convenient.
+
+## What I did well
+
+Cloudflare is so convenient.
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
