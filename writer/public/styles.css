@@ -112,7 +112,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 .shell {
   display: grid;
-  grid-template-columns: minmax(220px, 260px) minmax(0, 920px);
+  grid-template-columns: minmax(240px, 290px) minmax(0, 890px);
   gap: 24px;
   width: min(1220px, calc(100% - 40px));
   margin: 32px auto 110px;
@@ -187,7 +187,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 .project-manager #projectManagerBody { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule-dim); }
 .project-list { display: grid; gap: 7px; margin: 14px 0 19px; }
-.project-row { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto; gap: 9px; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(24, 34, 58, 0.8); }
+.project-row { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto; gap: 9px; align-items: center; padding: 8px 2px 8px 0; border-bottom: 1px solid rgba(24, 34, 58, 0.8); }
 .project-swatch { width: 8px; height: 8px; }
 .project-row-details { min-width: 0; }
 .project-row-details strong, .project-row-details small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
