@@ -117,7 +117,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   gap: 16px;
   align-self: start;
   max-height: calc(100vh - 124px);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .history-panel {
