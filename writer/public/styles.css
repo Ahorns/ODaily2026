@@ -110,12 +110,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   align-items: start;
 }
 
-.history-panel {
+.sidebar {
   position: sticky;
   top: 100px;
+  display: grid;
+  gap: 16px;
+  align-self: start;
   max-height: calc(100vh - 124px);
-  padding: 20px;
   overflow: auto;
+}
+
+.history-panel {
+  padding: 20px;
   border: 1px solid var(--rule);
   border-left: 3px solid var(--gold);
   background: rgba(13, 20, 36, 0.92);
@@ -153,8 +159,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .history-help, .muted { color: var(--dim); font-size: 0.7rem; line-height: 1.65; }
 
 .project-manager {
-  grid-column: 1;
-  grid-row: 2;
   padding: 20px;
   border: 1px solid var(--rule);
   border-left: 3px solid var(--comet);
@@ -286,8 +290,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.78); }
 
 @media (max-width: 900px) {
   .shell { grid-template-columns: 1fr; width: min(760px, calc(100% - 28px)); margin-top: 22px; }
-  .history-panel { position: static; max-height: none; }
-  .project-manager { grid-column: auto; grid-row: auto; }
+  .sidebar { position: static; max-height: none; overflow: visible; }
   .history-list { display: flex; gap: 5px; overflow-x: auto; margin-bottom: 10px; padding-bottom: 4px; }
   .history-date { flex: 0 0 auto; width: auto; }
   .history-help { display: none; }
