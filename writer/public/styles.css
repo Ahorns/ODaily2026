@@ -119,6 +119,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   max-height: calc(100vh - 124px);
   overflow-y: auto;
   overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .history-panel {
@@ -292,6 +294,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.78); }
 @media (max-width: 900px) {
   .shell { grid-template-columns: 1fr; width: min(760px, calc(100% - 28px)); margin-top: 22px; }
   .sidebar { position: static; max-height: none; overflow: visible; }
+  .project-manager #projectManagerBody { max-height: 360px; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
   .history-list { display: flex; gap: 5px; overflow-x: auto; margin-bottom: 10px; padding-bottom: 4px; }
   .history-date { flex: 0 0 auto; width: auto; }
   .history-help { display: none; }
