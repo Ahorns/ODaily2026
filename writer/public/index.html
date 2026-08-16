@@ -41,6 +41,70 @@
         <p class="history-help">Select a previous date to view or edit it. GitHub keeps every published revision.</p>
       </aside>
 
+      <section class="project-manager" aria-labelledby="projectManagerTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">CONSTELLATIONS</p>
+            <h2 id="projectManagerTitle">Projects</h2>
+          </div>
+          <button class="icon-button" id="toggleProjects" type="button" aria-expanded="false" aria-controls="projectManagerBody" title="Manage projects" aria-label="Manage projects">+</button>
+        </div>
+        <div id="projectManagerBody" hidden>
+          <p class="history-help">Add a project here. It will appear in the Project menu after saving.</p>
+          <div class="project-list" id="projectList"></div>
+          <form class="project-form" id="projectForm">
+            <input id="projectOriginalSlug" type="hidden" />
+            <label>
+              <span>Project name</span>
+              <input id="projectName" type="text" maxlength="120" placeholder="e.g. English Learning" required />
+            </label>
+            <label>
+              <span>Project key</span>
+              <input id="projectSlug" type="text" maxlength="60" placeholder="english-learning" />
+            </label>
+            <label>
+              <span>Group</span>
+              <select id="projectGroup" required></select>
+            </label>
+            <label id="newGroupRow" hidden>
+              <span>New group name</span>
+              <input id="newGroupName" type="text" maxlength="80" placeholder="e.g. Study" />
+            </label>
+            <label>
+              <span>Type</span>
+              <select id="projectCategory">
+                <option value="coding">Coding</option>
+                <option value="writing">Writing</option>
+                <option value="reading">Reading</option>
+                <option value="data">Data</option>
+                <option value="meeting">Meeting</option>
+                <option value="admin">Admin</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+            <label>
+              <span>Color</span>
+              <input id="projectColor" type="color" value="#7fd8f7" />
+            </label>
+            <label>
+              <span>Description</span>
+              <textarea id="projectBlurb" rows="3" maxlength="500" placeholder="What is this project about?"></textarea>
+            </label>
+            <label>
+              <span>Status</span>
+              <select id="projectStatus">
+                <option value="active">Active</option>
+                <option value="archived">Archived</option>
+              </select>
+            </label>
+            <div class="project-form-actions">
+              <button class="secondary-button" id="cancelProject" type="button">Cancel</button>
+              <button class="primary-button" id="saveProject" type="submit">Save project</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
       <form class="editor" id="entryForm">
         <section class="hero-card">
           <div>

@@ -17,6 +17,22 @@ const elements = {
   saveDetail: document.querySelector("#saveDetail"),
   publicLink: document.querySelector("#publicEntryLink"),
   toast: document.querySelector("#toast"),
+  toggleProjects: document.querySelector("#toggleProjects"),
+  projectManagerBody: document.querySelector("#projectManagerBody"),
+  projectList: document.querySelector("#projectList"),
+  projectForm: document.querySelector("#projectForm"),
+  projectOriginalSlug: document.querySelector("#projectOriginalSlug"),
+  projectName: document.querySelector("#projectName"),
+  projectSlug: document.querySelector("#projectSlug"),
+  projectGroup: document.querySelector("#projectGroup"),
+  newGroupRow: document.querySelector("#newGroupRow"),
+  newGroupName: document.querySelector("#newGroupName"),
+  projectCategory: document.querySelector("#projectCategory"),
+  projectColor: document.querySelector("#projectColor"),
+  projectBlurb: document.querySelector("#projectBlurb"),
+  projectStatus: document.querySelector("#projectStatus"),
+  cancelProject: document.querySelector("#cancelProject"),
+  saveProject: document.querySelector("#saveProject"),
   fields: {
     start: document.querySelector("#startText"),
     did: document.querySelector("#didText"),
@@ -36,6 +52,8 @@ const state = {
   draftTimer: null,
   toastTimer: null,
   publishSequence: 0,
+  projectRegistry: { groups: {}, projects: {} },
+  projectsSha: "",
 };
 
 function localToday() {
@@ -121,6 +139,159 @@ function notify(message, kind = "success") {
   state.toastTimer = setTimeout(() => { elements.toast.dataset.show = "false"; }, 4200);
 }
 
+function cloneRegistry() {
+  return JSON.parse(JSON.stringify(state.projectRegistry));
+}
+
+function slugify(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+}
+
+function renderProjectGroupOptions(selected = "") {
+  elements.projectGroup.replaceChildren();
+  for (const [key, group] of Object.entries(state.projectRegistry.groups || {})) {
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = group.name || key;
+    option.selected = key === selected;
+    elements.projectGroup.append(option);
+  }
+  const newOption = document.createElement("option");
+  newOption.value = "__new__";
+  newOption.textContent = "+ New group";
+  newOption.selected = selected === "__new__";
+  elements.projectGroup.append(newOption);
+  setNewGroupVisibility();
+}
+
+function setNewGroupVisibility() {
+  const isNew = elements.projectGroup.value === "__new__";
+  elements.newGroupRow.hidden = !isNew;
+  elements.newGroupName.required = isNew;
+}
+
+function renderProjectManager() {
+  elements.projectList.replaceChildren();
+  const entries = Object.entries(state.projectRegistry.projects || {});
+  if (!entries.length) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = "No projects yet.";
+    elements.projectList.append(empty);
+    return;
+  }
+  for (const [slug, project] of entries) {
+    const row = document.createElement("div");
+    row.className = "project-row";
+    const swatch = document.createElement("span");
+    swatch.className = "project-swatch";
+    swatch.style.background = project.color || "#7fd8f7";
+    const details = document.createElement("span");
+    details.className = "project-row-details";
+    const name = document.createElement("strong");
+    name.textContent = project.name || slug;
+    const meta = document.createElement("small");
+    meta.textContent = (project.status === "archived" ? "Archived · " : "") + (project.category || "other") + " · " + slug;
+    details.append(name, meta);
+    const edit = document.createElement("button");
+    edit.type = "button";
+    edit.className = "icon-button project-edit";
+    edit.textContent = "Edit";
+    edit.addEventListener("click", () => editProject(slug));
+    row.append(swatch, details, edit);
+    elements.projectList.append(row);
+  }
+}
+
+function resetProjectForm() {
+  elements.projectOriginalSlug.value = "";
+  elements.projectName.value = "";
+  elements.projectSlug.value = "";
+  elements.projectSlug.disabled = false;
+  renderProjectGroupOptions(Object.keys(state.projectRegistry.groups || {})[0] || "");
+  elements.newGroupName.value = "";
+  elements.projectCategory.value = "coding";
+  elements.projectColor.value = "#7fd8f7";
+  elements.projectBlurb.value = "";
+  elements.projectStatus.value = "active";
+}
+
+function editProject(slug) {
+  const project = state.projectRegistry.projects?.[slug];
+  if (!project) return;
+  elements.projectOriginalSlug.value = slug;
+  elements.projectName.value = project.name || "";
+  elements.projectSlug.value = slug;
+  elements.projectSlug.disabled = true;
+  renderProjectGroupOptions(project.group || "");
+  elements.newGroupName.value = "";
+  elements.projectCategory.value = project.category || "other";
+  elements.projectColor.value = project.color || "#7fd8f7";
+  elements.projectBlurb.value = project.blurb || "";
+  elements.projectStatus.value = project.status || "active";
+  elements.projectName.focus();
+}
+
+async function saveProject(event) {
+  event.preventDefault();
+  const registry = cloneRegistry();
+  const originalSlug = elements.projectOriginalSlug.value.trim();
+  const name = elements.projectName.value.trim();
+  const slug = (elements.projectSlug.value.trim() || slugify(name) || "project-" + Date.now().toString(36)).toLowerCase();
+  let group = elements.projectGroup.value;
+  if (group === "__new__") {
+    const groupName = elements.newGroupName.value.trim();
+    group = slugify(groupName);
+    if (!group || !groupName) {
+      notify("Enter a name for the new group.", "error");
+      return;
+    }
+    registry.groups[group] ||= { name: groupName, blurb: "" };
+  }
+  if (!name || !slug) {
+    notify("Enter a project name.", "error");
+    return;
+  }
+  if (!originalSlug && registry.projects[slug]) {
+    notify("That project key already exists.", "error");
+    return;
+  }
+  registry.projects[slug] = {
+    ...(registry.projects[originalSlug] || {}),
+    name,
+    group,
+    category: elements.projectCategory.value,
+    color: elements.projectColor.value,
+    status: elements.projectStatus.value,
+    blurb: elements.projectBlurb.value.trim(),
+  };
+  if (originalSlug && originalSlug !== slug) delete registry.projects[originalSlug];
+
+  elements.saveProject.disabled = true;
+  try {
+    const data = await request("/api/projects", {
+      method: "PUT",
+      body: JSON.stringify({ sha: state.projectsSha, registry }),
+    });
+    state.projectsSha = data.sha;
+    state.projectRegistry = registry;
+    await loadProjects();
+    refreshSessionProjects();
+    renderProjectManager();
+    resetProjectForm();
+    notify("Project saved. The galaxy is rebuilding.", "success");
+  } catch (error) {
+    notify(error.message, "error");
+  } finally {
+    elements.saveProject.disabled = false;
+  }
+}
+
 async function request(path, options = {}) {
   const response = await fetch(path, {
     ...options,
@@ -155,6 +326,14 @@ function projectOptions(select, selected = "") {
       optionGroup.append(option);
     }
     select.append(optionGroup);
+  }
+}
+
+function refreshSessionProjects() {
+  for (const row of elements.sessions.querySelectorAll(".session-row")) {
+    const select = row.querySelector("select");
+    const selected = select.value;
+    projectOptions(select, selected);
   }
 }
 
@@ -277,7 +456,12 @@ function renderHistory() {
 async function loadProjects() {
   const data = await request("/api/projects");
   state.projects = data.projects || [];
+  state.projectRegistry = data.registry || { groups: {}, projects: {} };
+  state.projectsSha = data.sha || "";
   if (!state.projects.length) throw new Error("No projects were found. Check projects.yml.");
+  renderProjectGroupOptions(Object.keys(state.projectRegistry.groups || {})[0] || "");
+  renderProjectManager();
+  refreshSessionProjects();
 }
 
 async function loadDates() {
@@ -368,5 +552,15 @@ elements.today.addEventListener("click", () => loadDate(localToday()));
 elements.addSession.addEventListener("click", () => { addSession(); changed(); });
 elements.reload.addEventListener("click", () => loadDate(elements.date.value));
 elements.refreshDates.addEventListener("click", loadDates);
+elements.toggleProjects.addEventListener("click", () => {
+  const open = elements.projectManagerBody.hidden;
+  elements.projectManagerBody.hidden = !open;
+  elements.toggleProjects.setAttribute("aria-expanded", String(open));
+  elements.toggleProjects.textContent = open ? "−" : "+";
+  if (open) resetProjectForm();
+});
+elements.projectGroup.addEventListener("change", setNewGroupVisibility);
+elements.projectForm.addEventListener("submit", saveProject);
+elements.cancelProject.addEventListener("click", resetProjectForm);
 
 boot();

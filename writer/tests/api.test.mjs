@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { onRequest as authorize } from "../functions/api/_middleware.js";
 import { onRequestPut as saveEntry } from "../functions/api/entry.js";
 import { onRequestGet as publishStatus } from "../functions/api/publish-status.js";
+import { onRequestPut as saveProjects } from "../functions/api/projects.js";
 import { parseEntry } from "../functions/lib/entry-format.js";
 
 const env = {
@@ -145,6 +146,66 @@ test("publish status reports the real public-site workflow result", async () => 
       conclusion: "success",
       runUrl: "https://github.example/run",
     });
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("project manager saves a new project through the Contents API", async () => {
+  const originalFetch = globalThis.fetch;
+  let written = null;
+  globalThis.fetch = async (url, init = {}) => {
+    const address = String(url);
+    if (address.includes("contents/projects.yml") && !init.method) {
+      return Response.json({ content: base64(projects), sha: "projects-sha" });
+    }
+    if (address.includes("contents/projects.yml") && init.method === "PUT") {
+      written = JSON.parse(init.body);
+      return Response.json({
+        content: { sha: "projects-new-sha", html_url: "https://github.example/projects" },
+        commit: { sha: "c".repeat(40), html_url: "https://github.example/projects-commit" },
+      });
+    }
+    return new Response("Unexpected request", { status: 500 });
+  };
+
+  try {
+    const registry = {
+      groups: { craft: { name: "Craft", blurb: "" } },
+      projects: {
+        odaily: {
+          name: "ODaily",
+          group: "craft",
+          category: "coding",
+          color: "#4fc3f7",
+          status: "active",
+          blurb: "",
+        },
+        english: {
+          name: "English Learning",
+          group: "craft",
+          category: "reading",
+          color: "#7fd8f7",
+          status: "active",
+          blurb: "Vocabulary practice.",
+        },
+      },
+    };
+    const response = await saveProjects({
+      env,
+      request: new Request("https://writer.example/api/projects", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sha: "projects-sha", registry }),
+      }),
+    });
+    assert.equal(response.status, 200);
+    const result = await response.json();
+    assert.equal(result.sha, "projects-new-sha");
+    assert.ok(written);
+    const encoded = Uint8Array.from(atob(written.content), (character) => character.charCodeAt(0));
+    assert.match(new TextDecoder().decode(encoded), /English Learning/);
+    assert.match(new TextDecoder().decode(encoded), /Vocabulary practice/);
   } finally {
     globalThis.fetch = originalFetch;
   }

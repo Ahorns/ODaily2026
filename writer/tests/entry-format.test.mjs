@@ -5,7 +5,12 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 import { formatEntry, parseEntry, validateEntry } from "../functions/lib/entry-format.js";
-import { parseProjectRegistry } from "../functions/lib/projects.js";
+import {
+  parseProjectDocument,
+  parseProjectRegistry,
+  serializeProjectDocument,
+  validateProjectDocument,
+} from "../functions/lib/projects.js";
 import { readRepoFile, writeRepoFile } from "../functions/lib/github.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -36,6 +41,25 @@ test("project registry parser keeps slugs, groups and metadata", () => {
   assert.deepEqual(projects.map((project) => project.slug).sort(), ["3DIC", "odaily"]);
   assert.equal(projects.find((project) => project.slug === "odaily").group, "Craft");
   assert.equal(projects.find((project) => project.slug === "3DIC").category, "coding");
+});
+
+test("project registry edits round-trip names, descriptions and colors", () => {
+  const document = parseProjectDocument(registryText);
+  document.groups.study = { name: "Study", blurb: "Learning time." };
+  document.projects.english = {
+    name: "English Learning",
+    group: "study",
+    category: "reading",
+    color: "#7fd8f7",
+    status: "active",
+    blurb: "Vocabulary and speaking practice.",
+  };
+  assert.deepEqual(validateProjectDocument(document), []);
+  const rebuilt = parseProjectDocument(serializeProjectDocument(document));
+  assert.equal(rebuilt.groups.study.name, "Study");
+  assert.equal(rebuilt.projects.english.name, "English Learning");
+  assert.equal(rebuilt.projects.english.blurb, "Vocabulary and speaking practice.");
+  assert.equal(rebuilt.projects.english.color, "#7fd8f7");
 });
 
 test("entry format round-trips prose, milestone and sessions", () => {
