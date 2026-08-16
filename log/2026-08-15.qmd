@@ -16,7 +16,7 @@ Back again.
     note: "Update Cloudeflare with ODaily, more easy to update."
   - project: thesis
     hours: 3
-    note: "Finishing Report"
+    note: "Finishing Report first version."
 
   Craft  odaily
   Gravity  thinking
