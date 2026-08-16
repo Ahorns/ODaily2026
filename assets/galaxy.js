@@ -883,14 +883,17 @@
   // On this page the navbar's own "Galaxy" link should fly you back rather than
   // reload the whole document. "/" and "/index.html" are the same page, so the
   // comparison has to normalise before it can match.
-  function samePage(path) {
-    return path.replace(/index\.html$/, "") === window.location.pathname.replace(/index\.html$/, "");
+  function samePage(anchor) {
+    // An external link such as the private Write editor also has a "/" pathname.
+    // Compare origins first, otherwise it is mistaken for the Galaxy home link.
+    if (anchor.origin !== window.location.origin) return false;
+    return anchor.pathname.replace(/index\.html$/, "") === window.location.pathname.replace(/index\.html$/, "");
   }
   Array.prototype.forEach.call(document.querySelectorAll(".navbar a"), function (a) {
     // The brand is deliberately exempt: on this page it is not a way back, it is
     // the way *in*. See aimBrand.
     if (a.classList.contains("navbar-brand")) return;
-    if (a.getAttribute("href") && samePage(a.pathname)) {
+    if (a.getAttribute("href") && samePage(a)) {
       a.addEventListener("click", function (ev) { ev.preventDefault(); enterOrbit(); });
     }
   });
