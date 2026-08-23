@@ -59,6 +59,8 @@
     ring: [44, 58, 96], ringFar: [26, 35, 60],
     ray: [17, 24, 42],
     empty: [46, 58, 88],
+    emptyShard: [111, 128, 168],
+    emptyGlint: [197, 210, 239],
     label: "#93a4cc", labelShadow: [6, 9, 18],
     moon: "#cdd8f0",
     select: "#f2c46b", today: "#7fd8f7", hover: "#8b9cc4",
@@ -398,6 +400,40 @@
     }
   }
 
+  // An unrecorded day is not absent: it is a broken world waiting for a log.
+  // The shards are deterministic from the date, so the same empty day keeps
+  // the same shape while the system turns around its star.
+  function fragmentedPlanet(x, y, r, seed, k) {
+    var shard = surf.fade(S.emptyShard, k);
+    var glint = surf.fade(S.emptyGlint, k * 0.72);
+    var phase = P.h2(seed, 45, 1) * TAU;
+    var pieces = 4 + Math.floor(P.h2(seed, 46, 1) * 3);
+
+    // Broken arcs suggest the missing sphere without filling its centre.
+    for (var i = 0; i < pieces; i++) {
+      var start = phase + (i / pieces) * TAU;
+      var span = 0.24 + P.h2(seed, 50 + i, 1) * 0.2;
+      var steps = Math.max(2, Math.round(r * span * 3));
+      for (var j = 0; j <= steps; j++) {
+        var a = start + span * (j / steps);
+        var px = Math.round(x + Math.cos(a) * r);
+        var py = Math.round(y + Math.sin(a) * r * 0.72);
+        surf.px(px, py, j === 0 ? glint : shard);
+      }
+    }
+
+    // A few pieces have drifted away from the main fracture.
+    var debris = 2 + Math.floor(P.h2(seed, 47, 1) * 2);
+    for (var d = 0; d < debris; d++) {
+      var da = phase + P.h2(seed, 60 + d, 1) * TAU;
+      var dist = r + 2 + Math.round(P.h2(seed, 70 + d, 1) * 2);
+      var dx = Math.round(x + Math.cos(da) * dist);
+      var dy = Math.round(y + Math.sin(da) * dist * 0.72);
+      surf.px(dx, dy, shard);
+      if (P.h2(seed, 80 + d, 1) > 0.55) surf.px(dx + (d % 2 ? 1 : -1), dy, glint);
+    }
+  }
+
   function system(scene, sys, sx, sy, w, h, z, S) {
     var scx = sx(sys.cx), scy = sy(sys.cy);
     var outer = sys.outer * z;
@@ -446,9 +482,7 @@
       var kk = lit ? 1 : 0.24;
 
       if (!sl.entry) {
-        var ec = surf.fade(S.empty, kk);
-        surf.px(px2, py2, ec);
-        if (z > 0.7) { surf.px(px2 + 2, py2 - 1, ec); surf.px(px2 - 2, py2 + 1, ec); }
+        fragmentedPlanet(px2, py2, Math.max(2, Math.round(sl.r * z)), sl.seed, kk);
         continue;
       }
 

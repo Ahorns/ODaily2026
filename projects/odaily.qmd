@@ -7,9 +7,11 @@ subtitle: "Constellation in Craft"
 
 This site — the log that keeps the rest of the log honest.
 
-<div class="stat-row"><div class="stat"><span class="stat-value">1h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">2</span><span class="stat-label">days visited</span></div><div class="stat"><span class="stat-value">2026-08-04</span><span class="stat-label">first seen</span></div></div>
+<div class="stat-row"><div class="stat"><span class="stat-value">2h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">4</span><span class="stat-label">days visited</span></div><div class="stat"><span class="stat-value">2026-08-04</span><span class="stat-label">first seen</span></div></div>
 
 | Day | Kind | Time | Note |
 |:--|:--|--:|:--|
+| [2026-08-16](../log/2026-08-16.qmd) | coding | 0m | — |
+| [2026-08-15](../log/2026-08-15.qmd) | coding | 1h | Update Cloudeflare with ODaily, more easy to update. |
 | [2026-08-05](../log/2026-08-05.qmd) | coding | 0m | — |
 | [2026-08-04](../log/2026-08-04.qmd) | coding | 1h | Update this pages, finally start it! |

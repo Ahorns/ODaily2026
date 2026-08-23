@@ -100,6 +100,11 @@
     return Math.max(4, Math.round(band * maxR));
   }
 
+  function emptyRadius(maxR, seed) {
+    var base = Math.max(3, Math.round(maxR * 0.58));
+    return base + (hash(seed, 44) > 0.62 ? 1 : 0);
+  }
+
   function buildGalaxy() {
     // Oldest system at the centre of the spiral, so the galaxy grows outward as
     // the year does and old months never move once placed.
@@ -144,7 +149,7 @@
           type: e ? e.type : "rock",
           color: e ? e.color : null,
           name: e ? e.name : "",
-          r: e ? radiusFor(e.hours, plan.maxR) : 0,
+          r: e ? radiusFor(e.hours, plan.maxR) : emptyRadius(plan.maxR, seed),
           // The ring and the angle are the date, not coordinates. x and y are
           // derived from them every frame so the system can turn — see advance().
           // ca/sa are taken once so that turn costs four multiplies, not two trig

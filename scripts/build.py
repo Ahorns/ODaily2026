@@ -452,14 +452,39 @@ def write_if_changed(path: Path, content: str) -> bool:
 
 def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
     """Everything the map needs, newest system first."""
-    systems: dict[str, dict] = {}
+    today = date.today()
+    logged_keys = {
+        system_for(day["date"])["key"]
+        for day in days
+        if day["date"] <= today
+    }
+
+    # Keep an explicitly defined system in the map even before its first entry.
+    # The renderer fills its date range with empty slots, so a new system can
+    # already be seen as a place waiting to be written into. Future dates are
+    # deliberately not added: an empty slot only represents a day that has
+    # already arrived and was left unrecorded.
+    systems: dict[str, dict] = {
+        rng["key"]: {
+            "key": rng["key"],
+            "name": rng["name"],
+            "start": rng["start"],
+            "end": min(rng["end"], today),
+            "days": {},
+        }
+        for rng in SYSTEM_RANGES
+        if rng["start"] <= today
+        and (rng["key"] in logged_keys or rng["start"] <= today <= rng["end"])
+    }
     for day in days:
+        if day["date"] > today:
+            continue
         rng = system_for(day["date"])
         system = systems.setdefault(rng["key"], {
             "key": rng["key"],
             "name": rng["name"],
             "start": rng["start"],
-            "end": rng["end"],
+            "end": min(rng["end"], today),
             "days": {},
         })
         system["days"][day["date"].isoformat()] = {

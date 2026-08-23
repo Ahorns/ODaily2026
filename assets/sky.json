@@ -8,10 +8,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/odaily.html",
-   "days": 2,
-   "hours": 1.0,
+   "days": 4,
+   "hours": 2.0,
    "first": "2026-08-04",
-   "last": "2026-08-05"
+   "last": "2026-08-16"
   },
   "thesis": {
    "name": "Thesis",
@@ -21,10 +21,10 @@
    "category": "writing",
    "status": "active",
    "url": "projects/thesis.html",
-   "days": 0,
-   "hours": 0.0,
-   "first": "",
-   "last": ""
+   "days": 1,
+   "hours": 3.0,
+   "first": "2026-08-15",
+   "last": "2026-08-15"
   },
   "reading": {
    "name": "Reading",
@@ -47,10 +47,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/multicoding.html",
-   "days": 1,
-   "hours": 6.0,
+   "days": 2,
+   "hours": 10.0,
    "first": "2026-08-08",
-   "last": "2026-08-08"
+   "last": "2026-08-23"
   },
   "3DIC": {
    "name": "3DIC",
@@ -60,10 +60,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/3DIC.html",
-   "days": 0,
-   "hours": 0.0,
-   "first": "",
-   "last": ""
+   "days": 1,
+   "hours": 3.0,
+   "first": "2026-08-23",
+   "last": "2026-08-23"
   },
   "pnr": {
    "name": "P&R",
@@ -103,9 +103,76 @@
    "hours": 0.0,
    "first": "",
    "last": ""
+  },
+  "wos": {
+   "name": "Words of Song",
+   "group": "Research",
+   "color": "#7fd8f7",
+   "blurb": "",
+   "category": "coding",
+   "status": "active",
+   "url": "projects/wos.html",
+   "days": 0,
+   "hours": 0.0,
+   "first": "",
+   "last": ""
+  },
+  "multidie": {
+   "name": "Multi-Die",
+   "group": "Research",
+   "color": "#7fd8f7",
+   "blurb": "",
+   "category": "coding",
+   "status": "active",
+   "url": "projects/multidie.html",
+   "days": 1,
+   "hours": 2.0,
+   "first": "2026-08-23",
+   "last": "2026-08-23"
   }
  },
  "systems": [
+  {
+   "key": "2026-08-alpha-centauri",
+   "name": "Alpha Centauri",
+   "start": "2026-08-17",
+   "end": "2026-08-23",
+   "days": {
+    "2026-08-23": {
+     "hours": 9.0,
+     "type": "gas",
+     "color": "#9ea8c0",
+     "name": "55 Cancri e",
+     "orbitAu": null,
+     "projects": [
+      "3DIC",
+      "multicoding",
+      "multidie"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Sunday 23 August 2026",
+     "url": "log/2026-08-23.html",
+     "sessions": [
+      [
+       "Multi-Coding",
+       4.0,
+       "Optimizing Fast path"
+      ],
+      [
+       "Multi-Die",
+       2.0,
+       "Checking bugs in AMF and find the benchmark in AMF is not correct"
+      ],
+      [
+       "3DIC",
+       3.0,
+       "Prepare slides for meeting in tomorrow"
+      ]
+     ]
+    }
+   }
+  },
   {
    "key": "2026-08-solar",
    "name": "Solar System",
@@ -171,6 +238,54 @@
       [
        "Multi-Coding",
        6.0,
+       ""
+      ]
+     ]
+    },
+    "2026-08-15": {
+     "hours": 4.0,
+     "type": "ice",
+     "color": "#d7ae96",
+     "name": "Hamal",
+     "orbitAu": null,
+     "projects": [
+      "odaily",
+      "thesis"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Saturday 15 August 2026",
+     "url": "log/2026-08-15.html",
+     "sessions": [
+      [
+       "ODaily",
+       1.0,
+       "Update Cloudeflare with ODaily, more easy to update."
+      ],
+      [
+       "Thesis",
+       3.0,
+       "Finishing Report first version."
+      ]
+     ]
+    },
+    "2026-08-16": {
+     "hours": 0.0,
+     "type": "gas",
+     "color": "#4fc3f7",
+     "name": "Merak",
+     "orbitAu": null,
+     "projects": [
+      "odaily"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Sunday 16 August 2026",
+     "url": "log/2026-08-16.html",
+     "sessions": [
+      [
+       "ODaily",
+       0.0,
        ""
       ]
      ]

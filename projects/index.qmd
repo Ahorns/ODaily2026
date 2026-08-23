@@ -15,11 +15,13 @@ The long arc — thesis, papers, experiments.
 
 | Constellation | Usually | Time | Days | Status |
 |:--|:--|--:|--:|:--|
-| [Multi-Coding](multicoding.qmd) | coding | 6h | 1 | active |
-| [3DIC](3DIC.qmd) | coding | — | — | active |
+| [Multi-Coding](multicoding.qmd) | coding | 10h | 2 | active |
+| [3DIC](3DIC.qmd) | coding | 3h | 1 | active |
+| [Thesis](thesis.qmd) | writing | 3h | 1 | active |
+| [Multi-Die](multidie.qmd) | coding | 2h | 1 | active |
 | [P&R](pnr.qmd) | coding | — | — | active |
 | [Reading](reading.qmd) | reading | — | — | active |
-| [Thesis](thesis.qmd) | writing | — | — | active |
+| [Words of Song](wos.qmd) | coding | — | — | active |
 
 ## [Craft](../sky/craft.qmd)
 
@@ -27,7 +29,7 @@ Tools and skills sharpened along the way.
 
 | Constellation | Usually | Time | Days | Status |
 |:--|:--|--:|--:|:--|
-| [ODaily](odaily.qmd) | coding | 1h | 2 | active |
+| [ODaily](odaily.qmd) | coding | 2h | 4 | active |
 
 ## [Gravity](../sky/gravity.qmd)
 
