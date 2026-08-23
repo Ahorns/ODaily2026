@@ -446,8 +446,9 @@
 
   // Double click: same day, but take me down to it.
   function openBelow(slot) {
-    if (!slot || !slot.entry) return;
+    if (!slot) return;
     showInfo(slot);
+    if (!slot.entry) return;
     loadInto(slot.entry.url, slot.entry.title, slot.entry);
     leaveOrbit();
   }
