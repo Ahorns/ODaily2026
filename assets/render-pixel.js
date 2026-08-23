@@ -406,31 +406,41 @@
   function fragmentedPlanet(x, y, r, seed, k) {
     var shard = surf.fade(S.emptyShard, k);
     var glint = surf.fade(S.emptyGlint, k * 0.72);
+    var crack = surf.fade(S.bg, k);
     var phase = P.h2(seed, 45, 1) * TAU;
-    var pieces = 4 + Math.floor(P.h2(seed, 46, 1) * 3);
 
-    // Broken arcs suggest the missing sphere without filling its centre.
-    for (var i = 0; i < pieces; i++) {
-      var start = phase + (i / pieces) * TAU;
-      var span = 0.24 + P.h2(seed, 50 + i, 1) * 0.2;
-      var steps = Math.max(2, Math.round(r * span * 3));
-      for (var j = 0; j <= steps; j++) {
-        var a = start + span * (j / steps);
-        var px = Math.round(x + Math.cos(a) * r);
-        var py = Math.round(y + Math.sin(a) * r * 0.72);
-        surf.px(px, py, j === 0 ? glint : shard);
+    // Start with a dim, recognisable sphere, then cut a jagged fault through
+    // it. The missing centre makes the object read as a broken planet rather
+    // than a decorative ring.
+    P.drawPlanet(surf, x, y, r, "rock", seed,
+      Math.floor(P.h2(seed, 46, 1) * P.SPIN_STEPS), k * 0.58, "#6f80a8");
+    var dirX = Math.cos(phase), dirY = Math.sin(phase) * 0.72;
+    var nx = -dirY, ny = dirX;
+    for (var t = -r - 1; t <= r + 1; t++) {
+      var wobble = Math.round((P.h2(seed, 50 + t, 1) - 0.5) * 2);
+      var fx = Math.round(x + dirX * t + nx * wobble);
+      var fy = Math.round(y + dirY * t + ny * wobble);
+      surf.px(fx, fy, crack);
+      if (Math.abs(t) % 3 === 0) surf.px(fx + Math.round(nx), fy + Math.round(ny), crack);
+    }
+
+    function chunk(cx, cy, size, colour) {
+      for (var yy = -size; yy <= size; yy++) {
+        for (var xx = -size; xx <= size; xx++) {
+          if (Math.abs(xx) + Math.abs(yy) <= size + 1) surf.px(cx + xx, cy + yy, colour);
+        }
       }
     }
 
     // A few pieces have drifted away from the main fracture.
-    var debris = 2 + Math.floor(P.h2(seed, 47, 1) * 2);
+    var debris = 3 + Math.floor(P.h2(seed, 47, 1) * 2);
     for (var d = 0; d < debris; d++) {
       var da = phase + P.h2(seed, 60 + d, 1) * TAU;
-      var dist = r + 2 + Math.round(P.h2(seed, 70 + d, 1) * 2);
+      var dist = r + 2 + Math.round(P.h2(seed, 70 + d, 1) * 3);
       var dx = Math.round(x + Math.cos(da) * dist);
       var dy = Math.round(y + Math.sin(da) * dist * 0.72);
-      surf.px(dx, dy, shard);
-      if (P.h2(seed, 80 + d, 1) > 0.55) surf.px(dx + (d % 2 ? 1 : -1), dy, glint);
+      var size = Math.max(1, Math.round(P.h2(seed, 80 + d, 1) * 1.5));
+      chunk(dx, dy, size, d === 0 ? glint : shard);
     }
   }
 

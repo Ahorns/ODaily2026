@@ -248,6 +248,7 @@ $ufo-beam: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
   margin: 0;
 }
 .stamp .milestone, .stamp .idea { color: $gold; }
+.stamp .empty-day { color: $comet; }
 
 .readout-foot, .readout-empty { margin: 0; font-size: 0.8125rem; color: $dim; }
 

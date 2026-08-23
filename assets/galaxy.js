@@ -306,7 +306,8 @@
       clampCamera();
       // Arriving with today already loaded below means the journal is never an
       // empty box on first visit.
-      if (target.entry) { showInfo(target); loadInto(target.entry.url, target.entry.title, target.entry); }
+      showInfo(target);
+      if (target.entry) loadInto(target.entry.url, target.entry.title, target.entry);
     }
   }
 
@@ -362,7 +363,6 @@
       if (Math.abs(wx - sys.cx) > OUTER + 40 || Math.abs(wy - sys.cy) > OUTER + 40) continue;
       for (var j = 0; j < sys.slots.length; j++) {
         var s = sys.slots[j];
-        if (!s.entry) continue;
         var d = Math.hypot(wx - s.x, wy - s.y);
         if (d <= s.r + pad && d < best) { best = d; hit = s; }
       }
@@ -393,10 +393,24 @@
   function showInfo(slot) {
     scene.selected = slot;
     var e = slot.entry;
-    if (!e) return;
 
     var stamp = DAY_NAMES[slot.dow] + " " + slot.d + " " +
       MONTH_NAMES[slot.m - 1] + " " + slot.yr;
+    var sys = scene.systems[slot.sys];
+
+    if (!e) {
+      overlay.innerHTML =
+        '<p class="stamp"><span>' + stamp + '</span><span class="empty-day">No entry</span></p>' +
+        '<p class="readout-name">Fractured planet</p>' +
+        '<h2>Nothing recorded yet.</h2>' +
+        '<p class="readout-foot">' + esc(sys ? sys.label : "Stellar system") +
+        ' · this date is waiting for a journal entry</p>' +
+        '<p class="readout-tip">This fragment marks an unrecorded day. Click another date to explore.</p>';
+      overlay.classList.add("is-on");
+      draw();
+      return;
+    }
+
     var names = e.projects.map(function (p) { return esc(scene.projects[p].name); }).join(", ");
 
     overlay.innerHTML =
@@ -728,7 +742,7 @@
       tapTimer = null; tapSlot = null;
       showInfo(hit);
       // Loaded quietly so "Read it below" and a later double-click are instant.
-      loadInto(hit.entry.url, hit.entry.title, hit.entry);
+      if (hit.entry) loadInto(hit.entry.url, hit.entry.title, hit.entry);
     }, 260);
   }
 
