@@ -1,0 +1,47 @@
+---
+title: "Sunday 23 August 2026"
+date: 2026-08-23
+milestone: false
+---
+
+## The start
+
+
+
+## What I did
+
+<!-- time
+  - project: multicoding
+    hours: 4
+    note: "Optimizing Fast path"
+  - project: multidie
+    hours: 2
+    note: "Checking bugs in AMF and find the benchmark in AMF is not correct"
+  - project: 3DIC
+    hours: 3
+    note: "Prepare slides for meeting in tomorrow"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+-->
+
+
+
+## What I did well
+
+Go to EE to study. 
+Finish dinner back to EE for study.
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
