@@ -80,3 +80,9 @@ projects:
     category: "coding"
     color: "#7fd8f7"
     status: active
+  multidie:
+    name: "Multi-Die"
+    group: research
+    category: "coding"
+    color: "#7fd8f7"
+    status: active
