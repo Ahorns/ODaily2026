@@ -1,7 +1,7 @@
 ---
 title: "Monday 24 August 2026"
 date: 2026-08-24
-milestone: false
+milestone: true
 ---
 
 ## The start
@@ -13,7 +13,22 @@ Back to EE study!
 <!-- time
   - project: 3DIC
     hours: 3
-    note: "Prepare report"
+    note: "Prepare report and discussion with Professor"
+  - project: odaily
+    hours: 0.25
+    note: "Update the missing day style"
+  - project: wos
+    hours: 0.5
+    note: "Still starting but with big troubles"
+  - project: pnr
+    hours: 1.25
+    note: "Start with new JPR6 version, with new method. Involving more ai and using repeat arch of FPGA this time"
+  - project: multidie
+    hours: 1.25
+    note: "First time finish running based on AMF design"
+  - project: multicoding
+    hours: 2.5
+    note: "Still running for different test. slightly improve."
 
   Craft  odaily
   Gravity  thinking
@@ -21,7 +36,7 @@ Back to EE study!
   Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
 -->
 
-
+Milestone: Multi-Die:First time finish running based on AMF design
 
 ## What I did well
 
