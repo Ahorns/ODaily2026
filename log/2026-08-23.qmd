@@ -12,14 +12,17 @@ milestone: false
 
 <!-- time
   - project: multicoding
-    hours: 4
+    hours: 7
     note: "Optimizing Fast path"
   - project: multidie
     hours: 2
     note: "Checking bugs in AMF and find the benchmark in AMF is not correct"
   - project: 3DIC
-    hours: 3
-    note: "Prepare slides for meeting in tomorrow"
+    hours: 0.5
+    note: "Prepare layout for meeting in tomorrow"
+  - project: pnr
+    hours: 0.5
+    note: "Checking if we need to change another path"
 
   Craft  odaily
   Gravity  thinking
