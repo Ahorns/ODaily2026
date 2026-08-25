@@ -1,0 +1,40 @@
+---
+title: "Tuesday 25 August 2026"
+date: 2026-08-25
+milestone: false
+---
+
+## The start
+
+Back to EE before 9 o'clock! Start a new day, and we gonna discuss progamatic first time. May become a minestone maybe!
+
+## What I did
+
+<!-- time
+  - project: 3DIC
+    hours: 3
+    note: "Prepare Meeting with Progamatic!"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
