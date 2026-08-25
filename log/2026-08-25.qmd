@@ -14,6 +14,18 @@ Back to EE before 9 o'clock! Start a new day, and we gonna discuss progamatic fi
   - project: 3DIC
     hours: 3
     note: "Prepare Meeting with Progamatic!"
+  - project: multicoding
+    hours: 4
+    note: "Struggling, try to convert another arch"
+  - project: multidie
+    hours: 1.5
+    note: "AMF results turn out not very good."
+  - project: pnr
+    hours: 2
+    note: "First time find FPGA repetition useful"
+  - project: other
+    hours: 0.5
+    note: "Try to design a navigator to monitor my plan, since I find it is easy for us to get lost during ai helps me."
 
   Craft  odaily
   Gravity  thinking
@@ -33,7 +45,7 @@ Back to EE before 9 o'clock! Start a new day, and we gonna discuss progamatic fi
 
 ## An idea that came up
 
-
+Design Boss Monitor system.
 
 ## Other
 
