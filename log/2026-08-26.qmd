@@ -1,0 +1,40 @@
+---
+title: "Wednesday 26 August 2026"
+date: 2026-08-26
+milestone: false
+---
+
+## The start
+
+
+
+## What I did
+
+<!-- time
+  - project: multidie
+    hours: 1
+    note: "Start to rethink version 7"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
