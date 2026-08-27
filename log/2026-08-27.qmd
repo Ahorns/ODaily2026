@@ -1,0 +1,40 @@
+---
+title: "Thursday 27 August 2026"
+date: 2026-08-27
+milestone: false
+---
+
+## The start
+
+Did not go to EE, but indeed study, I think I almost find the problem of my multi coding.
+
+## What I did
+
+<!-- time
+  - project: multicoding
+    hours: 8
+    note: "Finding bugs"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
