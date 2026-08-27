@@ -12,8 +12,11 @@ Did not go to EE, but indeed study, I think I almost find the problem of my mult
 
 <!-- time
   - project: multicoding
-    hours: 8
+    hours: 12
     note: "Finding bugs"
+  - project: multidie
+    hours: 1
+    note: ""
 
   Craft  odaily
   Gravity  thinking
