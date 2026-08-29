@@ -1,0 +1,43 @@
+---
+title: "Friday 28 August 2026"
+date: 2026-08-28
+milestone: false
+---
+
+## The start
+
+Debug multi coding.
+
+## What I did
+
+<!-- time
+  - project: multicoding
+    hours: 7
+    note: "Keep debugging"
+  - project: thesis
+    hours: 1
+    note: "Report"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+Timetable is important, ddl is also important.
+
+## An idea that came up
+
+
+
+## Other
+
+
