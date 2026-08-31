@@ -1,0 +1,40 @@
+---
+title: "Monday 31 August 2026"
+date: 2026-08-31
+milestone: false
+---
+
+## The start
+
+Brand new week! Remember carry on 3DIC and EDA work.
+
+## What I did
+
+<!-- time
+  - project: multicoding
+    hours: 2
+    note: "Continue update, reach 81.87 bro."
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
