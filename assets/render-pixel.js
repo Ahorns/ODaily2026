@@ -574,7 +574,7 @@
     if (isBehind !== behindPass) return;
     var vx = -Math.sin(angle) * xRadius;
     var vy = Math.cos(angle) * yRadius;
-    P.drawComet(surf, Math.round(x + ox), Math.round(y + oy), k, -vx, -vy);
+    P.drawComet(surf, Math.round(x + ox), Math.round(y + oy), k, -vx, -vy, r);
   }
 
   function bracket(x, y, b, c) {

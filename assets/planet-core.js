@@ -397,11 +397,16 @@
     }
   }
 
-  function drawComet(surf, cx, cy, k, dx, dy) {
+  function drawComet(surf, cx, cy, k, dx, dy, radius) {
     var head = surf.fade(hex("#ffe9b0"), k);
     var tail = surf.fade(hex("#8d6d33"), k);
-    surf.px(cx, cy, head); surf.px(cx + 1, cy, head);
-    surf.px(cx, cy + 1, head); surf.px(cx + 1, cy + 1, head);
+    // The galaxy passes the planet's current radius. Scale the comet with it
+    // so zooming never makes the marker look detached from its world. The
+    // static entry sprite omits radius and keeps its original 2x2 head.
+    var size = radius === undefined ? 2 : Math.max(1, Math.round(radius * 0.22 + 0.75));
+    for (var hy = 0; hy < size; hy++) {
+      for (var hx = 0; hx < size; hx++) surf.px(cx + hx, cy + hy, head);
+    }
 
     // The entry sprite passes no direction and keeps the original fixed tail.
     // The galaxy passes the comet's travel direction so its tail follows the
@@ -409,8 +414,10 @@
     if (dx !== undefined && dy !== undefined) {
       var scale = Math.max(Math.abs(dx), Math.abs(dy), 0.001);
       dx /= scale; dy /= scale;
-      for (var moving = 1; moving <= 4; moving++) {
-        surf.px(cx + Math.round(dx * (moving + 1)), cy + Math.round(dy * (moving + 1)), tail);
+      var movingLength = radius === undefined ? 4 : Math.max(2, Math.round(size * 2));
+      for (var moving = 0; moving < movingLength; moving++) {
+        var movingDistance = size + 1 + moving;
+        surf.px(cx + Math.round(dx * movingDistance), cy + Math.round(dy * movingDistance), tail);
       }
       return;
     }
