@@ -78,7 +78,7 @@ projects:
     name: "Words of Song"
     group: research
     category: "coding"
-    color: "#7fd8f7"
+    color: "#c792ea"
     status: active
   multidie:
     name: "Multi-Die"

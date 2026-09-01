@@ -107,7 +107,7 @@
   "wos": {
    "name": "Words of Song",
    "group": "Research",
-   "color": "#7fd8f7",
+   "color": "#c792ea",
    "blurb": "",
    "category": "coding",
    "status": "active",
@@ -211,7 +211,7 @@
     "2026-08-24": {
      "hours": 8.75,
      "type": "gas",
-     "color": "#b0a9aa",
+     "color": "#b4a5a9",
      "name": "Deneb Algedi",
      "orbitAu": null,
      "projects": [
