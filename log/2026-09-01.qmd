@@ -15,11 +15,14 @@ Back to EE in 11 o'clock.
     hours: 3
     note: "Optinmizing"
   - project: other
-    hours: 0.5
-    note: "Reply mail"
+    hours: 1
+    note: "Reply mail and message"
   - project: pnr
     hours: 1
     note: "Finding possible cooperation"
+  - project: 3DIC
+    hours: 1.5
+    note: "Discuss with Kham."
 
   Craft  odaily
   Gravity  thinking
