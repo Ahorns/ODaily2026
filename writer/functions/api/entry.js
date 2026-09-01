@@ -1,9 +1,9 @@
 import { readRepoFile, writeRepoFile } from "../lib/github.js";
-import { formatEntry, parseEntry, validateEntry } from "../lib/entry-format.js";
+import { formatEntry, isValidISODate, parseEntry, validateEntry } from "../lib/entry-format.js";
 import { parseProjectRegistry } from "../lib/projects.js";
 
 function validDate(date) {
-  return /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(`${date}T00:00:00Z`));
+  return isValidISODate(date);
 }
 
 async function registry(env) {

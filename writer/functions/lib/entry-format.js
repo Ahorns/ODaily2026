@@ -101,10 +101,23 @@ function cleanBody(value) {
   return String(value || "").replace(/\r/g, "").trim();
 }
 
+// Date.parse normalizes impossible calendar dates (for example, February 31)
+// instead of rejecting them. Keep the filename, frontmatter and displayed
+// weekday tied to the same real calendar day.
+export function isValidISODate(value) {
+  const text = String(value || "");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return false;
+  const [year, month, day] = text.split("-").map(Number);
+  if (year < 1 || month < 1 || month > 12 || day < 1) return false;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const monthLengths = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day <= monthLengths[month - 1];
+}
+
 export function validateEntry(input, projectSlugs = []) {
   const errors = [];
   const date = String(input?.date || "");
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) {
+  if (!isValidISODate(date)) {
     errors.push("Invalid date.");
   }
   const allowed = new Set(projectSlugs);

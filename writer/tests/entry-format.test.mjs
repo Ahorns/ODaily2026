@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
-import { formatEntry, parseEntry, validateEntry } from "../functions/lib/entry-format.js";
+import { formatEntry, isValidISODate, parseEntry, validateEntry } from "../functions/lib/entry-format.js";
 import {
   parseProjectDocument,
   parseProjectRegistry,
@@ -147,4 +147,13 @@ test("validation rejects impossible totals and unknown projects", () => {
   );
   assert.ok(errors.some((error) => error.includes("Unknown project")));
   assert.ok(errors.some((error) => error.includes("24")));
+});
+
+test("date validation rejects impossible calendar dates", () => {
+  assert.equal(isValidISODate("2026-02-28"), true);
+  assert.equal(isValidISODate("2026-02-29"), false);
+  assert.equal(isValidISODate("2024-02-29"), true);
+  assert.equal(isValidISODate("2026-04-31"), false);
+  assert.equal(isValidISODate("2026-13-01"), false);
+  assert.ok(validateEntry({ date: "2026-02-31", sessions: [] }).includes("Invalid date."));
 });
