@@ -397,11 +397,23 @@
     }
   }
 
-  function drawComet(surf, cx, cy, k) {
+  function drawComet(surf, cx, cy, k, dx, dy) {
     var head = surf.fade(hex("#ffe9b0"), k);
     var tail = surf.fade(hex("#8d6d33"), k);
     surf.px(cx, cy, head); surf.px(cx + 1, cy, head);
     surf.px(cx, cy + 1, head); surf.px(cx + 1, cy + 1, head);
+
+    // The entry sprite passes no direction and keeps the original fixed tail.
+    // The galaxy passes the comet's travel direction so its tail follows the
+    // moving head instead of making the idea marker look pinned in place.
+    if (dx !== undefined && dy !== undefined) {
+      var scale = Math.max(Math.abs(dx), Math.abs(dy), 0.001);
+      dx /= scale; dy /= scale;
+      for (var moving = 1; moving <= 4; moving++) {
+        surf.px(cx + Math.round(dx * (moving + 1)), cy + Math.round(dy * (moving + 1)), tail);
+      }
+      return;
+    }
     for (var i = 1; i <= 4; i++) surf.px(cx + 1 + i, cy - i, tail);
   }
 

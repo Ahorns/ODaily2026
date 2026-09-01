@@ -495,7 +495,7 @@
       if (extra > 0 && pr >= 5) {
         P.drawMoons(surf, px2, py2, pr, extra, sl.seed, kk, scene.time, moonColours(scene, sl));
       }
-      if (sl.entry.idea) comet(px2 + pr + 3, py2 - pr - 3, kk);
+      if (sl.entry.idea) comet(px2 + pr + 3, py2 - pr - 3, kk, sl.seed, scene.time);
 
       if (sl === scene.selected || sl === scene.hover || sl === scene.today) {
         var col = sl === scene.selected ? P.hex(S.select)
@@ -551,8 +551,18 @@
     }
   }
 
-  function comet(x, y, k) {
-    P.drawComet(surf, x, y, k);
+  function comet(x, y, k, seed, time) {
+    // An idea is a small body in orbit around its planet: deterministic phase
+    // keeps it recognisable, while time gives the head and tail a slow drift.
+    var phase = P.h2(seed, 91, 1) * TAU;
+    var radius = 3 + P.h2(seed, 92, 1) * 4;
+    var speed = 0.34 + P.h2(seed, 93, 1) * 0.22;
+    var angle = phase + (time || 0) * speed;
+    var ox = Math.cos(angle) * radius;
+    var oy = Math.sin(angle) * radius * 0.58;
+    var vx = -Math.sin(angle);
+    var vy = Math.cos(angle) * 0.58;
+    P.drawComet(surf, Math.round(x + ox), Math.round(y + oy), k, -vx, -vy);
   }
 
   function bracket(x, y, b, c) {
@@ -591,7 +601,7 @@
     };
     body(C, C, R, slot, (day.seed % P.SPIN_STEPS) / P.SPIN_STEPS, 1);
     if (day.moons > 0) P.drawMoons(s, C, C, R, day.moons, day.seed, 1, 0, day.moonColors || S.moon);
-    if (day.idea) comet(C + R + 3, C - R - 3, 1);
+    if (day.idea) P.drawComet(s, C + R + 3, C - R - 3, 1);
     surf = was;
 
     s.blit(canvas);
