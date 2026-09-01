@@ -33,7 +33,7 @@ Brand new week! Remember carry on 3DIC and EDA work.
 
 ## An idea that came up
 
-
+If we could use ram to expand VRAM?
 
 ## Other
 
