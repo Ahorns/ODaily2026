@@ -209,19 +209,33 @@
 
   var rampCache = {};
 
-  function rampFrom(colour) {
-    if (rampCache[colour]) return rampCache[colour];
+  function mixHex(a, b, amount) {
+    var x = hex(a), y = hex(b);
+    var channel = function (i) { return Math.round(x[i] + (y[i] - x[i]) * amount); };
+    return "#" + [channel(0), channel(1), channel(2)].map(function (v) {
+      return ("0" + v.toString(16)).slice(-2);
+    }).join("");
+  }
+
+  function rampFrom(colour, typeKey) {
+    var cacheKey = colour + "|" + typeKey;
+    if (rampCache[cacheKey]) return rampCache[cacheKey];
     var c = hex(colour);
     var hsl = rgbToHsl(c[0], c[1], c[2]);
     var hue = hsl[0], sat = Math.max(0.28, Math.min(0.78, hsl[1]));
+    var terrain = (TYPES[typeKey] || TYPES.rock).pal;
     var out = [];
     for (var i = 0; i < 5; i++) {
       var t = i / 4;
-      // Shadows lean cool, highlights lean warm — the cheap trick that stops a
-      // single hue ramp looking like flat plastic.
-      out.push(hslToHex(hue + (0.5 - t) * 22, sat * (1 - 0.25 * t), 0.15 + t * 0.66));
+      // Keep the project's colour as the identity, but pull each end of the
+      // ramp toward the terrain palette. A coding day can therefore read as
+      // blue-and-violet gas, while a writing day keeps its project colour with
+      // cool ice highlights instead of collapsing into one hue.
+      var projectStop = hslToHex(hue + (0.5 - t) * 34, sat * (1 - 0.15 * t), 0.15 + t * 0.66);
+      var terrainWeight = (i === 0 || i === 4) ? 0.58 : 0.28;
+      out.push(mixHex(projectStop, terrain[i], terrainWeight));
     }
-    rampCache[colour] = out;
+    rampCache[cacheKey] = out;
     return out;
   }
 
@@ -316,7 +330,7 @@
 
   function drawPlanet(surf, cx, cy, r, typeKey, seed, step, k, colour) {
     var T = TYPES[typeKey] || TYPES.rock;
-    var stops = colour ? rampFrom(colour) : T.pal;
+    var stops = colour ? rampFrom(colour, typeKey) : T.pal;
     var pal = stops.map(hex).map(function (c) { return k < 1 ? surf.fade(c, k) : c; });
     var sp = planetSprite(typeKey in TYPES ? typeKey : "rock", seed, r, step);
     for (var y = 0; y < sp.size; y++) {

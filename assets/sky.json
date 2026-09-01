@@ -120,7 +120,7 @@
   "multidie": {
    "name": "Multi-Die",
    "group": "Research",
-   "color": "#7fd8f7",
+   "color": "#f08cae",
    "blurb": "",
    "category": "coding",
    "status": "active",
@@ -172,7 +172,7 @@
     "2026-08-23": {
      "hours": 10.0,
      "type": "gas",
-     "color": "#70b3d6",
+     "color": "#93a3c7",
      "name": "55 Cancri e",
      "orbitAu": null,
      "projects": [
@@ -211,7 +211,7 @@
     "2026-08-24": {
      "hours": 8.75,
      "type": "gas",
-     "color": "#9dadbe",
+     "color": "#b0a1b1",
      "name": "Deneb Algedi",
      "orbitAu": null,
      "projects": [
@@ -262,7 +262,7 @@
     "2026-08-25": {
      "hours": 11.0,
      "type": "gas",
-     "color": "#94adbe",
+     "color": "#a7a1b2",
      "name": "Homam",
      "orbitAu": null,
      "projects": [
@@ -307,7 +307,7 @@
     "2026-08-26": {
      "hours": 6.0,
      "type": "gas",
-     "color": "#65b1da",
+     "color": "#85a4cd",
      "name": "Peacock",
      "orbitAu": null,
      "projects": [
@@ -334,7 +334,7 @@
     "2026-08-27": {
      "hours": 13.0,
      "type": "gas",
-     "color": "#62acd6",
+     "color": "#73a6d0",
      "name": "Mirach",
      "orbitAu": null,
      "projects": [
