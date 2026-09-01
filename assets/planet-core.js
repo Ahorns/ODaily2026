@@ -403,7 +403,7 @@
     // The galaxy passes the planet's current radius. Scale the comet with it
     // so zooming never makes the marker look detached from its world. The
     // static entry sprite omits radius and keeps its original 2x2 head.
-    var size = radius === undefined ? 2 : Math.max(1, Math.round(radius * 0.22 + 0.75));
+    var size = radius === undefined ? 2 : Math.max(1, Math.round(radius * 0.17 + 0.6));
     for (var hy = 0; hy < size; hy++) {
       for (var hx = 0; hx < size; hx++) surf.px(cx + hx, cy + hy, head);
     }
