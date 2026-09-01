@@ -495,7 +495,7 @@
       if (extra > 0 && pr >= 5) {
         P.drawMoons(surf, px2, py2, pr, extra, sl.seed, kk, scene.time, moonColours(scene, sl));
       }
-      if (sl.entry.idea) comet(px2 + pr + 3, py2 - pr - 3, kk, sl.seed, scene.time);
+      if (sl.entry.idea) comet(px2, py2, pr, kk, sl.seed, scene.time);
 
       if (sl === scene.selected || sl === scene.hover || sl === scene.today) {
         var col = sl === scene.selected ? P.hex(S.select)
@@ -551,17 +551,20 @@
     }
   }
 
-  function comet(x, y, k, seed, time) {
-    // An idea is a small body in orbit around its planet: deterministic phase
-    // keeps it recognisable, while time gives the head and tail a slow drift.
+  function comet(x, y, r, k, seed, time) {
+    // An idea is a small body in orbit around its planet. The orbit is tall and
+    // narrow on purpose: the comet visibly crosses from above to below the
+    // world instead of merely wobbling beside it.
     var phase = P.h2(seed, 91, 1) * TAU;
-    var radius = 3 + P.h2(seed, 92, 1) * 4;
+    var radius = r + 5 + P.h2(seed, 92, 1) * 3;
     var speed = 0.34 + P.h2(seed, 93, 1) * 0.22;
     var angle = phase + (time || 0) * speed;
-    var ox = Math.cos(angle) * radius;
-    var oy = Math.sin(angle) * radius * 0.58;
-    var vx = -Math.sin(angle);
-    var vy = Math.cos(angle) * 0.58;
+    var xRadius = radius * 0.52;
+    var yRadius = radius * 1.08;
+    var ox = Math.cos(angle) * xRadius;
+    var oy = Math.sin(angle) * yRadius;
+    var vx = -Math.sin(angle) * xRadius;
+    var vy = Math.cos(angle) * yRadius;
     P.drawComet(surf, Math.round(x + ox), Math.round(y + oy), k, -vx, -vy);
   }
 
