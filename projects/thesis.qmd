@@ -7,8 +7,9 @@ subtitle: "Constellation in Research"
 
 The main line of work.
 
-<div class="stat-row"><div class="stat"><span class="stat-value">3h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">1</span><span class="stat-label">days visited</span></div><div class="stat"><span class="stat-value">2026-08-15</span><span class="stat-label">first seen</span></div></div>
+<div class="stat-row"><div class="stat"><span class="stat-value">4h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">2</span><span class="stat-label">days visited</span></div><div class="stat"><span class="stat-value">2026-08-15</span><span class="stat-label">first seen</span></div></div>
 
 | Day | Kind | Time | Note |
 |:--|:--|--:|:--|
+| [2026-08-28](../log/2026-08-28.qmd) | writing | 1h | Report |
 | [2026-08-15](../log/2026-08-15.qmd) | writing | 3h | Finishing Report first version. |

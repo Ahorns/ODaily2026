@@ -7,14 +7,14 @@ subtitle: "Constellation family"
 
 The long arc — thesis, papers, experiments.
 
-<div class="stat-row"><div class="stat"><span class="stat-value">18h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">3</span><span class="stat-label">days touched</span></div><div class="stat"><span class="stat-value">7</span><span class="stat-label">constellations</span></div></div>
+<div class="stat-row"><div class="stat"><span class="stat-value">85h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">11</span><span class="stat-label">days touched</span></div><div class="stat"><span class="stat-value">7</span><span class="stat-label">constellations</span></div></div>
 
 | Constellation | Time | Days | Status |
 |:--|--:|--:|:--|
-| [Multi-Coding](../projects/multicoding.qmd) | 10h | 2 | active |
-| [3DIC](../projects/3DIC.qmd) | 3h | 1 | active |
-| [Thesis](../projects/thesis.qmd) | 3h | 1 | active |
-| [Multi-Die](../projects/multidie.qmd) | 2h | 1 | active |
-| [P&R](../projects/pnr.qmd) | — | — | active |
+| [Multi-Coding](../projects/multicoding.qmd) | 63h 30m | 10 | active |
+| [Multi-Die](../projects/multidie.qmd) | 6h 45m | 5 | active |
+| [3DIC](../projects/3DIC.qmd) | 6h 30m | 3 | active |
+| [Thesis](../projects/thesis.qmd) | 4h | 2 | active |
+| [P&R](../projects/pnr.qmd) | 3h 45m | 3 | active |
+| [Words of Song](../projects/wos.qmd) | 30m | 1 | active |
 | [Reading](../projects/reading.qmd) | — | — | active |
-| [Words of Song](../projects/wos.qmd) | — | — | active |

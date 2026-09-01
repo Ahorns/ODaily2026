@@ -7,8 +7,8 @@ subtitle: "Constellation family"
 
 Not yet sorted — work counted before it has been named.
 
-<div class="stat-row"><div class="stat"><span class="stat-value">0h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">0</span><span class="stat-label">days touched</span></div><div class="stat"><span class="stat-value">1</span><span class="stat-label">constellations</span></div></div>
+<div class="stat-row"><div class="stat"><span class="stat-value">30m</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">1</span><span class="stat-label">days touched</span></div><div class="stat"><span class="stat-value">1</span><span class="stat-label">constellations</span></div></div>
 
 | Constellation | Time | Days | Status |
 |:--|--:|--:|:--|
-| [Other](../projects/other.qmd) | — | — | active |
+| [Other](../projects/other.qmd) | 30m | 1 | active |

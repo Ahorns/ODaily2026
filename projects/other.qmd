@@ -7,4 +7,8 @@ subtitle: "Constellation in Others"
 
 The hours that belong somewhere, once it is clear where.
 
-_No days logged against this constellation yet._
+<div class="stat-row"><div class="stat"><span class="stat-value">30m</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">1</span><span class="stat-label">days visited</span></div><div class="stat"><span class="stat-value">2026-08-25</span><span class="stat-label">first seen</span></div></div>
+
+| Day | Kind | Time | Note |
+|:--|:--|--:|:--|
+| [2026-08-25](../log/2026-08-25.qmd) | admin | 30m | Try to design a navigator to monitor my plan, since I find it is easy for us to get lost during ai helps me. |

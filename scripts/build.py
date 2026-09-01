@@ -68,6 +68,8 @@ SYSTEM_RANGES = [
      "start": date(2026, 8, 4), "end": date(2026, 8, 16)},
     {"key": "2026-08-alpha-centauri", "name": "Alpha Centauri",
      "start": date(2026, 8, 17), "end": date(2026, 8, 31)},
+    {"key": "2026-09-sirius", "name": "Sirius System",
+     "start": date(2026, 9, 1), "end": date(2026, 10, 31)},
 ]
 
 

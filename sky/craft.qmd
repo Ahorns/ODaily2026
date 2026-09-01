@@ -7,8 +7,8 @@ subtitle: "Constellation family"
 
 Tools and skills sharpened along the way.
 
-<div class="stat-row"><div class="stat"><span class="stat-value">2h</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">4</span><span class="stat-label">days touched</span></div><div class="stat"><span class="stat-value">1</span><span class="stat-label">constellations</span></div></div>
+<div class="stat-row"><div class="stat"><span class="stat-value">2h 15m</span><span class="stat-label">total time</span></div><div class="stat"><span class="stat-value">5</span><span class="stat-label">days touched</span></div><div class="stat"><span class="stat-value">1</span><span class="stat-label">constellations</span></div></div>
 
 | Constellation | Time | Days | Status |
 |:--|--:|--:|:--|
-| [ODaily](../projects/odaily.qmd) | 2h | 4 | active |
+| [ODaily](../projects/odaily.qmd) | 2h 15m | 5 | active |

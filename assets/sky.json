@@ -8,10 +8,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/odaily.html",
-   "days": 4,
-   "hours": 2.0,
+   "days": 5,
+   "hours": 2.25,
    "first": "2026-08-04",
-   "last": "2026-08-16"
+   "last": "2026-08-24"
   },
   "thesis": {
    "name": "Thesis",
@@ -21,10 +21,10 @@
    "category": "writing",
    "status": "active",
    "url": "projects/thesis.html",
-   "days": 1,
-   "hours": 3.0,
+   "days": 2,
+   "hours": 4.0,
    "first": "2026-08-15",
-   "last": "2026-08-15"
+   "last": "2026-08-28"
   },
   "reading": {
    "name": "Reading",
@@ -47,10 +47,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/multicoding.html",
-   "days": 2,
-   "hours": 10.0,
+   "days": 10,
+   "hours": 63.5,
    "first": "2026-08-08",
-   "last": "2026-08-23"
+   "last": "2026-09-01"
   },
   "3DIC": {
    "name": "3DIC",
@@ -60,10 +60,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/3DIC.html",
-   "days": 1,
-   "hours": 3.0,
+   "days": 3,
+   "hours": 6.5,
    "first": "2026-08-23",
-   "last": "2026-08-23"
+   "last": "2026-08-25"
   },
   "pnr": {
    "name": "P&R",
@@ -73,10 +73,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/pnr.html",
-   "days": 0,
-   "hours": 0.0,
-   "first": "",
-   "last": ""
+   "days": 3,
+   "hours": 3.75,
+   "first": "2026-08-23",
+   "last": "2026-08-25"
   },
   "thinking": {
    "name": "Thinking",
@@ -99,10 +99,10 @@
    "category": "admin",
    "status": "active",
    "url": "projects/other.html",
-   "days": 0,
-   "hours": 0.0,
-   "first": "",
-   "last": ""
+   "days": 1,
+   "hours": 0.5,
+   "first": "2026-08-25",
+   "last": "2026-08-25"
   },
   "wos": {
    "name": "Words of Song",
@@ -112,10 +112,10 @@
    "category": "coding",
    "status": "active",
    "url": "projects/wos.html",
-   "days": 0,
-   "hours": 0.0,
-   "first": "",
-   "last": ""
+   "days": 1,
+   "hours": 0.5,
+   "first": "2026-08-24",
+   "last": "2026-08-24"
   },
   "multidie": {
    "name": "Multi-Die",
@@ -125,29 +125,59 @@
    "category": "coding",
    "status": "active",
    "url": "projects/multidie.html",
-   "days": 1,
-   "hours": 2.0,
+   "days": 5,
+   "hours": 6.75,
    "first": "2026-08-23",
-   "last": "2026-08-23"
+   "last": "2026-08-27"
   }
  },
  "systems": [
   {
+   "key": "2026-09-sirius",
+   "name": "Sirius System",
+   "start": "2026-09-01",
+   "end": "2026-09-01",
+   "days": {
+    "2026-09-01": {
+     "hours": 3.0,
+     "type": "gas",
+     "color": "#5fa8d3",
+     "name": "Antares",
+     "orbitAu": null,
+     "projects": [
+      "multicoding"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Tuesday 1 September 2026",
+     "url": "log/2026-09-01.html",
+     "sessions": [
+      [
+       "Multi-Coding",
+       3.0,
+       "Optinmizing"
+      ]
+     ]
+    }
+   }
+  },
+  {
    "key": "2026-08-alpha-centauri",
    "name": "Alpha Centauri",
    "start": "2026-08-17",
-   "end": "2026-08-23",
+   "end": "2026-08-31",
    "days": {
     "2026-08-23": {
-     "hours": 9.0,
+     "hours": 10.0,
      "type": "gas",
-     "color": "#9ea8c0",
+     "color": "#70b3d6",
      "name": "55 Cancri e",
      "orbitAu": null,
      "projects": [
       "3DIC",
       "multicoding",
-      "multidie"
+      "multidie",
+      "pnr"
      ],
      "milestone": false,
      "idea": false,
@@ -156,7 +186,7 @@
      "sessions": [
       [
        "Multi-Coding",
-       4.0,
+       7.0,
        "Optimizing Fast path"
       ],
       [
@@ -166,8 +196,232 @@
       ],
       [
        "3DIC",
+       0.5,
+       "Prepare layout for meeting in tomorrow"
+      ],
+      [
+       "P&R",
+       0.5,
+       "Checking if we need to change another path"
+      ]
+     ]
+    },
+    "2026-08-24": {
+     "hours": 8.75,
+     "type": "gas",
+     "color": "#9dadbe",
+     "name": "Deneb Algedi",
+     "orbitAu": null,
+     "projects": [
+      "3DIC",
+      "multicoding",
+      "multidie",
+      "odaily",
+      "pnr",
+      "wos"
+     ],
+     "milestone": true,
+     "idea": false,
+     "title": "Monday 24 August 2026",
+     "url": "log/2026-08-24.html",
+     "sessions": [
+      [
+       "3DIC",
        3.0,
-       "Prepare slides for meeting in tomorrow"
+       "Prepare report and discussion with Professor"
+      ],
+      [
+       "ODaily",
+       0.25,
+       "Update the missing day style"
+      ],
+      [
+       "Words of Song",
+       0.5,
+       "Still starting but with big troubles"
+      ],
+      [
+       "P&R",
+       1.25,
+       "Start with new JPR6 version, with new method. Involving more ai and using repeat arch of FPGA this time"
+      ],
+      [
+       "Multi-Die",
+       1.25,
+       "First time finish running based on AMF design"
+      ],
+      [
+       "Multi-Coding",
+       2.5,
+       "Still running for different test. slightly improve."
+      ]
+     ]
+    },
+    "2026-08-25": {
+     "hours": 11.0,
+     "type": "gas",
+     "color": "#94adbe",
+     "name": "Homam",
+     "orbitAu": null,
+     "projects": [
+      "3DIC",
+      "multicoding",
+      "multidie",
+      "other",
+      "pnr"
+     ],
+     "milestone": false,
+     "idea": true,
+     "title": "Tuesday 25 August 2026",
+     "url": "log/2026-08-25.html",
+     "sessions": [
+      [
+       "3DIC",
+       3.0,
+       "Prepare Meeting with Progamatic!"
+      ],
+      [
+       "Multi-Coding",
+       4.0,
+       "Struggling, try to convert another arch"
+      ],
+      [
+       "Multi-Die",
+       1.5,
+       "AMF results turn out not very good."
+      ],
+      [
+       "P&R",
+       2.0,
+       "First time find FPGA repetition useful"
+      ],
+      [
+       "Other",
+       0.5,
+       "Try to design a navigator to monitor my plan, since I find it is easy for us to get lost during ai helps me."
+      ]
+     ]
+    },
+    "2026-08-26": {
+     "hours": 6.0,
+     "type": "gas",
+     "color": "#65b1da",
+     "name": "Peacock",
+     "orbitAu": null,
+     "projects": [
+      "multicoding",
+      "multidie"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Wednesday 26 August 2026",
+     "url": "log/2026-08-26.html",
+     "sessions": [
+      [
+       "Multi-Die",
+       1.0,
+       "Start to rethink version 7"
+      ],
+      [
+       "Multi-Coding",
+       5.0,
+       "Rethink our arch"
+      ]
+     ]
+    },
+    "2026-08-27": {
+     "hours": 13.0,
+     "type": "gas",
+     "color": "#62acd6",
+     "name": "Mirach",
+     "orbitAu": null,
+     "projects": [
+      "multicoding",
+      "multidie"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Thursday 27 August 2026",
+     "url": "log/2026-08-27.html",
+     "sessions": [
+      [
+       "Multi-Coding",
+       12.0,
+       "Finding bugs"
+      ],
+      [
+       "Multi-Die",
+       1.0,
+       ""
+      ]
+     ]
+    },
+    "2026-08-28": {
+     "hours": 8.0,
+     "type": "gas",
+     "color": "#7ea8c9",
+     "name": "Eltanin",
+     "orbitAu": null,
+     "projects": [
+      "multicoding",
+      "thesis"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Friday 28 August 2026",
+     "url": "log/2026-08-28.html",
+     "sessions": [
+      [
+       "Multi-Coding",
+       7.0,
+       "Keep debugging"
+      ],
+      [
+       "Thesis",
+       1.0,
+       "Report"
+      ]
+     ]
+    },
+    "2026-08-29": {
+     "hours": 5.0,
+     "type": "gas",
+     "color": "#5fa8d3",
+     "name": "Achernar",
+     "orbitAu": null,
+     "projects": [
+      "multicoding"
+     ],
+     "milestone": false,
+     "idea": false,
+     "title": "Saturday 29 August 2026",
+     "url": "log/2026-08-29.html",
+     "sessions": [
+      [
+       "Multi-Coding",
+       5.0,
+       "Continue working"
+      ]
+     ]
+    },
+    "2026-08-31": {
+     "hours": 12.0,
+     "type": "gas",
+     "color": "#5fa8d3",
+     "name": "Chiron",
+     "orbitAu": null,
+     "projects": [
+      "multicoding"
+     ],
+     "milestone": false,
+     "idea": true,
+     "title": "Monday 31 August 2026",
+     "url": "log/2026-08-31.html",
+     "sessions": [
+      [
+       "Multi-Coding",
+       12.0,
+       "Continue update, reach 81.87 bro."
       ]
      ]
     }
