@@ -11,9 +11,9 @@ Back to EE in 11 o'clock.
 ## What I did
 
 <!-- time
-  - project: odaily
-    hours: 0
-    note: ""
+  - project: multicoding
+    hours: 3
+    note: "Optinmizing"
 
   Craft  odaily
   Gravity  thinking
