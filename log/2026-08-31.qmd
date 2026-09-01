@@ -12,7 +12,7 @@ Brand new week! Remember carry on 3DIC and EDA work.
 
 <!-- time
   - project: multicoding
-    hours: 2
+    hours: 12
     note: "Continue update, reach 81.87 bro."
 
   Craft  odaily
