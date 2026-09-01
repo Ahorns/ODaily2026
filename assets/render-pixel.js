@@ -489,13 +489,18 @@
       var pr = Math.max(2, Math.round(sl.r * z));
       var turn = ((sl.phase + scene.time * sl.spinRate) % 1 + 1) % 1;
 
+      // Draw the far half first so the planet occludes it; the near half is
+      // drawn again below the moons after the planet has been painted.
+      if (sl.entry.idea) comet(px2, py2, pr, kk, sl.seed, scene.time, true);
+
       body(px2, py2, pr, sl, turn, kk);
 
       var extra = sl.projects.length - 1;
       if (extra > 0 && pr >= 5) {
         P.drawMoons(surf, px2, py2, pr, extra, sl.seed, kk, scene.time, moonColours(scene, sl));
       }
-      if (sl.entry.idea) comet(px2, py2, pr, kk, sl.seed, scene.time);
+
+      if (sl.entry.idea) comet(px2, py2, pr, kk, sl.seed, scene.time, false);
 
       if (sl === scene.selected || sl === scene.hover || sl === scene.today) {
         var col = sl === scene.selected ? P.hex(S.select)
@@ -551,7 +556,7 @@
     }
   }
 
-  function comet(x, y, r, k, seed, time) {
+  function comet(x, y, r, k, seed, time, behindPass) {
     // An idea is a small body in orbit around its planet. The orbit is tall and
     // narrow on purpose: the comet visibly crosses from above to below the
     // world instead of merely wobbling beside it.
@@ -563,6 +568,10 @@
     var yRadius = radius * 1.08;
     var ox = Math.cos(angle) * xRadius;
     var oy = Math.sin(angle) * yRadius;
+    // The left half of this vertical orbit is the far side of the planet.
+    // It is painted before the body; the right half is painted afterwards.
+    var isBehind = Math.cos(angle) < 0;
+    if (isBehind !== behindPass) return;
     var vx = -Math.sin(angle) * xRadius;
     var vy = Math.cos(angle) * yRadius;
     P.drawComet(surf, Math.round(x + ox), Math.round(y + oy), k, -vx, -vy);
