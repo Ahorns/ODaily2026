@@ -122,6 +122,10 @@
       // starts mid-month.
       var start = dateFromISO(sys.start);
       var end = dateFromISO(sys.end);
+      // `end` is the live map horizon (today); `plannedEnd` preserves the
+      // full configured span so the system readout can explain its capacity
+      // without putting future empty dates on the map.
+      var plannedEnd = dateFromISO(sys.plannedEnd || sys.end);
       var startDow = start.getDay();
       var totalDays = Math.round((end - start) / 86400000) + 1;
       var plan = orbitsFor(Math.ceil((totalDays + startDow) / 7));
@@ -180,8 +184,9 @@
       var label = sys.name || (MONTH_NAMES[start.getMonth()] + " " + start.getFullYear());
 
       return {
-        key: sys.key, name: sys.name || "", label: label, range: rangeLabel(start, end),
-        start: start, end: end,
+        key: sys.key, name: sys.name || "", label: label,
+        range: rangeLabel(start, end), plannedRange: rangeLabel(start, plannedEnd),
+        start: start, end: end, plannedEnd: plannedEnd,
         cx: cx, cy: cy, rings: plan.rings, slots: slots,
         outer: plan.rings[plan.rings.length - 1],
         // Each month turns at its own rate, so the field is never in lockstep —
@@ -435,11 +440,16 @@
   function showSystemInfo(sys) {
     scene.selected = null;
     var logged = sys.slots.filter(function (s) { return s.entry; }).length;
+    var shownDays = sys.slots.length;
+    var plannedDays = Math.round((sys.plannedEnd - sys.start) / 86400000) + 1;
     overlay.innerHTML =
       '<p class="stamp"><span>Stellar system</span></p>' +
       '<p class="readout-name">' + esc(sys.name || sys.range) + "</p>" +
-      "<h2>" + esc(sys.range) + "</h2>" +
-      '<p class="readout-foot">' + logged + (logged === 1 ? " day logged" : " days logged") + "</p>";
+      "<h2>" + esc(sys.plannedRange || sys.range) + "</h2>" +
+      '<p class="readout-foot">' + logged + (logged === 1 ? " day logged" : " days logged") +
+      " · " + shownDays + (shownDays === 1 ? " day shown" : " days shown") +
+      " · " + plannedDays + " days planned</p>" +
+      '<p class="readout-tip">Future dates appear as their days arrive.</p>';
     overlay.classList.add("is-on");
     draw();
   }

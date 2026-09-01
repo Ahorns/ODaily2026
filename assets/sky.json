@@ -137,6 +137,7 @@
    "name": "Sirius System",
    "start": "2026-09-01",
    "end": "2026-09-01",
+   "plannedEnd": "2026-10-31",
    "days": {
     "2026-09-01": {
      "hours": 3.0,
@@ -166,6 +167,7 @@
    "name": "Alpha Centauri",
    "start": "2026-08-17",
    "end": "2026-08-31",
+   "plannedEnd": "2026-08-31",
    "days": {
     "2026-08-23": {
      "hours": 10.0,
@@ -432,6 +434,7 @@
    "name": "Solar System",
    "start": "2026-08-04",
    "end": "2026-08-16",
+   "plannedEnd": "2026-08-16",
    "days": {
     "2026-08-04": {
      "hours": 1.0,

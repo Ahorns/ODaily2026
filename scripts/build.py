@@ -472,6 +472,7 @@ def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
             "name": rng["name"],
             "start": rng["start"],
             "end": min(rng["end"], today),
+            "plannedEnd": rng["end"],
             "days": {},
         }
         for rng in SYSTEM_RANGES
@@ -487,6 +488,7 @@ def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
             "name": rng["name"],
             "start": rng["start"],
             "end": min(rng["end"], today),
+            "plannedEnd": rng["end"],
             "days": {},
         })
         system["days"][day["date"].isoformat()] = {
@@ -556,7 +558,8 @@ def sky_data(days: list[dict], projects: dict, groups: dict) -> str:
             for slug, meta in projects.items()
         },
         "systems": [
-            {**s, "start": s["start"].isoformat(), "end": s["end"].isoformat()}
+            {**s, "start": s["start"].isoformat(), "end": s["end"].isoformat(),
+             "plannedEnd": s["plannedEnd"].isoformat()}
             for s in sorted(systems.values(), key=lambda s: s["start"], reverse=True)
         ],
     }, indent=1)
