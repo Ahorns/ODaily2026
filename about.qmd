@@ -47,8 +47,11 @@ are included unchanged. They are visual reconstructions based on NASA elevation
 and imagery data; colours have been adjusted by their original publisher.
 
 In the 3D view, the astronomical texture supplies the planet's natural surface.
-ODaily project colours are added only as small surface markers and satellite
-colours. They do not recolour the underlying map.
+An Earth texture is used only for a record explicitly named **Earth**; otherwise
+the maps act as material references for a world class, not as a claim that the
+record is a second Earth, Mars, or Jupiter. Project colours are intentionally
+kept off the 3D bodies: a day with additional projects gains natural-looking
+satellites, while the project names remain available in the selected-day panel.
 
 ## How it is kept
 

@@ -2,24 +2,48 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const PLANET_STYLES = {
-  earth:   { label: "ocean world", texture: "earth", roughness: 0.72, clouds: true },
-  mercury: { label: "cratered world", texture: "mercury", roughness: 0.96 },
-  venus:   { label: "cloud world", texture: "venus", roughness: 0.84, yScale: 0.99 },
-  mars:    { label: "desert world", texture: "mars", roughness: 0.92 },
-  moon:    { label: "airless world", texture: "moon", roughness: 1 },
-  jupiter: { label: "banded giant", texture: "jupiter", roughness: 0.76, yScale: 0.92 },
-  saturn:  { label: "ringed giant", texture: "saturn", roughness: 0.8, yScale: 0.9, ring: "saturn" },
-  uranus:  { label: "ice giant", texture: "uranus", roughness: 0.67, yScale: 0.95, ring: "uranus" },
-  neptune: { label: "storm giant", texture: "neptune", roughness: 0.7, yScale: 0.94 }
+  earth:   { identity: "Earth", texture: "earth", roughness: 0.72, clouds: true },
+  mercury: { identity: "Mercury", texture: "mercury", roughness: 0.96 },
+  venus:   { identity: "Venus", texture: "venus", roughness: 0.84, yScale: 0.99 },
+  mars:    { identity: "Mars", texture: "mars", roughness: 0.92 },
+  moon:    { identity: "Moon", texture: "moon", roughness: 1 },
+  jupiter: { identity: "Jupiter", texture: "jupiter", roughness: 0.76, yScale: 0.92 },
+  saturn:  { identity: "Saturn", texture: "saturn", roughness: 0.8, yScale: 0.9, ring: "saturn" },
+  uranus:  { identity: "Uranus", texture: "uranus", roughness: 0.67, yScale: 0.95, ring: "uranus" },
+  neptune: { identity: "Neptune", texture: "neptune", roughness: 0.7, yScale: 0.94 }
+};
+
+const NAMED_SOLAR_BODIES = {
+  earth: "earth",
+  mercury: "mercury",
+  venus: "venus",
+  mars: "mars",
+  moon: "moon",
+  jupiter: "jupiter",
+  saturn: "saturn",
+  uranus: "uranus",
+  neptune: "neptune"
+};
+
+const WORLD_CLASS_LABELS = {
+  ice: "ice world",
+  rock: "rock world",
+  ocean: "ocean world",
+  lava: "volcanic world",
+  forest: "living world",
+  gas: "gas giant"
 };
 
 const PLANET_CATALOGS = {
-  ice: ["neptune", "uranus", "earth", "moon", "venus"],
-  rock: ["mercury", "mars", "moon", "venus", "earth"],
-  ocean: ["earth", "neptune", "uranus", "venus"],
+  // Earth is deliberately absent from automatic catalogues. It appears only
+  // when a record is explicitly named Earth, so another system never silently
+  // receives a duplicate Earth identity.
+  ice: ["neptune", "uranus", "moon", "venus"],
+  rock: ["mercury", "mars", "moon", "venus"],
+  ocean: ["neptune", "uranus", "venus"],
   lava: ["mars", "venus", "mercury"],
-  forest: ["earth", "venus", "uranus"],
-  gas: ["jupiter", "saturn", "neptune", "uranus", "venus", "earth", "mars", "mercury"]
+  forest: ["venus", "uranus", "neptune"],
+  gas: ["jupiter", "saturn", "neptune", "uranus", "venus", "mars", "mercury"]
 };
 
 const root = document.getElementById("galaxy-3d-root");
@@ -223,9 +247,14 @@ async function boot() {
     const firstDow = start.getUTCDay();
     const weeks = Math.max(1, Math.ceil((totalDays + firstDow) / 7));
     const ringRadii = [];
+    const largestBodyRadius = Object.values(systemData.days).reduce(function (largest, entry) {
+      return Math.max(largest, planetRadius(entry.hours));
+    }, 3.2);
+    const firstOrbitRadius = Math.max(25, largestBodyRadius * 4.1);
+    const weekSpacing = Math.max(19, largestBodyRadius * 3.3);
 
     for (let week = 0; week < weeks; week++) {
-      const radius = 18 + week * 13;
+      const radius = firstOrbitRadius + week * weekSpacing;
       ringRadii.push(radius);
       const ring = makeOrbit(radius, index === total - 1 ? "#384d78" : "#253451");
       system.add(ring);
@@ -238,8 +267,9 @@ async function boot() {
       glow: glow,
       records: [],
       centre: system.position.clone(),
-      radius: ringRadii[ringRadii.length - 1] + 12,
-      seed: seed
+      radius: ringRadii[ringRadii.length - 1] + weekSpacing * 0.8,
+      seed: seed,
+      orbitSpeed: 0.014 + (seed % 7) * 0.0007
     };
 
     for (let offset = 0; offset < totalDays; offset++) {
@@ -254,7 +284,7 @@ async function boot() {
       const dayRand = mulberry32(daySeed);
       const size = entry ? planetRadius(entry.hours) : 2.15 + dayRand() * 0.55;
       const planet = entry
-        ? makePlanet(entry, size, daySeed, data.projects)
+        ? makePlanet(entry, size, daySeed)
         : makeFragments(size, daySeed);
 
       planet.position.set(Math.cos(angle) * orbitRadius, 0, Math.sin(angle) * orbitRadius);
@@ -268,7 +298,9 @@ async function boot() {
         system: systemRecord,
         baseAngle: angle,
         orbitRadius: orbitRadius,
-        orbitSpeed: 0.018 + dayRand() * 0.013,
+        // Every date keeps its calendar position. Rotating the system as one
+        // rigid wheel prevents neighbouring days from drifting into collisions.
+        orbitSpeed: systemRecord.orbitSpeed,
         spinSpeed: 0.08 + dayRand() * 0.11,
         size: size,
         moons: [],
@@ -283,7 +315,7 @@ async function boot() {
         }
       });
 
-      if (entry && entry.projects.length > 1) addMoons(record, data.projects, daySeed);
+      if (entry && entry.projects.length > 1) addMoons(record, daySeed);
       if (entry && entry.idea) addComet(record, daySeed);
 
       const dayLabel = makeLabelSprite(iso.slice(5), entry ? "#dce7ff" : "#7182aa", 0.63);
@@ -299,9 +331,9 @@ async function boot() {
     return systemRecord;
   }
 
-  function makePlanet(entry, radius, seed, projects) {
+  function makePlanet(entry, radius, seed) {
     const group = new THREE.Group();
-    const style = choosePlanetStyle(entry.type, seed);
+    const style = choosePlanetStyle(entry, seed);
     const geometry = new THREE.SphereGeometry(radius, 64, 40);
     const material = new THREE.MeshStandardMaterial({
       color: "#ffffff",
@@ -338,7 +370,6 @@ async function boot() {
     }
 
     if (style.ring) addPlanetRing(group, radius, style.ring, seed);
-    addProjectAccents(group, entry.projects, projects, radius, seed);
 
     // A glow belongs only to a milestone. Ordinary planets keep their natural
     // limb and lighting, so the milestone signal remains unambiguous.
@@ -396,28 +427,6 @@ async function boot() {
     group.add(ring);
   }
 
-  function addProjectAccents(group, slugs, projects, radius, seed) {
-    const rand = mulberry32(seed + 4319);
-    slugs.forEach(function (slug, index) {
-      const project = projects[slug];
-      if (!project) return;
-      const markerRadius = Math.max(0.075, radius * 0.032);
-      const marker = new THREE.Mesh(
-        new THREE.SphereGeometry(markerRadius, 10, 8),
-        new THREE.MeshBasicMaterial({ color: project.color })
-      );
-      const longitude = rand() * Math.PI * 2 + index * 1.7;
-      const latitude = (rand() - 0.5) * Math.PI * 0.92;
-      const normal = new THREE.Vector3(
-        Math.cos(latitude) * Math.cos(longitude),
-        Math.sin(latitude),
-        Math.cos(latitude) * Math.sin(longitude)
-      );
-      marker.position.copy(normal.multiplyScalar(radius * 1.018));
-      group.add(marker);
-    });
-  }
-
   function makeFragments(radius, seed) {
     const group = new THREE.Group();
     const rand = mulberry32(seed ^ 0xa5a5a5);
@@ -453,10 +462,9 @@ async function boot() {
     return group;
   }
 
-  function addMoons(record, projects, seed) {
+  function addMoons(record, seed) {
     const rand = mulberry32(seed + 7781);
-    record.entry.projects.slice(1).forEach(function (slug, index) {
-      const project = projects[slug];
+    record.entry.projects.slice(1).forEach(function (_slug, index) {
       const radius = Math.max(0.36, record.size * 0.14);
       const moon = new THREE.Group();
       const moonBody = new THREE.Mesh(
@@ -468,14 +476,6 @@ async function boot() {
         })
       );
       moon.add(moonBody);
-      if (project) {
-        const marker = new THREE.Mesh(
-          new THREE.SphereGeometry(Math.max(0.045, radius * 0.14), 8, 6),
-          new THREE.MeshBasicMaterial({ color: project.color })
-        );
-        marker.position.set(0, radius * 0.2, radius * 0.99);
-        moon.add(marker);
-      }
       moon.userData.orbitRadius = record.size * 1.65 + 1.4 + index * 0.7;
       moon.userData.phase = rand() * Math.PI * 2;
       moon.userData.speed = 0.45 + index * 0.11 + rand() * 0.18;
@@ -754,9 +754,20 @@ async function boot() {
   }
 }
 
-function choosePlanetStyle(type, seed) {
-  const catalog = PLANET_CATALOGS[type] || PLANET_CATALOGS.gas;
-  return PLANET_STYLES[catalog[Math.abs(seed) % catalog.length]];
+function choosePlanetStyle(entry, seed) {
+  const recordedName = String(entry.name || "").trim().toLowerCase();
+  const namedStyleKey = NAMED_SOLAR_BODIES[recordedName];
+  if (namedStyleKey) {
+    const namedStyle = PLANET_STYLES[namedStyleKey];
+    return Object.assign({}, namedStyle, { label: namedStyle.identity });
+  }
+
+  const catalog = PLANET_CATALOGS[entry.type] || PLANET_CATALOGS.gas;
+  const appearanceSeed = hashString(recordedName + ":" + seed + ":" + entry.type);
+  const style = PLANET_STYLES[catalog[Math.abs(appearanceSeed) % catalog.length]];
+  return Object.assign({}, style, {
+    label: WORLD_CLASS_LABELS[entry.type] || "archive world"
+  });
 }
 
 async function loadPlanetTextures(renderer) {
@@ -908,7 +919,7 @@ function longDate(date) {
 }
 
 function planetRadius(hours) {
-  return 2.6 + Math.min(4.8, Math.sqrt(Math.max(0, hours || 0)) * 1.15);
+  return 2.5 + Math.min(3.7, Math.sqrt(Math.max(0, hours || 0)) * 0.95);
 }
 
 function formatHours(hours) {
