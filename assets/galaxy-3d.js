@@ -1,6 +1,27 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
+const PLANET_STYLES = {
+  earth:   { label: "ocean world", texture: "earth", roughness: 0.72, clouds: true },
+  mercury: { label: "cratered world", texture: "mercury", roughness: 0.96 },
+  venus:   { label: "cloud world", texture: "venus", roughness: 0.84, yScale: 0.99 },
+  mars:    { label: "desert world", texture: "mars", roughness: 0.92 },
+  moon:    { label: "airless world", texture: "moon", roughness: 1 },
+  jupiter: { label: "banded giant", texture: "jupiter", roughness: 0.76, yScale: 0.92 },
+  saturn:  { label: "ringed giant", texture: "saturn", roughness: 0.8, yScale: 0.9, ring: "saturn" },
+  uranus:  { label: "ice giant", texture: "uranus", roughness: 0.67, yScale: 0.95, ring: "uranus" },
+  neptune: { label: "storm giant", texture: "neptune", roughness: 0.7, yScale: 0.94 }
+};
+
+const PLANET_CATALOGS = {
+  ice: ["neptune", "uranus", "earth", "moon", "venus"],
+  rock: ["mercury", "mars", "moon", "venus", "earth"],
+  ocean: ["earth", "neptune", "uranus", "venus"],
+  lava: ["mars", "venus", "mercury"],
+  forest: ["earth", "venus", "uranus"],
+  gas: ["jupiter", "saturn", "neptune", "uranus", "venus", "earth", "mars", "mercury"]
+};
+
 const root = document.getElementById("galaxy-3d-root");
 
 if (root) {
@@ -41,6 +62,8 @@ async function boot() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.16;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+
+  const planetTextures = await loadPlanetTextures(renderer);
 
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
@@ -171,8 +194,8 @@ async function boot() {
 
     const starColor = new THREE.Color(index === total - 1 ? "#f2c46b" : "#dbe7ff");
     const star = new THREE.Mesh(
-      new THREE.SphereGeometry(5.2, 28, 20),
-      new THREE.MeshBasicMaterial({ color: starColor })
+      new THREE.SphereGeometry(5.2, 48, 32),
+      new THREE.MeshBasicMaterial({ color: starColor, map: planetTextures.sun })
     );
     system.add(star);
 
@@ -231,7 +254,7 @@ async function boot() {
       const dayRand = mulberry32(daySeed);
       const size = entry ? planetRadius(entry.hours) : 2.15 + dayRand() * 0.55;
       const planet = entry
-        ? makePlanet(entry, size, daySeed)
+        ? makePlanet(entry, size, daySeed, data.projects)
         : makeFragments(size, daySeed);
 
       planet.position.set(Math.cos(angle) * orbitRadius, 0, Math.sin(angle) * orbitRadius);
@@ -276,44 +299,123 @@ async function boot() {
     return systemRecord;
   }
 
-  function makePlanet(entry, radius, seed) {
+  function makePlanet(entry, radius, seed, projects) {
     const group = new THREE.Group();
-    const geometry = new THREE.SphereGeometry(radius, 28, 20);
+    const style = choosePlanetStyle(entry.type, seed);
+    const geometry = new THREE.SphereGeometry(radius, 64, 40);
     const material = new THREE.MeshStandardMaterial({
       color: "#ffffff",
-      map: makePlanetTexture(entry.color, entry.type, seed),
-      roughness: entry.type === "ice" ? 0.42 : 0.78,
-      metalness: entry.type === "ice" ? 0.12 : 0.03,
-      emissive: new THREE.Color(entry.color).multiplyScalar(0.22),
-      emissiveIntensity: 0.42
+      map: planetTextures[style.texture],
+      roughness: style.roughness,
+      metalness: style.metalness || 0,
+      emissive: style.emissive || "#000000",
+      emissiveIntensity: style.emissiveIntensity || 0
     });
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.scale.set(style.xScale || 1, style.yScale || 1, style.zScale || 1);
     mesh.userData.pickable = true;
     mesh.userData.baseScale = 1;
     group.add(mesh);
+    group.userData.surface = mesh;
+    group.userData.visualType = style.label;
 
-    const atmosphere = new THREE.Mesh(
-      new THREE.SphereGeometry(radius * 1.1, 24, 16),
-      new THREE.MeshBasicMaterial({
-        color: entry.color,
-        transparent: true,
-        opacity: 0.075,
-        blending: THREE.AdditiveBlending,
-        side: THREE.BackSide,
-        depthWrite: false
-      })
-    );
-    group.add(atmosphere);
+    if (style.clouds) {
+      const clouds = new THREE.Mesh(
+        new THREE.SphereGeometry(radius * 1.015, 64, 40),
+        new THREE.MeshStandardMaterial({
+          color: "#ffffff",
+          map: planetTextures.earthClouds,
+          alphaMap: planetTextures.earthClouds,
+          roughness: 0.72,
+          transparent: true,
+          opacity: 0.42,
+          alphaTest: 0.025,
+          depthWrite: false
+        })
+      );
+      group.add(clouds);
+      group.userData.clouds = clouds;
+    }
 
+    if (style.ring) addPlanetRing(group, radius, style.ring, seed);
+    addProjectAccents(group, entry.projects, projects, radius, seed);
+
+    // A glow belongs only to a milestone. Ordinary planets keep their natural
+    // limb and lighting, so the milestone signal remains unambiguous.
     if (entry.milestone) {
+      const halo = new THREE.Mesh(
+        new THREE.SphereGeometry(radius * 1.14, 48, 28),
+        new THREE.MeshBasicMaterial({
+          color: "#f2c46b",
+          side: THREE.BackSide,
+          blending: THREE.AdditiveBlending,
+          transparent: true,
+          opacity: 0.28,
+          depthWrite: false
+        })
+      );
+      group.add(halo);
       const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(radius * 1.58, 0.09, 6, 64),
-        new THREE.MeshBasicMaterial({ color: "#f2c46b", transparent: true, opacity: 0.88 })
+        new THREE.TorusGeometry(radius * 1.53, Math.max(0.045, radius * 0.018), 8, 96),
+        new THREE.MeshBasicMaterial({
+          color: "#f2c46b",
+          transparent: true,
+          opacity: 0.92,
+          blending: THREE.AdditiveBlending
+        })
       );
       ring.rotation.x = Math.PI / 2.6;
       group.add(ring);
     }
     return group;
+  }
+
+  function addPlanetRing(group, radius, ringKind, seed) {
+    const inner = radius * (ringKind === "saturn" ? 1.22 : 1.38);
+    const outer = radius * (ringKind === "saturn" ? 2.18 : 1.82);
+    const geometry = new THREE.RingGeometry(inner, outer, 128);
+    const positions = geometry.attributes.position;
+    const uv = geometry.attributes.uv;
+    for (let i = 0; i < positions.count; i++) {
+      const radial = Math.hypot(positions.getX(i), positions.getY(i));
+      uv.setXY(i, (radial - inner) / (outer - inner), 0.5);
+    }
+    const material = new THREE.MeshBasicMaterial({
+      color: ringKind === "saturn" ? "#ffffff" : "#a9dfe3",
+      map: planetTextures.saturnRing,
+      alphaMap: planetTextures.saturnRing,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: ringKind === "saturn" ? 0.9 : 0.32,
+      alphaTest: 0.025,
+      depthWrite: false
+    });
+    const ring = new THREE.Mesh(geometry, material);
+    ring.rotation.x = Math.PI / (2.15 + (seed % 5) * 0.07);
+    ring.rotation.z = ((seed % 17) / 17 - 0.5) * 0.35;
+    group.add(ring);
+  }
+
+  function addProjectAccents(group, slugs, projects, radius, seed) {
+    const rand = mulberry32(seed + 4319);
+    slugs.forEach(function (slug, index) {
+      const project = projects[slug];
+      if (!project) return;
+      const markerRadius = Math.max(0.075, radius * 0.032);
+      const marker = new THREE.Mesh(
+        new THREE.SphereGeometry(markerRadius, 10, 8),
+        new THREE.MeshBasicMaterial({ color: project.color })
+      );
+      const longitude = rand() * Math.PI * 2 + index * 1.7;
+      const latitude = (rand() - 0.5) * Math.PI * 0.92;
+      const normal = new THREE.Vector3(
+        Math.cos(latitude) * Math.cos(longitude),
+        Math.sin(latitude),
+        Math.cos(latitude) * Math.sin(longitude)
+      );
+      marker.position.copy(normal.multiplyScalar(radius * 1.018));
+      group.add(marker);
+    });
   }
 
   function makeFragments(radius, seed) {
@@ -356,15 +458,24 @@ async function boot() {
     record.entry.projects.slice(1).forEach(function (slug, index) {
       const project = projects[slug];
       const radius = Math.max(0.36, record.size * 0.14);
-      const moon = new THREE.Mesh(
-        new THREE.SphereGeometry(radius, 12, 8),
+      const moon = new THREE.Group();
+      const moonBody = new THREE.Mesh(
+        new THREE.SphereGeometry(radius, 24, 16),
         new THREE.MeshStandardMaterial({
-          color: project ? project.color : "#cdd8f0",
-          emissive: project ? project.color : "#cdd8f0",
-          emissiveIntensity: 0.3,
-          roughness: 0.72
+          color: "#ffffff",
+          map: planetTextures.moon,
+          roughness: 1
         })
       );
+      moon.add(moonBody);
+      if (project) {
+        const marker = new THREE.Mesh(
+          new THREE.SphereGeometry(Math.max(0.045, radius * 0.14), 8, 6),
+          new THREE.MeshBasicMaterial({ color: project.color })
+        );
+        marker.position.set(0, radius * 0.2, radius * 0.99);
+        moon.add(marker);
+      }
       moon.userData.orbitRadius = record.size * 1.65 + 1.4 + index * 0.7;
       moon.userData.phase = rand() * Math.PI * 2;
       moon.userData.speed = 0.45 + index * 0.11 + rand() * 0.18;
@@ -404,46 +515,6 @@ async function boot() {
       transparent: true,
       opacity: 0.48
     }));
-  }
-
-  function makePlanetTexture(color, type, seed) {
-    const size = 128;
-    const textureCanvas = document.createElement("canvas");
-    textureCanvas.width = size;
-    textureCanvas.height = size;
-    const ctx = textureCanvas.getContext("2d");
-    const rand = mulberry32(seed);
-    const base = new THREE.Color(color);
-    const dark = base.clone().multiplyScalar(0.38);
-    const light = base.clone().lerp(new THREE.Color("#eaf1ff"), 0.48);
-    ctx.fillStyle = "#" + dark.getHexString();
-    ctx.fillRect(0, 0, size, size);
-
-    const block = type === "gas" ? 8 : 5;
-    for (let y = 0; y < size; y += block) {
-      for (let x = 0; x < size; x += block) {
-        const wave = type === "gas" ? Math.sin(y * 0.13 + seed * 0.001) * 0.18 : 0;
-        const mix = clamp(0.18 + rand() * 0.68 + wave, 0, 1);
-        const tone = dark.clone().lerp(light, mix);
-        ctx.fillStyle = "#" + tone.getHexString();
-        ctx.fillRect(x, y, block + 1, block + 1);
-      }
-    }
-    if (type === "ice") {
-      ctx.strokeStyle = "rgba(234,241,255,.48)";
-      ctx.lineWidth = 2;
-      for (let i = 0; i < 9; i++) {
-        ctx.beginPath();
-        ctx.moveTo(rand() * size, rand() * size);
-        ctx.lineTo(rand() * size, rand() * size);
-        ctx.stroke();
-      }
-    }
-    const texture = new THREE.CanvasTexture(textureCanvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.LinearMipmapLinearFilter;
-    return texture;
   }
 
   function buildSystemButtons() {
@@ -541,7 +612,7 @@ async function boot() {
     }).join("");
 
     readout.innerHTML =
-      "<p class='g3d-eyebrow'>" + systemName + " · " + escapeHTML(entry.type || "PLANET") + "</p>" +
+      "<p class='g3d-eyebrow'>" + systemName + " · " + escapeHTML(record.node.userData.visualType || entry.type || "PLANET") + "</p>" +
       "<h2>" + escapeHTML(entry.name || longDate(record.date)) + "</h2>" +
       "<p class='g3d-date'>" + escapeHTML(longDate(record.date)) + " <span>" + formatHours(entry.hours) + " logged</span></p>" +
       "<div class='g3d-projects'>" + projects + "</div>" +
@@ -629,6 +700,9 @@ async function boot() {
         Math.sin(angle) * record.orbitRadius
       );
       record.node.rotation.y = simTime * record.spinSpeed;
+      if (record.node.userData.clouds) {
+        record.node.userData.clouds.rotation.y = simTime * record.spinSpeed * 0.18;
+      }
       if (record.node.userData.fragmented) {
         record.node.children.forEach(function (fragment, index) {
           if (!fragment.userData.pickable) fragment.rotation.y += delta * (0.08 + index * 0.012);
@@ -655,6 +729,7 @@ async function boot() {
     });
 
     systems.forEach(function (system, index) {
+      system.star.rotation.y = simTime * (0.025 + index * 0.004);
       system.star.scale.setScalar(1 + Math.sin(simTime * 1.8 + index) * 0.025);
       system.glow.material.opacity = 0.54 + Math.sin(simTime * 1.25 + index) * 0.08;
     });
@@ -677,6 +752,39 @@ async function boot() {
     button.textContent = paused ? "Play" : "Pause";
     button.setAttribute("aria-pressed", String(paused));
   }
+}
+
+function choosePlanetStyle(type, seed) {
+  const catalog = PLANET_CATALOGS[type] || PLANET_CATALOGS.gas;
+  return PLANET_STYLES[catalog[Math.abs(seed) % catalog.length]];
+}
+
+async function loadPlanetTextures(renderer) {
+  const files = {
+    earth: "earth-day.jpg",
+    earthClouds: "earth-clouds.jpg",
+    moon: "moon.jpg",
+    mercury: "mercury.jpg",
+    venus: "venus-atmosphere.jpg",
+    mars: "mars.jpg",
+    jupiter: "jupiter.jpg",
+    saturn: "saturn.jpg",
+    saturnRing: "saturn-rings.png",
+    uranus: "uranus.jpg",
+    neptune: "neptune.jpg",
+    sun: "sun.jpg"
+  };
+  const loader = new THREE.TextureLoader();
+  const anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  const output = {};
+  await Promise.all(Object.keys(files).map(async function (key) {
+    const texture = await loader.loadAsync("/assets/planet-textures/" + files[key]);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = anisotropy;
+    if (key !== "saturnRing") texture.wrapS = THREE.RepeatWrapping;
+    output[key] = texture;
+  }));
+  return output;
 }
 
 function buildStarfield(scene, dotTexture) {

@@ -38,6 +38,18 @@ Colour and terrain are deliberately separate: colour says *what* you worked on,
 terrain says *how*. Two days of writing on different projects look different;
 two days on the same project in different modes look related but not identical.
 
+## 3D planet textures
+
+The optional 3D galaxy uses sphere maps by
+[Solar System Scope](https://www.solarsystemscope.com/textures/), licensed under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The texture images
+are included unchanged. They are visual reconstructions based on NASA elevation
+and imagery data; colours have been adjusted by their original publisher.
+
+In the 3D view, the astronomical texture supplies the planet's natural surface.
+ODaily project colours are added only as small surface markers and satellite
+colours. They do not recolour the underlying map.
+
 ## How it is kept
 
 | Idea | Here |

@@ -32,7 +32,7 @@ toc: false
 <div class="g3d-bottom">
 <div class="g3d-system-bar"><span class="g3d-label">Stellar systems</span><div id="g3d-systems"></div></div>
 <div class="g3d-filter-bar"><span class="g3d-label">Constellation</span><div id="g3d-filters"></div></div>
-<p class="g3d-help">Drag to orbit · scroll to zoom · click a planet · double-click to read</p>
+<p class="g3d-help">Drag to orbit · scroll to zoom · click a planet · double-click to read · <a href="/about.html#3d-planet-textures">Texture credits ↗</a></p>
 </div>
 </div>
 </div>

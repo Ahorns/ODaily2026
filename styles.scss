@@ -890,6 +890,8 @@ body.galaxy-3d-page footer { display: none; }
   background: var(--project, #{$gold});
 }
 .g3d-help { margin: 0; color: rgba(111, 128, 168, 0.72); font-size: 0.61rem; text-align: right; }
+.g3d-help a { color: inherit; }
+.g3d-help a:hover { color: $gold; }
 
 @media (max-width: 760px) {
   .g3d-hud { padding: 4.8rem 0.75rem 0.75rem; }
