@@ -1,0 +1,43 @@
+---
+title: "Monday 7 September 2026"
+date: 2026-09-07
+milestone: false
+---
+
+## The start
+
+First day of week!
+
+## What I did
+
+<!-- time
+  - project: multicoding
+    hours: 5
+    note: "Getting 85+ network"
+  - project: pnr
+    hours: 7
+    note: "Prepare for meeting tmr"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
