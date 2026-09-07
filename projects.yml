@@ -86,3 +86,9 @@ projects:
     category: "coding"
     color: "#f2c46b"
     status: active
+  tc:
+    name: "ToomCook"
+    group: research
+    category: "coding"
+    color: "#7fd8f7"
+    status: active
