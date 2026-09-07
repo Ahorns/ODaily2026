@@ -1,0 +1,46 @@
+---
+title: "Sunday 6 September 2026"
+date: 2026-09-06
+milestone: false
+---
+
+## The start
+
+Brand new results of multi coding!
+
+## What I did
+
+<!-- time
+  - project: multicoding
+    hours: 10
+    note: "optimize the results up to 87+ with GRU!"
+  - project: pnr
+    hours: 2
+    note: "Optimizing"
+  - project: 3DIC
+    hours: 1
+    note: "Layout of SRAM and DRAM"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
