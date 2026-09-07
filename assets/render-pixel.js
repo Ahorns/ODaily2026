@@ -557,15 +557,15 @@
   }
 
   function comet(x, y, r, k, seed, time, behindPass) {
-    // An idea is a small body in orbit around its planet. The orbit is tall and
-    // narrow on purpose: the comet visibly crosses from above to below the
-    // world instead of merely wobbling beside it.
+    // An idea is a small body in orbit around its planet. Keep the local path
+    // close to a circle so it visibly completes a full revolution, while still
+    // crossing from above to below the world.
     var phase = P.h2(seed, 91, 1) * TAU;
     var radius = r + 5 + P.h2(seed, 92, 1) * 3;
     var speed = 0.34 + P.h2(seed, 93, 1) * 0.22;
     var angle = phase + (time || 0) * speed;
-    var xRadius = radius * 0.52;
-    var yRadius = radius * 1.08;
+    var xRadius = radius * 0.92;
+    var yRadius = radius * 0.92;
     var ox = Math.cos(angle) * xRadius;
     var oy = Math.sin(angle) * yRadius;
     // The left half of this vertical orbit is the far side of the planet.
