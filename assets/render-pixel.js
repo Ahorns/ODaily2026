@@ -557,24 +557,31 @@
   }
 
   function comet(x, y, r, k, seed, time, behindPass) {
-    // An idea is a small body in orbit around its planet. Keep the local path
-    // close to a circle so it visibly completes a full revolution, while still
-    // crossing from above to below the world.
+    // An idea is a small body in orbit around its planet. Project a tilted 3D
+    // orbit onto the screen: its far arc crosses the planet's disc and is drawn
+    // first, so the body really can hide it instead of merely changing layers.
     var phase = P.h2(seed, 91, 1) * TAU;
     var radius = r + 5 + P.h2(seed, 92, 1) * 3;
     var speed = 0.34 + P.h2(seed, 93, 1) * 0.22;
     var angle = phase + (time || 0) * speed;
-    var xRadius = radius * 0.92;
-    var yRadius = radius * 0.92;
-    var ox = Math.cos(angle) * xRadius;
-    var oy = Math.sin(angle) * yRadius;
-    // The left half of this vertical orbit is the far side of the planet.
-    // It is painted before the body; the right half is painted afterwards.
-    var isBehind = Math.cos(angle) < 0;
+    var majorRadius = radius * 0.95;
+    var minorRadius = Math.max(1.5, r * 0.68);
+    var tilt = 1.08;
+    var ct = Math.cos(tilt), st = Math.sin(tilt);
+    var u = Math.cos(angle) * majorRadius;
+    var v = Math.sin(angle) * minorRadius;
+    var ox = u * ct - v * st;
+    var oy = u * st + v * ct;
+    // Negative depth is the far half. It is painted before the planet and the
+    // centre of that arc projects inside the planet, producing real occlusion.
+    var isBehind = Math.sin(angle) < 0;
     if (isBehind !== behindPass) return;
-    var vx = -Math.sin(angle) * xRadius;
-    var vy = Math.cos(angle) * yRadius;
-    P.drawComet(surf, Math.round(x + ox), Math.round(y + oy), k, -vx, -vy, r);
+    var du = -Math.sin(angle) * majorRadius;
+    var dv = Math.cos(angle) * minorRadius;
+    var vx = du * ct - dv * st;
+    var vy = du * st + dv * ct;
+    var depthK = isBehind ? k * 0.55 : k;
+    P.drawComet(surf, Math.round(x + ox), Math.round(y + oy), depthK, -vx, -vy, r);
   }
 
   function bracket(x, y, b, c) {
