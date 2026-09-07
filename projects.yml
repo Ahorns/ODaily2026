@@ -92,3 +92,9 @@ projects:
     category: "coding"
     color: "#7fd8f7"
     status: active
+  lt:
+    name: "LocalThinking"
+    group: research
+    category: "coding"
+    color: "#7fd8f7"
+    status: active
