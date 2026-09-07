@@ -26,11 +26,14 @@ Crazy working day! Fable 5.1 release!
   - project: tc
     hours: 2
     note: "Think about this idea originally"
+  - project: lt
+    hours: 1
+    note: "Optimizing it, but find we need a real normal gpu"
 
   Craft  odaily
   Gravity  thinking
   Others  other
-  Research  3DIC, multicoding, multidie, pnr, reading, thesis, tc, wos
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
 -->
 
 
