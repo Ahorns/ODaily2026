@@ -1,0 +1,40 @@
+---
+title: "Friday 4 September 2026"
+date: 2026-09-04
+milestone: false
+---
+
+## The start
+
+Back to study
+
+## What I did
+
+<!-- time
+  - project: odaily
+    hours: 0
+    note: ""
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
