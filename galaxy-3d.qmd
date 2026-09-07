@@ -1,0 +1,50 @@
+---
+title: "ODaily 2026 · 3D Galaxy"
+page-layout: custom
+body-classes: galaxy-3d-page
+toc: false
+---
+
+::: {#galaxy-3d-root data-src="assets/sky.json"}
+
+<div class="galaxy-3d-stage">
+<canvas id="galaxy-3d-canvas" tabindex="0" role="img" aria-label="A three-dimensional universe of ODaily entries. Drag to rotate, scroll to zoom, and select a planet to inspect that day."></canvas>
+
+<div class="g3d-loading" id="g3d-loading"><span></span>Charting the ODaily universe…</div>
+
+<div class="g3d-hud">
+<div class="g3d-topbar">
+<div class="g3d-title"><span>IMMERSIVE ARCHIVE</span><strong>ODaily 2026 · 3D Galaxy</strong><small>Months are stellar systems · days are planets</small></div>
+<div class="g3d-actions">
+<a href="/" class="g3d-button">2D Map</a>
+<button type="button" class="g3d-button" id="g3d-overview">Overview</button>
+<button type="button" class="g3d-button" id="g3d-today">Latest day</button>
+<button type="button" class="g3d-button" id="g3d-motion" aria-pressed="false">Pause</button>
+</div>
+</div>
+
+<aside class="g3d-readout" id="g3d-readout" aria-live="polite">
+<p class="g3d-eyebrow">FLIGHT LOG</p>
+<h2>Select a planet</h2>
+<p>Drag to orbit the camera. Scroll to cross the galaxy. Click a world to inspect its day; double-click it to read the entry.</p>
+</aside>
+
+<div class="g3d-bottom">
+<div class="g3d-system-bar"><span class="g3d-label">Stellar systems</span><div id="g3d-systems"></div></div>
+<div class="g3d-filter-bar"><span class="g3d-label">Constellation</span><div id="g3d-filters"></div></div>
+<p class="g3d-help">Drag to orbit · scroll to zoom · click a planet · double-click to read</p>
+</div>
+</div>
+</div>
+
+:::
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "/assets/vendor/three/three.module.min.js",
+    "three/addons/controls/OrbitControls.js": "/assets/vendor/three/OrbitControls.js"
+  }
+}
+</script>
+<script type="module" src="/assets/galaxy-3d.js"></script>

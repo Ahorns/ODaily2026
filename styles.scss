@@ -637,3 +637,280 @@ body.mode-list #journal { border-top: 1px solid $rule-dim; }
 }
 .readout-name { margin: 0.4rem 0 0; }
 .day-name { text-align: center; margin-top: 0.5rem; }
+
+// ---------------------------------------------------------------------------
+// 3D galaxy — a second lens on the same ODaily data
+// ---------------------------------------------------------------------------
+
+html.galaxy-3d-active,
+html.galaxy-3d-active body { overflow: hidden; height: 100%; }
+
+body.galaxy-3d-page {
+  padding-top: 0 !important;
+  background: #050812;
+}
+body.galaxy-3d-page #title-block-header { display: none !important; }
+body.galaxy-3d-page main { margin-top: 0; }
+body.galaxy-3d-page footer { display: none; }
+
+#galaxy-3d-root { position: relative; }
+
+.galaxy-3d-stage {
+  position: relative;
+  height: 100vh;
+  min-height: 34rem;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 45% 42%, rgba(35, 51, 92, 0.2), transparent 38%),
+    #050812;
+}
+
+#galaxy-3d-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+#galaxy-3d-canvas:active { cursor: grabbing; }
+#galaxy-3d-canvas.is-over-planet { cursor: pointer; }
+#galaxy-3d-canvas:focus-visible { outline: 2px solid $gold; outline-offset: -4px; }
+
+.g3d-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  gap: 0.9rem;
+  justify-items: center;
+  color: $dim;
+  background: #050812;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: opacity 420ms ease, visibility 420ms ease;
+}
+.g3d-loading span {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 1px solid $rule;
+  border-top-color: $gold;
+  border-radius: 50%;
+  animation: g3d-spin 900ms linear infinite;
+}
+.g3d-loading.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
+.g3d-loading a { color: $gold; }
+@keyframes g3d-spin { to { transform: rotate(360deg); } }
+
+.g3d-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5.25rem clamp(1rem, 3vw, 2.5rem) 1.35rem;
+  pointer-events: none;
+}
+
+.g3d-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.g3d-title {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.85rem;
+  border-left: 2px solid $gold;
+  text-shadow: 0 2px 10px #050812;
+}
+.g3d-title span,
+.g3d-eyebrow,
+.g3d-label {
+  color: $gold;
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.g3d-title strong {
+  margin-top: 0.18rem;
+  color: $bright;
+  font-size: clamp(0.86rem, 1.6vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.035em;
+}
+.g3d-title small {
+  margin-top: 0.15rem;
+  color: $dim;
+  font-size: 0.64rem;
+}
+
+.g3d-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.42rem;
+  pointer-events: auto;
+}
+
+.g3d-button,
+.g3d-open,
+#g3d-systems button,
+#g3d-filters button {
+  font: inherit;
+  color: $dim;
+  background: rgba(8, 13, 25, 0.68);
+  border: 1px solid $rule-dim;
+  border-radius: 0;
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+.g3d-button {
+  padding: 0.38rem 0.7rem;
+  font-size: 0.68rem;
+  text-decoration: none;
+}
+.g3d-button:hover,
+.g3d-open:hover,
+#g3d-systems button:hover,
+#g3d-filters button:hover {
+  color: $bright;
+  border-color: $rule;
+}
+.g3d-button[aria-pressed="true"] { color: $gold; border-color: $gold-dim; }
+
+.g3d-readout {
+  align-self: flex-start;
+  width: min(23rem, calc(100vw - 2rem));
+  max-height: min(48vh, 30rem);
+  overflow: auto;
+  padding: 1rem 1.15rem;
+  color: $text;
+  background: rgba(10, 16, 31, 0.76);
+  border: 1px solid $rule;
+  border-left: 3px solid $gold;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(16px);
+  pointer-events: auto;
+  scrollbar-width: thin;
+  scrollbar-color: $rule transparent;
+}
+.g3d-readout h2 {
+  margin: 0.28rem 0 0.55rem;
+  color: $bright;
+  font-size: 1.16rem;
+  line-height: 1.25;
+}
+.g3d-readout p { margin: 0; font-size: 0.76rem; line-height: 1.55; }
+.g3d-eyebrow { margin: 0 !important; }
+.g3d-muted { color: $dim; }
+.g3d-date {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: $dim;
+}
+.g3d-date span { color: $gold; }
+
+.g3d-projects { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.8rem; }
+.g3d-project {
+  padding: 0.18rem 0.42rem;
+  color: var(--project);
+  border: 1px solid color-mix(in srgb, var(--project) 48%, transparent);
+  background: color-mix(in srgb, var(--project) 10%, transparent);
+  font-size: 0.66rem;
+}
+
+.g3d-sessions {
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $rule-dim;
+}
+.g3d-sessions li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid $rule-dim;
+  color: $dim;
+  font-size: 0.68rem;
+}
+.g3d-sessions strong { flex: 0 0 auto; color: $text; font-weight: 500; }
+.g3d-open {
+  display: inline-block;
+  margin-top: 0.85rem;
+  padding: 0.38rem 0.66rem;
+  color: $gold;
+  font-size: 0.68rem;
+  text-decoration: none;
+}
+
+.g3d-system-stats { display: flex; gap: 1.2rem; margin-top: 0.85rem; color: $dim; font-size: 0.68rem; }
+.g3d-system-stats span { display: flex; flex-direction: column; }
+.g3d-system-stats strong { color: $gold; font-size: 1rem; font-weight: 500; }
+
+.g3d-bottom {
+  display: grid;
+  gap: 0.55rem;
+  width: min(74rem, 100%);
+  align-self: center;
+  padding: 0.75rem 0.9rem;
+  background: rgba(8, 13, 25, 0.7);
+  border: 1px solid $rule-dim;
+  backdrop-filter: blur(14px);
+  pointer-events: auto;
+}
+.g3d-system-bar,
+.g3d-filter-bar { display: flex; align-items: center; gap: 0.7rem; }
+.g3d-label { flex: 0 0 7.8rem; color: $dim; }
+#g3d-systems,
+#g3d-filters { display: flex; gap: 0.35rem; overflow-x: auto; scrollbar-width: none; }
+#g3d-systems::-webkit-scrollbar,
+#g3d-filters::-webkit-scrollbar { display: none; }
+#g3d-systems button,
+#g3d-filters button {
+  flex: 0 0 auto;
+  padding: 0.25rem 0.58rem;
+  font-size: 0.65rem;
+  white-space: nowrap;
+}
+#g3d-filters button[aria-pressed="true"] {
+  color: $void;
+  border-color: var(--project, #{$gold});
+  background: var(--project, #{$gold});
+}
+.g3d-help { margin: 0; color: rgba(111, 128, 168, 0.72); font-size: 0.61rem; text-align: right; }
+
+@media (max-width: 760px) {
+  .g3d-hud { padding: 4.8rem 0.75rem 0.75rem; }
+  .g3d-topbar { gap: 0.55rem; }
+  .g3d-title small { display: none; }
+  .g3d-actions .g3d-button:nth-child(2),
+  .g3d-actions .g3d-button:nth-child(4) { display: none; }
+  .g3d-readout { width: min(19rem, calc(100vw - 1.5rem)); max-height: 39vh; }
+  .g3d-system-bar,
+  .g3d-filter-bar { align-items: flex-start; flex-direction: column; gap: 0.35rem; }
+  .g3d-label { flex-basis: auto; }
+  #g3d-systems,
+  #g3d-filters { width: 100%; }
+  .g3d-help { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .g3d-loading span { animation: none; }
+  .g3d-loading { transition: none; }
+  .g3d-button,
+  .g3d-open,
+  #g3d-systems button,
+  #g3d-filters button { transition: none; }
+}

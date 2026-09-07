@@ -7,10 +7,11 @@ in.
 ## Live websites
 
 - **ODaily journal:** <https://odaily2026.pages.dev/>
+- **ODaily 3D galaxy:** <https://odaily2026.pages.dev/galaxy-3d.html>
 - **Private writer:** <https://odaily-write.pages.dev/>
 
-The site has two registers on purpose. What you **navigate** — the month map on
-the home page — is pixel art. What you **read** — an entry — is quiet and
+The site has two registers on purpose. What you **navigate** — the pixel map or
+its optional 3D galaxy — is spatial. What you **read** — an entry — is quiet and
 text-first, in the same palette. The metaphor stops at the door of an entry.
 
 ## Writing a day

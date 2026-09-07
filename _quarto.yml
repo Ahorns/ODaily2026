@@ -5,6 +5,7 @@ project:
     - "index.qmd"
     - "about.qmd"
     - "comets.qmd"
+    - "galaxy-3d.qmd"
     - "log/*.qmd"
     - "projects/*.qmd"
     - "system/*.qmd"
@@ -20,6 +21,8 @@ website:
     left:
       - href: index.qmd
         text: "Galaxy"
+      - href: galaxy-3d.qmd
+        text: "Galaxy 3D"
       - href: projects/index.qmd
         text: "Constellations"
       - href: comets.qmd
