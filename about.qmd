@@ -53,6 +53,11 @@ record is a second Earth, Mars, or Jupiter. Project colours are intentionally
 kept off the 3D bodies: a day with additional projects gains natural-looking
 satellites, while the project names remain available in the selected-day panel.
 
+The lightweight realism pass reuses those same maps for rocky relief, lights
+each system primarily from its own star, and adds only a thin atmospheric limb
+to bodies that need one. The viewer loads just the texture families used by the
+current archive, rather than downloading the complete planet library every time.
+
 ## How it is kept
 
 | Idea | Here |

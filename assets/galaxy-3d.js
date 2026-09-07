@@ -2,15 +2,15 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const PLANET_STYLES = {
-  earth:   { identity: "Earth", texture: "earth", roughness: 0.72, clouds: true },
-  mercury: { identity: "Mercury", texture: "mercury", roughness: 0.96 },
-  venus:   { identity: "Venus", texture: "venus", roughness: 0.84, yScale: 0.99 },
-  mars:    { identity: "Mars", texture: "mars", roughness: 0.92 },
-  moon:    { identity: "Moon", texture: "moon", roughness: 1 },
-  jupiter: { identity: "Jupiter", texture: "jupiter", roughness: 0.76, yScale: 0.92 },
-  saturn:  { identity: "Saturn", texture: "saturn", roughness: 0.8, yScale: 0.9, ring: "saturn" },
-  uranus:  { identity: "Uranus", texture: "uranus", roughness: 0.67, yScale: 0.95, ring: "uranus" },
-  neptune: { identity: "Neptune", texture: "neptune", roughness: 0.7, yScale: 0.94 }
+  earth:   { identity: "Earth", texture: "earth", roughness: 0.7, bump: 0.028, clouds: true, atmosphere: "#67b8ff", atmosphereOpacity: 0.3, tints: ["#ffffff"] },
+  mercury: { identity: "Mercury", texture: "mercury", roughness: 0.98, bump: 0.052, tints: ["#ffffff", "#e9e1d7", "#d8dce3"] },
+  venus:   { identity: "Venus", texture: "venus", roughness: 0.82, yScale: 0.99, atmosphere: "#e8bd78", atmosphereOpacity: 0.2, tints: ["#fff8e8", "#efd6ad", "#e6c59d"] },
+  mars:    { identity: "Mars", texture: "mars", roughness: 0.95, bump: 0.046, atmosphere: "#bc704f", atmosphereOpacity: 0.1, tints: ["#ffffff", "#e8c3ad", "#d8aa91"] },
+  moon:    { identity: "Moon", texture: "moon", roughness: 1, bump: 0.058, tints: ["#ffffff", "#dce2e7", "#e1d8ce"] },
+  jupiter: { identity: "Jupiter", texture: "jupiter", roughness: 0.66, yScale: 0.92, atmosphere: "#dfc49d", atmosphereOpacity: 0.13, tints: ["#ffffff", "#f0dfca", "#e9d0b2"] },
+  saturn:  { identity: "Saturn", texture: "saturn", roughness: 0.7, yScale: 0.9, ring: "saturn", atmosphere: "#e5d4ad", atmosphereOpacity: 0.11, tints: ["#ffffff", "#f0e3c8", "#dfd0b5"] },
+  uranus:  { identity: "Uranus", texture: "uranus", roughness: 0.62, yScale: 0.95, ring: "uranus", atmosphere: "#8fdfe2", atmosphereOpacity: 0.17, tints: ["#ffffff", "#d9f1ee", "#c6e5e8"] },
+  neptune: { identity: "Neptune", texture: "neptune", roughness: 0.63, yScale: 0.94, atmosphere: "#668dff", atmosphereOpacity: 0.2, tints: ["#ffffff", "#ced8ff", "#b9caf5"] }
 };
 
 const NAMED_SOLAR_BODIES = {
@@ -38,12 +38,12 @@ const PLANET_CATALOGS = {
   // Earth is deliberately absent from automatic catalogues. It appears only
   // when a record is explicitly named Earth, so another system never silently
   // receives a duplicate Earth identity.
-  ice: ["neptune", "uranus", "moon", "venus"],
-  rock: ["mercury", "mars", "moon", "venus"],
-  ocean: ["neptune", "uranus", "venus"],
+  ice: ["neptune", "uranus"],
+  rock: ["mercury", "mars", "moon"],
+  ocean: ["neptune", "uranus"],
   lava: ["mars", "venus", "mercury"],
   forest: ["venus", "uranus", "neptune"],
-  gas: ["jupiter", "saturn", "neptune", "uranus", "venus", "mars", "mercury"]
+  gas: ["jupiter", "saturn", "neptune", "uranus"]
 };
 
 const root = document.getElementById("galaxy-3d-root");
@@ -84,10 +84,10 @@ async function boot() {
   });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.16;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.toneMappingExposure = 1.08;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 700 ? 1.25 : 1.5));
 
-  const planetTextures = await loadPlanetTextures(renderer);
+  const planetTextures = await loadPlanetTextures(renderer, data);
 
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
@@ -99,8 +99,10 @@ async function boot() {
   controls.maxDistance = 1050;
   controls.target.set(0, 0, 0);
 
-  scene.add(new THREE.HemisphereLight("#a8c8ff", "#120b24", 1.25));
-  const keyLight = new THREE.DirectionalLight("#dbe7ff", 1.35);
+  // A dim fill preserves texture detail on the night side. The nearby system
+  // star is the real key light, so every planet gains a proper terminator.
+  scene.add(new THREE.HemisphereLight("#91acd8", "#080b14", 0.55));
+  const keyLight = new THREE.DirectionalLight("#a9bee0", 0.4);
   keyLight.position.set(-100, 180, 140);
   scene.add(keyLight);
 
@@ -234,7 +236,7 @@ async function boot() {
     glow.scale.set(34, 34, 1);
     system.add(glow);
 
-    const point = new THREE.PointLight(starColor, 35, 125, 1.65);
+    const point = new THREE.PointLight(starColor, 1200, 480, 2);
     system.add(point);
 
     const label = makeLabelSprite(systemData.name || systemData.key, "#c5d2ef", 0.92);
@@ -336,12 +338,15 @@ async function boot() {
     const style = choosePlanetStyle(entry, seed);
     const geometry = new THREE.SphereGeometry(radius, 64, 40);
     const material = new THREE.MeshStandardMaterial({
-      color: "#ffffff",
+      color: naturalPlanetTint(style, seed),
       map: planetTextures[style.texture],
+      bumpMap: style.bump ? planetTextures[style.texture] : null,
+      bumpScale: style.bump ? radius * style.bump : 0,
       roughness: style.roughness,
       metalness: style.metalness || 0,
       emissive: style.emissive || "#000000",
-      emissiveIntensity: style.emissiveIntensity || 0
+      emissiveIntensity: style.emissiveIntensity || 0,
+      dithering: true
     });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.scale.set(style.xScale || 1, style.yScale || 1, style.zScale || 1);
@@ -350,6 +355,12 @@ async function boot() {
     group.add(mesh);
     group.userData.surface = mesh;
     group.userData.visualType = style.label;
+
+    if (style.atmosphere) {
+      const atmosphere = makeAtmosphere(radius, style.atmosphere, style.atmosphereOpacity);
+      atmosphere.scale.set(style.xScale || 1, style.yScale || 1, style.zScale || 1);
+      group.add(atmosphere);
+    }
 
     if (style.clouds) {
       const clouds = new THREE.Mesh(
@@ -759,7 +770,7 @@ function choosePlanetStyle(entry, seed) {
   const namedStyleKey = NAMED_SOLAR_BODIES[recordedName];
   if (namedStyleKey) {
     const namedStyle = PLANET_STYLES[namedStyleKey];
-    return Object.assign({}, namedStyle, { label: namedStyle.identity });
+    return Object.assign({}, namedStyle, { label: namedStyle.identity, exactIdentity: true });
   }
 
   const catalog = PLANET_CATALOGS[entry.type] || PLANET_CATALOGS.gas;
@@ -770,7 +781,55 @@ function choosePlanetStyle(entry, seed) {
   });
 }
 
-async function loadPlanetTextures(renderer) {
+function naturalPlanetTint(style, seed) {
+  if (style.exactIdentity || !style.tints || !style.tints.length) return "#ffffff";
+  return style.tints[Math.abs(seed * 17 + hashString(style.texture)) % style.tints.length];
+}
+
+function makeAtmosphere(radius, color, opacity) {
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      rimColor: { value: new THREE.Color(color) },
+      rimOpacity: { value: opacity || 0.14 }
+    },
+    vertexShader: `
+      varying vec3 vViewNormal;
+      varying vec3 vViewPosition;
+      void main() {
+        vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+        vViewPosition = viewPosition.xyz;
+        vViewNormal = normalize(normalMatrix * normal);
+        gl_Position = projectionMatrix * viewPosition;
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 rimColor;
+      uniform float rimOpacity;
+      varying vec3 vViewNormal;
+      varying vec3 vViewPosition;
+      void main() {
+        vec3 viewDirection = normalize(-vViewPosition);
+        float facing = max(dot(normalize(vViewNormal), viewDirection), 0.0);
+        float rim = pow(1.0 - facing, 3.6);
+        float alpha = rim * rimOpacity;
+        gl_FragColor = vec4(rimColor, alpha);
+      }
+    `,
+    side: THREE.FrontSide,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    toneMapped: false
+  });
+  const atmosphere = new THREE.Mesh(
+    new THREE.SphereGeometry(radius * 1.018, 48, 32),
+    material
+  );
+  atmosphere.renderOrder = 1;
+  return atmosphere;
+}
+
+async function loadPlanetTextures(renderer, data) {
   const files = {
     earth: "earth-day.jpg",
     earthClouds: "earth-clouds.jpg",
@@ -785,10 +844,22 @@ async function loadPlanetTextures(renderer) {
     neptune: "neptune.jpg",
     sun: "sun.jpg"
   };
+  const required = new Set(["sun"]);
+  data.systems.forEach(function (system) {
+    Object.keys(system.days).forEach(function (iso) {
+      const entry = system.days[iso];
+      const seed = Number(iso.replaceAll("-", ""));
+      const style = choosePlanetStyle(entry, seed);
+      required.add(style.texture);
+      if (style.clouds) required.add("earthClouds");
+      if (style.ring) required.add("saturnRing");
+      if (entry.projects.length > 1) required.add("moon");
+    });
+  });
   const loader = new THREE.TextureLoader();
   const anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
   const output = {};
-  await Promise.all(Object.keys(files).map(async function (key) {
+  await Promise.all(Array.from(required).map(async function (key) {
     const texture = await loader.loadAsync("/assets/planet-textures/" + files[key]);
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = anisotropy;
