@@ -1,0 +1,40 @@
+---
+title: "Tuesday 8 September 2026"
+date: 2026-09-08
+milestone: false
+---
+
+## The start
+
+Dying, but worthwhile!
+
+## What I did
+
+<!-- time
+  - project: 3DIC
+    hours: 7
+    note: "Prepare Meeting with APRIL."
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
+-->
+
+Discussing our 3D IC EDA work with APRIL Cristin, may a good start.
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
