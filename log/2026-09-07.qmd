@@ -12,16 +12,25 @@ First day of week!
 
 <!-- time
   - project: multicoding
-    hours: 5
+    hours: 3
     note: "Getting 85+ network"
   - project: pnr
-    hours: 7
+    hours: 5
     note: "Prepare for meeting tmr"
+  - project: 3DIC
+    hours: 2
+    note: ""
+  - project: odaily
+    hours: 0.5
+    note: "Make 3D version"
+  - project: 3DIC
+    hours: 3
+    note: "Prepare the meeting, and update layout"
 
   Craft  odaily
   Gravity  thinking
   Others  other
-  Research  3DIC, multicoding, multidie, pnr, reading, thesis, wos
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
 -->
 
 
