@@ -1,7 +1,7 @@
 ---
 title: "Tuesday 8 September 2026"
 date: 2026-09-08
-milestone: false
+milestone: true
 ---
 
 ## The start
@@ -12,8 +12,14 @@ Dying, but worthwhile!
 
 <!-- time
   - project: 3DIC
-    hours: 7
+    hours: 5
     note: "Prepare Meeting with APRIL."
+  - project: 3DIC
+    hours: 0.5
+    note: "Layout for Lab"
+  - project: pnr
+    hours: 2
+    note: "Continue Optimizing, and also prepare meeting with APRIL"
 
   Craft  odaily
   Gravity  thinking
