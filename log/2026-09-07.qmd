@@ -15,11 +15,8 @@ First day of week!
     hours: 3
     note: "Getting 85+ network"
   - project: pnr
-    hours: 5
-    note: "Prepare for meeting tmr"
-  - project: 3DIC
-    hours: 2
-    note: ""
+    hours: 4
+    note: "Prepare for meeting tmr, and find a way for JPR"
   - project: odaily
     hours: 0.5
     note: "Make 3D version"
@@ -41,11 +38,11 @@ First day of week!
 
 ## What I learned
 
-
+First start the slide, no matter how worse it is. And I learn a new way to make good slide.
 
 ## An idea that came up
 
-
+Why we could not design a keyboard only for vibe cording, speaker.
 
 ## Other
 
