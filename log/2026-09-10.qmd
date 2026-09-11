@@ -11,7 +11,7 @@ Rest day.
 ## What I did
 
 <!-- time
-  - project: odaily
+  - project: other
     hours: 0
     note: ""
 
