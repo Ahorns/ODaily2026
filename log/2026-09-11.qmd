@@ -1,0 +1,43 @@
+---
+title: "Friday 11 September 2026"
+date: 2026-09-11
+milestone: false
+---
+
+## The start
+
+Move the 3D ARCH part forward, check it again.
+Move JPR, find the way it matters.
+Move multi coding, try to understand the version we have.
+Move the website to orginize the project that i am doing.
+
+## What I did
+
+<!-- time
+  - project: odaily
+    hours: 0
+    note: ""
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
