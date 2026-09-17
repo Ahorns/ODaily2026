@@ -1,0 +1,43 @@
+---
+title: "Monday 14 September 2026"
+date: 2026-09-14
+milestone: false
+---
+
+## The start
+
+Server still disconnect.
+
+## What I did
+
+<!-- time
+  - project: 3DIC
+    hours: 3
+    note: "EDA funding + Discussing"
+  - project: other
+    hours: 3
+    note: "Funding server ing"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
+-->
+
+Discuss with Prof, the result is good about how to write the funding report.
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
