@@ -14,9 +14,12 @@ Move the website to orginize the project that i am doing.
 ## What I did
 
 <!-- time
+  - project: 3DIC
+    hours: 1.5
+    note: "Group meeting with Kham"
   - project: odaily
-    hours: 0
-    note: ""
+    hours: 3
+    note: "Update the project website"
 
   Craft  odaily
   Gravity  thinking
