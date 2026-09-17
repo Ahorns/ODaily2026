@@ -20,6 +20,9 @@ Back to record.
   - project: 3DIC
     hours: 1
     note: "Analyse the report"
+  - project: odaily
+    hours: 0.5
+    note: "Back to record"
 
   Craft  odaily
   Gravity  thinking
