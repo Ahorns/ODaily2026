@@ -1,0 +1,46 @@
+---
+title: "Thursday 17 September 2026"
+date: 2026-09-17
+milestone: false
+---
+
+## The start
+
+Back to record.
+
+## What I did
+
+<!-- time
+  - project: other
+    hours: 4
+    note: "Setting up Server stuff"
+  - project: multicoding
+    hours: 5
+    note: "Finally running, try to make model better"
+  - project: 3DIC
+    hours: 1
+    note: "Analyse the report"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
+-->
+
+Not mile stone but quite important. I found the runpod as my server. One day like 20 dollors 24 hours to use full one 24GB 4090, quite good!! And I also got one old desktop from IT, also borrow like few monthes.
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+Why we could not use every spare gpu source, and rent it to others like Airbnb.
+
+## Other
+
+
