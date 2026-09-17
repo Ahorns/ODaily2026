@@ -17,6 +17,9 @@ Server still disconnect.
   - project: other
     hours: 3
     note: "Funding server ing"
+  - project: odaily
+    hours: 0.75
+    note: "Upload Expense"
 
   Craft  odaily
   Gravity  thinking
