@@ -19,7 +19,19 @@ Claude code restart day
     note: "EDA cadence continue for SRAM and DRAM"
   - project: other
     hours: 2
-    note: "Try Cambridge GPU"
+    note: "Try Cam GPU"
+  - project: wos
+    hours: 0.5
+    note: "Try rethink, but Cam GPU could not."
+  - project: pnr
+    hours: 1
+    note: "Try to reorganize"
+  - project: 3DIC
+    hours: 0.5
+    note: "Simulate based on data"
+  - project: tc
+    hours: 0.5
+    note: "Rethink about it"
 
   Craft  odaily
   Gravity  thinking
