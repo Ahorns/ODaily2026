@@ -1,7 +1,7 @@
 ---
 title: "Thursday 17 September 2026"
 date: 2026-09-17
-milestone: false
+milestone: true
 ---
 
 ## The start
@@ -27,7 +27,7 @@ Back to record.
   Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
 -->
 
-Not mile stone but quite important. I found the runpod as my server. One day like 20 dollors 24 hours to use full one 24GB 4090, quite good!! And I also got one old desktop from IT, also borrow like few monthes.
+I found the runpod as my server. One day like 20 dollors 24 hours to use full one 24GB 4090, quite good!! And I also got one old desktop from IT, also borrow like few monthes.
 
 ## What I did well
 
