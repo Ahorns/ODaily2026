@@ -1,0 +1,43 @@
+---
+title: "Tuesday 15 September 2026"
+date: 2026-09-15
+milestone: false
+---
+
+## The start
+
+
+
+## What I did
+
+<!-- time
+  - project: other
+    hours: 4
+    note: "Funding server; check Cam server center"
+  - project: 3DIC
+    hours: 1
+    note: "Discuss with Kham about how to simulation, and what data I need"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
