@@ -1,0 +1,49 @@
+---
+title: "Tuesday 22 September 2026"
+date: 2026-09-22
+milestone: false
+---
+
+## The start
+
+Discuss with Guo, my bachelor upperclass, in arch and in CS. Learn a lot from him.
+
+## What I did
+
+<!-- time
+  - project: multicoding
+    hours: 4
+    note: "Optimizing algorithm of TTFS"
+  - project: 3DIC
+    hours: 1
+    note: "For Sandpit"
+  - project: pnr
+    hours: 2
+    note: "Keep finding path"
+  - project: multidie
+    hours: 1
+    note: "Keep optimizing"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
