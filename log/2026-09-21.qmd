@@ -1,0 +1,46 @@
+---
+title: "Monday 21 September 2026"
+date: 2026-09-21
+milestone: false
+---
+
+## The start
+
+Go to south Cambridge with Mei who needs check body. South Cambridge is another world which is so luxurious.
+
+## What I did
+
+<!-- time
+  - project: 3DIC
+    hours: 3
+    note: "Discuss with Prof. Kill 3D CFET."
+  - project: multicoding
+    hours: 2.5
+    note: "Keep optimizing TTFS"
+  - project: pnr
+    hours: 1
+    note: "Keep finding the way, finding in lut level JPR may better?"
+
+  Craft  odaily
+  Gravity  thinking
+  Others  other
+  Research  3DIC, lt, multicoding, multidie, pnr, reading, thesis, tc, wos
+-->
+
+
+
+## What I did well
+
+
+
+## What I learned
+
+
+
+## An idea that came up
+
+
+
+## Other
+
+
